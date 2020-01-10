@@ -35,6 +35,7 @@ ext {
             jflog_version             : "1.8.1",
             rounded_views_version     : "1.1.0",
             gson_version              : "2.8.6",
+            leakcanary_version        : "2.1",
     ]
 
     dependencies = [
@@ -92,5 +93,8 @@ ext {
             "room_compiler"      : "androidx.room:room-compiler:${version["room_version"]}",
             "room_ktx"           : "androidx.room:room-ktx:${version["room_version"]}",
             "room_rxjava2"       : "androidx.room:room-rxjava2:${version["room_version"]}",
+
+            // Debug
+            "leakcanary"         : "com.squareup.leakcanary:leakcanary-android:${version["leakcanary_version"]}",
     ]
 }
