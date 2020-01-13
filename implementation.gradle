@@ -57,9 +57,8 @@ ext {
             "test_espresso_core" : "androidx.test.espresso:espresso-core:${version["espresso_version"]}",
 
             // Koin
-            "koin_core"          : "org.koin:koin-core-ext:${version["koin_version"]}",
-            "koin_java"          : "org.koin:koin-java:${version["koin_version"]}",
-            "koin_android"       : "org.koin:koin-android:${version["koin_version"]}",
+            "koin_core"          : "org.koin:koin-core:${version["koin_version"]}",
+            "koin_core_ext"      : "org.koin:koin-core-ext:${version["koin_version"]}",
             "koin_scope"         : "org.koin:koin-androidx-scope:${version["koin_version"]}",
             "koin_viewmodel"     : "org.koin:koin-androidx-viewmodel:${version["koin_version"]}",
             "koin_ext"           : "org.koin:koin-androidx-ext:${version["koin_version"]}",
@@ -96,5 +95,9 @@ ext {
 
             // Debug
             "leakcanary"         : "com.squareup.leakcanary:leakcanary-android:${version["leakcanary_version"]}",
+
+            // Paging
+            "paging_runtime"     : "androidx.paging:paging-runtime:${version["paging_version"]}",
+            "paging_rxjava2"     : "androidx.paging:paging-rxjava2:${version["paging_version"]}",
     ]
 }
