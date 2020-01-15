@@ -1,10 +1,12 @@
 package com.jeff.startproject.view.table
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.jeff.startproject.R
 import com.jeff.startproject.model.api.user.UserItem
 import com.jeff.startproject.view.table.viewholder.UserInfoViewHolder
@@ -39,22 +41,21 @@ class UserInfoListAdapter : PagedListAdapter<UserItem, UserInfoViewHolder>(diffC
             // user avatar
             Glide.with(holder.itemView.context)
                 .load(it?.avatarUrl)
+                .apply(RequestOptions.circleCropTransform())
                 .placeholder(R.mipmap.ic_launcher)
-                .into(holder.ivAvater)
+                .into(holder.ivAvatar)
 
             // user login
             it?.login.run {
                 holder.tvName.text = it?.login
             }
 
-            /*
             // user badge
             if (it!!.isSiteAdmin!!) {
-                holder.badgeTextView.visibility = View.VISIBLE
+                holder.tvBadge.visibility = View.VISIBLE
             } else {
-                holder.badgeTextView.visibility = View.GONE
+                holder.tvBadge.visibility = View.GONE
             }
-            */
         }
     }
 }
