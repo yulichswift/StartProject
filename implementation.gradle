@@ -20,7 +20,7 @@ ext {
             dagger_version            : "2.24",
             koin_version              : "2.0.1",
             moshi_version             : "1.8.0",
-            glide_version             : "4.10.0",
+            glide_version             : "4.11.0",
             circle_image_view_version : "3.0.1",
             material_dialogs_version  : "3.1.0",
             pogress_hud_version       : "1.2.0",
@@ -99,5 +99,9 @@ ext {
             // Paging
             "paging_runtime"     : "androidx.paging:paging-runtime:${version["paging_version"]}",
             "paging_rxjava2"     : "androidx.paging:paging-rxjava2:${version["paging_version"]}",
+
+            // glide
+            "glide"              : "com.github.bumptech.glide:glide:${version["glide_version"]}",
+            "glide_compiler"     : "com.github.bumptech.glide:compiler:${version["glide_version"]}",
     ]
 }
