@@ -184,7 +184,6 @@ class EventBusActivity : BaseActivity() {
                 tv_text.text = string
             })
 
-
         btn_send.setOnClickListener {
             LiveEventBus
                 .get(key)
