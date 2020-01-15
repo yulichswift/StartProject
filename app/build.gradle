@@ -20,6 +20,8 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField "String", "API_HOST", '"https://api.github.com"'
+            
             zipAlignEnabled false
             minifyEnabled false
             debuggable true
@@ -28,6 +30,8 @@ android {
             versionNameSuffix "-debug"
         }
         release {
+            buildConfigField "String", "API_HOST", '"https://api.github.com"'
+
             zipAlignEnabled true
             minifyEnabled true
             debuggable false
@@ -87,4 +91,12 @@ dependencies {
     implementation rootProject.ext.dependencies["room_rxjava2"]
 
     debugImplementation rootProject.ext.dependencies["leakcanary"]
+
+    implementation rootProject.ext.dependencies["paging_runtime"]
+
+    implementation rootProject.ext.dependencies["okhttp"]
+    implementation rootProject.ext.dependencies["okhttp_interceptor"]
+
+    implementation rootProject.ext.dependencies["glide"]
+    annotationProcessor rootProject.ext.dependencies["glide_compiler"]
 }

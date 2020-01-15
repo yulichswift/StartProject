@@ -8,6 +8,7 @@ import com.jeff.startproject.view.base.BaseActivity
 import com.jeremyliao.liveeventbus.LiveEventBus
 import com.log.JFLog
 import kotlinx.android.synthetic.main.activity_event_bus.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
@@ -17,6 +18,8 @@ import kotlin.random.Random
  */
 
 class EventBusActivity : BaseActivity() {
+
+    private val viewModel by viewModel<EventBusViewModel>()
 
     override fun getLayoutId(): Int {
         return R.layout.activity_event_bus
