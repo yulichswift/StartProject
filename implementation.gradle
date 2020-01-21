@@ -89,8 +89,11 @@ ext {
 
             // Room
             "room_runtime"       : "androidx.room:room-runtime:${version["room_version"]}",
+            // For Kotlin use kapt instead of annotationProcessor
             "room_compiler"      : "androidx.room:room-compiler:${version["room_version"]}",
+            // optional - Kotlin Extensions and Coroutines support for Room
             "room_ktx"           : "androidx.room:room-ktx:${version["room_version"]}",
+            // optional - RxJava support for Room
             "room_rxjava2"       : "androidx.room:room-rxjava2:${version["room_version"]}",
 
             // Debug

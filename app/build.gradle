@@ -88,7 +88,6 @@ dependencies {
     implementation rootProject.ext.dependencies["room_runtime"]
     kapt rootProject.ext.dependencies["room_compiler"]
     implementation rootProject.ext.dependencies["room_ktx"]
-    implementation rootProject.ext.dependencies["room_rxjava2"]
 
     debugImplementation rootProject.ext.dependencies["leakcanary"]
 
@@ -98,5 +97,5 @@ dependencies {
     implementation rootProject.ext.dependencies["okhttp_interceptor"]
 
     implementation rootProject.ext.dependencies["glide"]
-    annotationProcessor rootProject.ext.dependencies["glide_compiler"]
+    kapt rootProject.ext.dependencies["glide_compiler"]
 }
