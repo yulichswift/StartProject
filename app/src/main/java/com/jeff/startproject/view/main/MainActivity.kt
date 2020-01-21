@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import com.jeff.startproject.R
 import com.jeff.startproject.view.base.BaseActivity
+import com.jeff.startproject.view.edittext.EditTextActivity
 import com.jeff.startproject.view.eventbus.EventBusActivity
 import com.jeff.startproject.view.table.TableActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -31,6 +32,12 @@ class MainActivity : BaseActivity() {
 
         btn_table.setOnClickListener {
             Intent(this, TableActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        btn_edit.setOnClickListener {
+            Intent(this, EditTextActivity::class.java).also {
                 startActivity(it)
             }
         }

@@ -31,6 +31,16 @@
                 app:btn_solid_color="@android:color/holo_blue_light" />
 
             <com.yulichswift.roundedview.widget.RoundedTextView
+                android:id="@+id/btn_edit"
+                style="@style/btn_size_14"
+                android:layout_marginTop="20dp"
+                android:text="EditText"
+                android:textColor="@android:color/white"
+                app:btn_corner_radius="standard"
+                app:btn_pressed_color="darker"
+                app:btn_solid_color="@android:color/holo_blue_light" />
+
+            <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_table"
                 style="@style/btn_size_14"
                 android:layout_marginTop="20dp"
