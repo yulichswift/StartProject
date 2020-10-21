@@ -1,4 +1,4 @@
-package com.jeff.startproject.floating.draggable
+package com.jeff.startproject.widget.floating.draggable
 
 import android.view.Gravity
 import android.view.View
