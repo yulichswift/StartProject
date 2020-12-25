@@ -1,10 +1,10 @@
 package com.jeff.startproject.view.text
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
-import android.text.style.ImageSpan
-import com.jeff.startproject.R
+import android.text.style.ForegroundColorSpan
 import com.jeff.startproject.databinding.ActivityTextBinding
 import com.view.base.BaseActivity
 
@@ -24,18 +24,24 @@ class TextActivity : BaseActivity<ActivityTextBinding>() {
             sb.toString()
         })
 
-        var i = 0
-        while (i >= 0) {
-            if (i > 0) {
-                i++
-            }
-
-            i = stringBuilder.indexOf("5", i, false)
-            if (i >= 0) {
-                stringBuilder.setSpan(ImageSpan(this, R.drawable.ic_smile), i, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        /*
+        // 圖片
+        run {
+            var i = 0
+            while (i >= 0) {
+                i = stringBuilder.indexOf("5", i, false)
+                if (i >= 0) {
+                    stringBuilder.setSpan(ImageSpan(this, R.drawable.ic_smile), i, i + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    i++
+                }
             }
         }
+        */
 
+        // Start: index
+        // End: index不算
+        // 3, 6: 實際3到5
+        stringBuilder.setSpan(ForegroundColorSpan(Color.RED), 3, 6, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         binding.tv1.text = stringBuilder
     }
 }
