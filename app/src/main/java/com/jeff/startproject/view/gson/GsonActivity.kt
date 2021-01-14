@@ -16,7 +16,7 @@ class GsonActivity : BaseActivity<ActivityGsonBinding>() {
 
     private val gson by lazy { Gson() }
 
-    // 序列化有Expose
+    // 忽略"沒有"標註Expose的欄位
     private val exposeGson by lazy { GsonBuilder().excludeFieldsWithoutExposeAnnotation().create() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,15 +29,15 @@ class GsonActivity : BaseActivity<ActivityGsonBinding>() {
         inputStream.close()
 
         run {
-            // val employee = gson.fromJson(text, Employee::class.java)
-            // JFLog.d("$employee")
-            // binding.tv.text = "$employee"
+            val employee = gson.fromJson(text, Employee::class.java)
+            JFLog.d("$employee")
+            binding.tv1.text = "$employee"
         }
 
         run {
             val employee = exposeGson.fromJson(text, Employee::class.java)
             JFLog.d("$employee")
-            binding.tv.text = "$employee"
+            binding.tv2.text = "$employee"
         }
     }
 }
