@@ -1,12 +1,12 @@
 package com.jeff.startproject.view.edittext
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import com.jeff.startproject.databinding.ActivityEditBinding
 import com.log.JFLog
 import com.view.base.BaseActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 // (TextWatcher) https://developer.android.com/reference/android/text/TextWatcher.html
 
@@ -38,7 +38,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditTextActivity : BaseActivity<ActivityEditBinding>() {
 
-    private val viewModel by viewModel<EditTextViewModel>()
+    private val viewModel: EditTextViewModel by viewModels()
 
     override fun getViewBinding(): ActivityEditBinding {
         return ActivityEditBinding.inflate(layoutInflater)
