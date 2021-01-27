@@ -40,4 +40,9 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="FloatingHintTextStyle" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">#08f</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
 </resources>
