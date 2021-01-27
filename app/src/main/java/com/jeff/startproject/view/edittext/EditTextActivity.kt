@@ -1,9 +1,11 @@
 package com.jeff.startproject.view.edittext
 
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityEditBinding
 import com.log.JFLog
 import com.view.base.BaseActivity
@@ -46,6 +48,13 @@ class EditTextActivity : BaseActivity<ActivityEditBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // XML Not working
+        // app:hintTextAppearance="@style/FloatingHintTextStyle"
+        binding.layoutEdit1.setHintTextAppearance(R.style.FloatingHintTextStyle)
+
+        // 在XML設置EditText會影響, TextInputLayout的hint.
+        binding.edit1.setTypeface(Typeface.DEFAULT_BOLD, Typeface.BOLD)
 
         if (true) {
             //MyTextWatcher(binding.edit1)
