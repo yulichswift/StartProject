@@ -64,9 +64,10 @@
         <activity android:name=".view.text.TextActivity" />
         <activity android:name=".view.sort.DataSortActivity" />
         <activity android:name=".view.encrypt.EncryptActivity" />
-        <activity android:name=".view.OverrideTransitionActivity" />
+        <activity android:name=".view.others.OverrideTransitionActivity" />
         <activity android:name=".view.gson.GsonActivity" />
         <activity android:name=".view.list.DragActivity" />
+        <activity android:name=".view.others.CustomActivity" />
 
         <activity-alias
             android:name="com.jeff.file"

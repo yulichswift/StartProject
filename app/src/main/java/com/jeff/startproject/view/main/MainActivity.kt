@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.databinding.ActivityMainBinding
-import com.jeff.startproject.view.OverrideTransitionActivity
 import com.jeff.startproject.view.adbcmd.AdbCmdActivity
 import com.jeff.startproject.view.blur.BlurActivity
 import com.jeff.startproject.view.chain.ChainActivity
@@ -23,6 +22,8 @@ import com.jeff.startproject.view.gson.GsonActivity
 import com.jeff.startproject.view.list.DragActivity
 import com.jeff.startproject.view.login.LoginActivity
 import com.jeff.startproject.view.navigation.NavigationActivity
+import com.jeff.startproject.view.others.CustomActivity
+import com.jeff.startproject.view.others.OverrideTransitionActivity
 import com.jeff.startproject.view.pager.PagerActivity
 import com.jeff.startproject.view.preferences.PreferencesActivity
 import com.jeff.startproject.view.runtimeexec.RuntimeExecActivity
@@ -224,6 +225,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         binding.btnDrag.setOnClickListener {
             Intent(this, DragActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.btnCustom.setOnClickListener {
+            Intent(this, CustomActivity::class.java).also {
                 startActivity(it)
             }
         }
