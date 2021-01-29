@@ -1,4 +1,4 @@
-package com.jeff.startproject.view
+package com.jeff.startproject.view.others
 
 import android.content.Intent
 import android.os.Bundle
