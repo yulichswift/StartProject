@@ -30,6 +30,7 @@ import com.jeff.startproject.view.runtimeexec.RuntimeExecActivity
 import com.jeff.startproject.view.sample.SampleActivity
 import com.jeff.startproject.view.sort.DataSortActivity
 import com.jeff.startproject.view.text.TextActivity
+import com.jeff.startproject.view.ui.SeekBarActivity
 import com.jeff.startproject.view.vector.VectorActivity
 import com.jeff.startproject.view.websocket.WebSocketActivity
 import com.view.base.BaseActivity
@@ -231,6 +232,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         binding.btnCustom.setOnClickListener {
             Intent(this, CustomActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.btnSeekBar.setOnClickListener {
+            Intent(this, SeekBarActivity::class.java).also {
                 startActivity(it)
             }
         }
