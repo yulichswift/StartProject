@@ -59,6 +59,7 @@ class EditTextActivity : BaseActivity<ActivityEditBinding>() {
         if (true) {
             //MyTextWatcher(binding.edit1)
             CurrencyTextWatcher(binding.edit1)
+            //BankCardTextWatcher(binding.edit1)
         } else {
             binding.edit1.addTextChangedListener(
                 beforeTextChanged = { s, start, count, after ->

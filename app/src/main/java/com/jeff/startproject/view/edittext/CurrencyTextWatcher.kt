@@ -3,7 +3,6 @@ package com.jeff.startproject.view.edittext
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
-import java.lang.StringBuilder
 import com.log.JFLog
 
 // val moneyFormat = NumberFormat.getCurrencyInstance(Locale.CHINA).format(money)
@@ -96,13 +95,13 @@ class CurrencyTextWatcher(private val editText: EditText) : TextWatcher {
                         }
                     }
 
-            lastString = resultString
-
-            editText.setText(lastString)
+            editText.setText(resultString)
             editText.setSelection(newSelectionStart)
 
             editText.addTextChangedListener(this)
         }
+
+        lastString = resultString
 
         JFLog.d("Spend: ${System.currentTimeMillis() - startTime} ns")
     }
