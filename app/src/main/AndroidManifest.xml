@@ -69,6 +69,7 @@
         <activity android:name=".view.list.DragActivity" />
         <activity android:name=".view.others.CustomActivity" />
         <activity android:name=".view.ui.SeekBarActivity" />
+        <activity android:name=".view.spec.SpecActivity" />
 
         <activity-alias
             android:name="com.jeff.file"
