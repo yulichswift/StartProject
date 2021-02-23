@@ -36,6 +36,10 @@ class MyApplication : Application(), LifecycleObserver {
             applicationContext().resources.getIdentifier("status_bar_height", "dimen", "android")
                 .takeIf { it > 0 }?.let { applicationContext().resources.getDimensionPixelSize(it) } ?: 0
 
+        fun getBottomNavigationBarHeight(): Int =
+            applicationContext().resources.getIdentifier("navigation_bar_height", "dimen", "android")
+                .takeIf { it > 0 }?.let { applicationContext().resources.getDimensionPixelSize(it) } ?: 0
+
         private val display: DisplayMetrics
             get() = self.resources.displayMetrics
 

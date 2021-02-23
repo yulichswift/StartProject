@@ -29,6 +29,7 @@ import com.jeff.startproject.view.preferences.PreferencesActivity
 import com.jeff.startproject.view.runtimeexec.RuntimeExecActivity
 import com.jeff.startproject.view.sample.SampleActivity
 import com.jeff.startproject.view.sort.DataSortActivity
+import com.jeff.startproject.view.spec.SpecActivity
 import com.jeff.startproject.view.text.TextActivity
 import com.jeff.startproject.view.ui.SeekBarActivity
 import com.jeff.startproject.view.vector.VectorActivity
@@ -238,6 +239,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         binding.btnSeekBar.setOnClickListener {
             Intent(this, SeekBarActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.btnSpec.setOnClickListener {
+            Intent(this, SpecActivity::class.java).also {
                 startActivity(it)
             }
         }
