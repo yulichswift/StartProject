@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.databinding.ActivityMainBinding
+import com.jeff.startproject.view.LiveDataAdvActivity
 import com.jeff.startproject.view.adbcmd.AdbCmdActivity
 import com.jeff.startproject.view.blur.BlurActivity
 import com.jeff.startproject.view.chain.ChainActivity
@@ -245,6 +246,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         binding.btnSpec.setOnClickListener {
             Intent(this, SpecActivity::class.java).also {
+                startActivity(it)
+            }
+        }
+
+        binding.btnLiveDataAdv.setOnClickListener {
+            Intent(this, LiveDataAdvActivity::class.java).also {
                 startActivity(it)
             }
         }
