@@ -22,17 +22,21 @@
     <com.jeff.startproject.view.draw.ArcView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:cornerRadius="60dp"
         app:layout_constraintBottom_toBottomOf="@id/tv_first"
         app:layout_constraintEnd_toEndOf="@id/tv_first"
         app:layout_constraintStart_toStartOf="@id/tv_first"
-        app:layout_constraintTop_toTopOf="@id/tv_first" />
+        app:layout_constraintTop_toTopOf="@id/tv_first"
+        app:viewColor="#000" />
 
-    <com.jeff.startproject.view.draw.RoundedView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <com.jeff.startproject.view.draw.RoundView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_marginTop="20dp"
+        app:cornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_first" />
+        app:layout_constraintTop_toBottomOf="@id/tv_first"
+        app:viewColor="#ff0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import com.jeff.startproject.R
 
 class RoundFrameLayout(context: Context, attrs: AttributeSet) : FrameLayout(context, attrs) {
 
@@ -19,10 +20,17 @@ class RoundFrameLayout(context: Context, attrs: AttributeSet) : FrameLayout(cont
         Path()
     }
 
+    init {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundFrameLayout)
+        cornerRadius = typedArray.getDimension(R.styleable.RoundView_cornerRadius, 0f)
+        typedArray.recycle()
+    }
+
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-
-        cornerRadius = w / 2f
+        if (cornerRadius == 0f) {
+            cornerRadius = w / 2f
+        }
 
         rectF.apply {
             right = w.toFloat()

@@ -4,14 +4,20 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import com.jeff.startproject.R
 
 class ArcView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var cornerSize = 0f
+    private var cornerRadius = 0f
     private val paint = Paint()
 
     init {
-        paint.color = Color.YELLOW
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ArcView)
+        val viewColor = typedArray.getColor(R.styleable.ArcView_viewColor, Color.TRANSPARENT)
+        cornerRadius = typedArray.getDimension(R.styleable.ArcView_cornerRadius, 0f)
+        typedArray.recycle()
+
+        paint.color = viewColor
         paint.isAntiAlias = true
     }
 
@@ -25,8 +31,9 @@ class ArcView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-
-        cornerSize = w / 2f
+        if (cornerRadius == 0f) {
+            cornerRadius = w / 2f
+        }
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -42,14 +49,14 @@ class ArcView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun drawLeftTop(canvas: Canvas) {
         path.reset()
-        path.moveTo(0f, cornerSize)
+        path.moveTo(0f, cornerRadius)
         path.lineTo(0f, 0f)
-        path.lineTo(cornerSize, 0f)
+        path.lineTo(cornerRadius, 0f)
         rectF.apply {
             left = 0f
             top = 0f
-            right = cornerSize * 2
-            bottom = cornerSize * 2
+            right = cornerRadius * 2
+            bottom = cornerRadius * 2
         }
         path.arcTo(rectF, -90f, -90f)
         path.close()
@@ -58,13 +65,13 @@ class ArcView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun drawLeftBottom(canvas: Canvas) {
         path.reset()
-        path.moveTo(0f, height - cornerSize)
+        path.moveTo(0f, height - cornerRadius)
         path.lineTo(0f, height.toFloat())
-        path.lineTo(cornerSize, height.toFloat())
+        path.lineTo(cornerRadius, height.toFloat())
         rectF.apply {
             left = 0f
-            top = height - cornerSize * 2
-            right = cornerSize * 2
+            top = height - cornerRadius * 2
+            right = cornerRadius * 2
             bottom = height.toFloat()
         }
         path.arcTo(rectF, 90f, 90f)
@@ -74,12 +81,12 @@ class ArcView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun drawRightBottom(canvas: Canvas) {
         path.reset()
-        path.moveTo(width.toFloat() - cornerSize, height.toFloat())
+        path.moveTo(width.toFloat() - cornerRadius, height.toFloat())
         path.lineTo(width.toFloat(), height.toFloat())
-        path.lineTo(width.toFloat(), height - cornerSize)
+        path.lineTo(width.toFloat(), height - cornerRadius)
         rectF.apply {
-            left = width - cornerSize * 2
-            top = height - cornerSize * 2
+            left = width - cornerRadius * 2
+            top = height - cornerRadius * 2
             right = width.toFloat()
             bottom = height.toFloat()
         }
@@ -90,14 +97,14 @@ class ArcView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun drawRightTop(canvas: Canvas) {
         path.reset()
-        path.moveTo(width.toFloat(), cornerSize)
+        path.moveTo(width.toFloat(), cornerRadius)
         path.lineTo(width.toFloat(), 0f)
-        path.lineTo(width.toFloat() - cornerSize, 0f)
+        path.lineTo(width.toFloat() - cornerRadius, 0f)
         rectF.apply {
-            left = width - cornerSize * 2
+            left = width - cornerRadius * 2
             top = 0f
             right = width.toFloat()
-            bottom = cornerSize * 2
+            bottom = cornerRadius * 2
         }
         path.arcTo(rectF, -90f, 90f)
         path.close()

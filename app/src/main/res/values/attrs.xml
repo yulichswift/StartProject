@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="cornerRadius" format="dimension" />
+    <attr name="viewColor" format="color" />
+
+    <declare-styleable name="RoundView">
+        <attr name="viewColor" />
+        <attr name="cornerRadius" />
+    </declare-styleable>
+
+    <declare-styleable name="ArcView">
+        <attr name="viewColor" />
+        <attr name="cornerRadius" />
+    </declare-styleable>
+
+    <declare-styleable name="RoundFrameLayout">
+        <attr name="cornerRadius" />
+    </declare-styleable>
+</resources>

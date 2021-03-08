@@ -4,10 +4,11 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import com.jeff.startproject.R
 
-class RoundedView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class RoundView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var cornerSize = 0f
+    private var cornerRadius = 0f
         set(value) {
             field = value
             cornerArray = floatArrayOf(value, value, value, value, value, value, value, value)
@@ -16,7 +17,12 @@ class RoundedView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private val paint = Paint()
 
     init {
-        paint.color = Color.BLACK
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundView)
+        val backgroundColor = typedArray.getColor(R.styleable.RoundView_viewColor, Color.TRANSPARENT)
+        cornerRadius = typedArray.getDimension(R.styleable.RoundView_cornerRadius, 0f)
+        typedArray.recycle()
+
+        paint.color = backgroundColor
         paint.isAntiAlias = true
     }
 
@@ -30,8 +36,9 @@ class RoundedView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-
-        cornerSize = w / 2f
+        if (cornerRadius == 0f) {
+            cornerRadius = w / 2f
+        }
     }
 
     private lateinit var cornerArray: FloatArray
