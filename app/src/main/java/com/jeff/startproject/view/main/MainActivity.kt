@@ -1,7 +1,11 @@
 package com.jeff.startproject.view.main
 
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.activity.viewModels
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.databinding.ActivityMainBinding
@@ -35,6 +39,7 @@ import com.jeff.startproject.view.text.TextActivity
 import com.jeff.startproject.view.ui.SeekBarActivity
 import com.jeff.startproject.view.vector.VectorActivity
 import com.jeff.startproject.view.websocket.WebSocketActivity
+import com.jeff.startproject.widget.CustomView3
 import com.view.base.BaseActivity
 
 /*
@@ -71,6 +76,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding.cardView.setOnClickListener {
+            addCustomView(it)
+        }
 
         binding.btnEventBus.setOnClickListener {
             Intent(this, EventBusActivity::class.java).also {
@@ -253,6 +262,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.btnLiveDataAdv.setOnClickListener {
             Intent(this, LiveDataAdvActivity::class.java).also {
                 startActivity(it)
+            }
+        }
+    }
+
+    private fun addCustomView(view: View) {
+        val rect = Rect().also { view.getGlobalVisibleRect(it) }
+        val lp = FrameLayout.LayoutParams(rect.width(), rect.height())
+        lp.setMargins(rect.left, rect.top, 0, 0)
+
+        val customView = CustomView3(this)
+        (window.decorView as ViewGroup).apply {
+            addView(customView, lp)
+
+            customView.btn.setOnClickListener {
+                removeView(customView)
             }
         }
     }
