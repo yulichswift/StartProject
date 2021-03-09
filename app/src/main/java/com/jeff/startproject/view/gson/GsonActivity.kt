@@ -3,7 +3,6 @@ package com.jeff.startproject.view.gson
 import android.os.Bundle
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityGsonBinding
 import com.log.JFLog
@@ -22,7 +21,7 @@ class GsonActivity : BaseActivity<ActivityGsonBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val inputStream = MyApplication.applicationContext().resources.openRawResource(R.raw.employee)
+        val inputStream = resources.openRawResource(R.raw.employee)
         val reader = BufferedReader(InputStreamReader(inputStream))
         val text = reader.readText()
         reader.close()
