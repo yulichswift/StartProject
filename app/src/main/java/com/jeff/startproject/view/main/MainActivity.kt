@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.viewModels
+import androidx.core.widget.NestedScrollView
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.databinding.ActivityMainBinding
 import com.jeff.startproject.view.LiveDataAdvActivity
@@ -76,6 +77,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding.nestedScrollView.setAlphaByScroll(binding.appbar)
 
         binding.cardView.setOnClickListener {
             addCustomView(it)
@@ -278,6 +281,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             customView.btn.setOnClickListener {
                 removeView(customView)
             }
+        }
+    }
+
+    private fun NestedScrollView.setAlphaByScroll(view: View) {
+        setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            view.alpha =
+                (scrollY - oldScrollY).let {
+                    view.alpha - it / 90f
+                }.let {
+                    when {
+                        it > 1.0f -> 1.0f
+                        it < 0f -> 0f
+                        else -> it
+                    }
+                }
         }
     }
 }
