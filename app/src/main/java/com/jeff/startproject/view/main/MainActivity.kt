@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.core.widget.NestedScrollView
 import com.jeff.startproject.MyApplication
+import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityMainBinding
 import com.jeff.startproject.view.LiveDataAdvActivity
 import com.jeff.startproject.view.adbcmd.AdbCmdActivity
@@ -77,6 +78,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        window.navigationBarColor = getColor(R.color.purple)
 
         binding.nestedScrollView.setAlphaByScroll(binding.appbar)
 
