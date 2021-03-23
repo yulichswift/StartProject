@@ -2,7 +2,6 @@ package com.jeff.startproject.view.flowcontrol
 
 import android.graphics.Rect
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -47,8 +46,6 @@ class FlowControlActivity : BaseActivity<ActivityFlowControlBinding>() {
 
     override fun onResume() {
         super.onResume()
-
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         lifecycleScope.launch {
             delay(1000L)
