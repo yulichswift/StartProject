@@ -11,7 +11,7 @@ class BankCardTextWatcher(private val editText: EditText) : TextWatcher {
         editText.addTextChangedListener(this)
     }
 
-    // TODO: 不建議使用
+    // TODO: 開發測試用
     protected fun finalize() {
         JFLog.d("GC")
     }
