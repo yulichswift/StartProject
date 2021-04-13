@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.viewModels
+import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
+import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityMainBinding
@@ -43,6 +46,13 @@ import com.jeff.startproject.view.vector.VectorActivity
 import com.jeff.startproject.view.websocket.WebSocketActivity
 import com.jeff.startproject.widget.CustomView3
 import com.view.base.BaseActivity
+import com.yulichswift.roundedview.widget.RoundedTextView
+import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.launch
 
 /*
  * https://developer.android.google.cn/kotlin/ktx
@@ -72,6 +82,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val viewModel: MainViewModel by viewModels()
 
+    private val broadcastChannel = BroadcastChannel<String>(Channel.BUFFERED)
+    fun getBroadcastChannelFlow() = broadcastChannel.asFlow()
+
     override fun getViewBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
     }
@@ -79,12 +92,24 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        lifecycleScope.launch {
+            getBroadcastChannelFlow()
+                    .debounce(500L)
+                    .collectLatest {
+                        filterBtn(it)
+                    }
+        }
+
+        binding.editTextSearch.addTextChangedListener {
+            broadcastChannel.offer(it.toString())
+        }
+
         window.navigationBarColor = getColor(R.color.purple)
 
         binding.nestedScrollView.setAlphaByScroll(binding.appbar)
 
         binding.cardView.setOnClickListener {
-            addCustomView(it)
+            addViewToDecorView(it)
         }
 
         binding.btnEventBus.setOnClickListener {
@@ -272,7 +297,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
     }
 
-    private fun addCustomView(view: View) {
+    private fun addViewToDecorView(view: View) {
         val rect = Rect().also { view.getGlobalVisibleRect(it) }
         val lp = FrameLayout.LayoutParams(rect.width(), rect.height())
         lp.setMargins(rect.left, rect.top, 0, 0)
@@ -290,15 +315,31 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun NestedScrollView.setAlphaByScroll(view: View) {
         setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             view.alpha =
-                (scrollY - oldScrollY).let {
-                    view.alpha - it / 90f
-                }.let {
-                    when {
-                        it > 1.0f -> 1.0f
-                        it < 0f -> 0f
-                        else -> it
+                    (scrollY - oldScrollY).let {
+                        view.alpha - it / 90f
+                    }.let {
+                        when {
+                            it > 1.0f -> 1.0f
+                            it < 0f -> 0f
+                            else -> it
+                        }
                     }
-                }
+        }
+    }
+
+    private fun filterBtn(key: String) {
+        binding.layout.children.filter {
+            it is RoundedTextView
+        }.map {
+            it as RoundedTextView
+        }.forEach {
+            when {
+                key.isBlank() -> View.VISIBLE
+                it.text.contains(key, true) -> View.VISIBLE
+                else -> View.GONE
+            }.let { result ->
+                it.visibility = result
+            }
         }
     }
 }

@@ -60,29 +60,42 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="20dp">
+            android:orientation="vertical">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardView"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:visibility="visible"
                 app:cardBackgroundColor="@color/smoke_white" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:hint="Search">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_room"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_room"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -90,9 +103,8 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_flow"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_flow"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -100,9 +112,8 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_file"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_file"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -110,9 +121,8 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_pager"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_viewpager2"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -120,9 +130,8 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_event_bus"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_event_bus"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -130,9 +139,8 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_live_event_bus"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_live_event_bus"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -140,9 +148,8 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_edit"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_text_watcher"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -150,20 +157,17 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_vector"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_animation"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
 
-
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_sample"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_sample"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -171,9 +175,8 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_login"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_login"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -181,20 +184,17 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_websocket"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_websocket"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
 
-
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_navigation"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_navigation"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -202,9 +202,8 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_chain"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_chain"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -212,9 +211,8 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_draw"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_draw"
-
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
@@ -223,7 +221,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_adb_cmd"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_adb_cmd"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -232,27 +230,25 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_runtime_exec"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_runtime_exec"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
 
-
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_data_structure"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_data_structure"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
                 app:btn_solid_color="@android:color/black" />
 
-
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_preference"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_preference"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -261,7 +257,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_blur"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_blur"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -270,7 +266,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_floating"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_floating"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -279,7 +275,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_text_view"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_view"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -288,7 +284,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_vibrate"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_vibrate"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -297,7 +293,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_sort"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_sort"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -306,7 +302,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_encrypt"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_encrypt"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -315,7 +311,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_override_transition"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_override_transition"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -324,7 +320,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_gson"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_gson"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -333,7 +329,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_drag"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_drag_drop"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -342,7 +338,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_custom"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/text_custom"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -351,7 +347,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_seek_bar"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="SeekBar"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -360,7 +356,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_spec"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="Spec"
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
@@ -369,7 +365,7 @@
             <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_live_data_adv"
                 style="@style/btn_size_14"
-                android:layout_margin="10dp"
+                android:layout_marginTop="10dp"
                 android:text="Live data adv."
                 app:btn_corner_radius="standard"
                 app:btn_pressed_color="@android:color/darker_gray"
