@@ -1,11 +1,15 @@
 package com.jeff.startproject.view.main
 
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.FrameLayout
+import android.widget.PopupWindow
 import androidx.activity.viewModels
 import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
@@ -295,6 +299,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 startActivity(it)
             }
         }
+
+        binding.btnPopupMenu.setOnClickListener {
+            showPopupWindow(binding.btnPopupMenu, 0, 0)
+        }
     }
 
     private fun addViewToDecorView(view: View) {
@@ -340,6 +348,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }.let { result ->
                 it.visibility = result
             }
+        }
+    }
+
+    private fun showPopupWindow(anchor: View, xOffset: Int, yOffset: Int) {
+        val rect = Rect().also { anchor.getGlobalVisibleRect(it) }
+        PopupWindow(this).apply {
+            width = rect.width()
+            height = WindowManager.LayoutParams.WRAP_CONTENT
+            contentView = CustomView3(this@MainActivity)
+            isTouchable = true
+            isFocusable = true
+            isOutsideTouchable = true
+            elevation = 9f
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setOnDismissListener {
+            }
+            showAsDropDown(anchor, xOffset, yOffset)
         }
     }
 }

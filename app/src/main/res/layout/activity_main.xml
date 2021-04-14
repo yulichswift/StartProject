@@ -93,6 +93,15 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.yulichswift.roundedview.widget.RoundedTextView
+                android:id="@+id/btnPopupMenu"
+                style="@style/btn_size_14"
+                android:layout_marginTop="10dp"
+                android:text="Popup menu"
+                app:btn_corner_radius="standard"
+                app:btn_pressed_color="@android:color/darker_gray"
+                app:btn_solid_color="@android:color/black" />
+
+            <com.yulichswift.roundedview.widget.RoundedTextView
                 android:id="@+id/btn_room"
                 style="@style/btn_size_14"
                 android:layout_marginTop="10dp"
