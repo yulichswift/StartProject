@@ -12,4 +12,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.jeff.startproject.view.pager.ViewPager2Indicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        app:indicator_distance="12dp"
+        app:indicator_radius="3dp"
+        app:indicator_selected_color="@color/purple"
+        app:indicator_unselected_color="#aaa"
+        app:layout_constraintTop_toBottomOf="@id/view_pager" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

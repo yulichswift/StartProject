@@ -47,6 +47,8 @@ class PagerActivity : BaseActivity<ActivityPagerBinding>() {
         }
 
         addMarginAndPadding(binding.viewPager)
+
+        binding.indicator.setViewPager(binding.viewPager, 5)
     }
 
     /**
