@@ -1,386 +1,396 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".view.main.MainActivity"
-    tools:ignore="MergeRootFrame">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/tool_bar_height"
-        android:animateLayoutChanges="true"
-        android:background="?attr/colorPrimary"
-        android:fitsSystemWindows="true"
-        android:stateListAnimator="@animator/animator_toolbar"
-        android:theme="@style/AppTheme">
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            app:collapsedTitleGravity="center"
-            app:contentScrim="@android:color/background_dark"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:statusBarScrim="@android:color/transparent"
-            app:title="@string/app_name"
-            app:titleEnabled="true"
-            app:toolbarId="@id/toolbar">
-
-            <ImageView
-                android:id="@+id/toolbar_image"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/tool_bar_height"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/logo"
-                app:layout_collapseMode="parallax" />
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent"
-                app:contentInsetStartWithNavigation="30dp"
-                app:layout_collapseMode="pin"
-                app:titleTextColor="@android:color/darker_gray" />
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <View
+        android:id="@+id/backgroundView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="?attr/actionBarSize"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:background="#eee" />
 
-        <LinearLayout
-            android:id="@+id/layout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context=".view.main.MainActivity"
+        tools:ignore="MergeRootFrame">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="20dp">
+            android:layout_height="@dimen/tool_bar_height"
+            android:animateLayoutChanges="true"
+            android:background="?attr/colorPrimary"
+            android:fitsSystemWindows="true"
+            android:stateListAnimator="@animator/animator_toolbar"
+            android:theme="@style/AppTheme">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardView"
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:visibility="visible"
-                app:cardBackgroundColor="@color/smoke_white" />
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:collapsedTitleGravity="center"
+                app:contentScrim="@android:color/background_dark"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                app:statusBarScrim="@android:color/transparent"
+                app:title="@string/app_name"
+                app:titleEnabled="true"
+                app:toolbarId="@id/toolbar">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <ImageView
+                    android:id="@+id/toolbar_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/tool_bar_height"
+                    android:fitsSystemWindows="true"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/logo"
+                    app:layout_collapseMode="parallax" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@android:color/transparent"
+                    app:contentInsetStartWithNavigation="30dp"
+                    app:layout_collapseMode="pin"
+                    app:titleTextColor="@android:color/darker_gray" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="?attr/actionBarSize"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
-                android:hint="Search">
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/editTextSearch"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="50dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:visibility="visible"
+                    app:cardBackgroundColor="@color/smoke_white" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="20dp"
+                    android:hint="Search">
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btnPopupMenu"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="Popup menu"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_room"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_room"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_flow"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_flow"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btnPopupMenu"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="Popup menu"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_file"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_file"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_room"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_room"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_pager"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_viewpager2"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_flow"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_flow"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_event_bus"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_event_bus"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_file"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_file"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_live_event_bus"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_live_event_bus"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_pager"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_viewpager2"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_edit"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_text_watcher"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_event_bus"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_event_bus"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_vector"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_animation"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_live_event_bus"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_live_event_bus"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_sample"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_sample"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_edit"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_text_watcher"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_login"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_login"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_vector"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_animation"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_websocket"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_websocket"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_sample"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_sample"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_navigation"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_navigation"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_login"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_login"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_chain"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_chain"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_websocket"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_websocket"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_draw"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_draw"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_navigation"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_navigation"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
+
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_chain"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_chain"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
+
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_draw"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_draw"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_adb_cmd"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_adb_cmd"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_adb_cmd"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_adb_cmd"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_runtime_exec"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_runtime_exec"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_runtime_exec"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_runtime_exec"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_data_structure"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_data_structure"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_data_structure"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_data_structure"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_preference"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_preference"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_preference"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_preference"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_blur"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_blur"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_blur"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_blur"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_floating"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_floating"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_floating"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_floating"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_text_view"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_view"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_text_view"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_view"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_vibrate"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_vibrate"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_vibrate"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_vibrate"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_sort"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_sort"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_sort"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_sort"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_encrypt"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_encrypt"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_encrypt"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_encrypt"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_override_transition"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_override_transition"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_override_transition"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_override_transition"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_gson"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_gson"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_gson"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_gson"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_drag"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_drag_drop"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_drag"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_drag_drop"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_custom"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="@string/text_custom"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_custom"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/text_custom"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_seek_bar"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="SeekBar"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_seek_bar"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="SeekBar"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_spec"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="Spec"
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_spec"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="Spec"
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-            <com.yulichswift.roundedview.widget.RoundedTextView
-                android:id="@+id/btn_live_data_adv"
-                style="@style/btn_size_14"
-                android:layout_marginTop="10dp"
-                android:text="Live data adv."
-                app:btn_corner_radius="standard"
-                app:btn_pressed_color="@android:color/darker_gray"
-                app:btn_solid_color="@android:color/black" />
+                <com.yulichswift.roundedview.widget.RoundedTextView
+                    android:id="@+id/btn_live_data_adv"
+                    style="@style/btn_size_14"
+                    android:layout_marginTop="10dp"
+                    android:text="Live data adv."
+                    app:btn_corner_radius="standard"
+                    app:btn_pressed_color="@android:color/darker_gray"
+                    app:btn_solid_color="@android:color/black" />
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>
