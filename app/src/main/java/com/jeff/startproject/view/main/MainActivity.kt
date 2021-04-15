@@ -96,6 +96,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        window.navigationBarColor = getColor(R.color.purple)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+
+        binding.nestedScrollView.setAlphaByScroll(binding.backgroundView)
+
         lifecycleScope.launch {
             getBroadcastChannelFlow()
                     .debounce(500L)
@@ -107,10 +112,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.editTextSearch.addTextChangedListener {
             broadcastChannel.offer(it.toString())
         }
-
-        window.navigationBarColor = getColor(R.color.purple)
-
-        binding.nestedScrollView.setAlphaByScroll(binding.appbar)
 
         binding.cardView.setOnClickListener {
             addViewToDecorView(it)
@@ -324,11 +325,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             view.alpha =
                     (scrollY - oldScrollY).let {
-                        view.alpha - it / 90f
+                        view.alpha - it / 300f
                     }.let {
                         when {
-                            it > 1.0f -> 1.0f
-                            it < 0f -> 0f
+                            it > 1f -> 1f
+                            it < .1f -> .1f
                             else -> it
                         }
                     }
@@ -336,7 +337,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     }
 
     private fun filterBtn(key: String) {
-        binding.layout.children.filter {
+        (binding.nestedScrollView.getChildAt(0) as ViewGroup).children.filter {
             it is RoundedTextView
         }.map {
             it as RoundedTextView
