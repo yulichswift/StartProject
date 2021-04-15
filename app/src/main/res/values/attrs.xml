@@ -16,4 +16,11 @@
     <declare-styleable name="RoundFrameLayout">
         <attr name="cornerRadius" />
     </declare-styleable>
+
+    <declare-styleable name="ViewPager2Indicator">
+        <attr name="indicator_selected_color" format="color" />
+        <attr name="indicator_unselected_color" format="color" />
+        <attr name="indicator_radius" format="dimension" />
+        <attr name="indicator_distance" format="dimension" />
+    </declare-styleable>
 </resources>
