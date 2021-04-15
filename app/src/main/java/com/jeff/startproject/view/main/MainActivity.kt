@@ -329,7 +329,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                     }.let {
                         when {
                             it > 1f -> 1f
-                            it < .1f -> .1f
+                            it < .5f -> .5f
                             else -> it
                         }
                     }
