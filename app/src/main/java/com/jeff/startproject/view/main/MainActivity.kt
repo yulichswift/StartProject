@@ -324,8 +324,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun NestedScrollView.setAlphaByScroll(view: View) {
         setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             view.alpha =
-                    (scrollY - oldScrollY).let {
-                        view.alpha - it / 300f
+                    if (oldScrollY > scrollY) {
+                        1f
+                    } else {
+                        (scrollY - oldScrollY).let {
+                            view.alpha - it / 300f
+                        }
                     }.let {
                         when {
                             it > 1f -> 1f
