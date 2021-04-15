@@ -2,6 +2,7 @@ package com.jeff.startproject.view.pager
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
@@ -23,24 +24,27 @@ class PagerActivity : BaseActivity<ActivityPagerBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val adapter = MyPagerAdapter()
+        val concatAdapter = ConcatAdapter()
+        binding.viewPager.adapter = concatAdapter
 
-        binding.viewPager.adapter = adapter
+        repeat(3) { adapterIndex ->
+            val adapter = MyPagerAdapter()
+            val list = mutableListOf<MyPagerItem>()
+            repeat(5) {
+                val item = MyPagerItem()
+                item.title = "Adapter: $adapterIndex"
+                item.subtitle = "Index: $it"
 
-        val list = mutableListOf<MyPagerItem>()
-        repeat(100) {
-            val item = MyPagerItem()
-            item.title = "Index: $it"
+                val r = Random.nextInt(255)
+                val g = Random.nextInt(255)
+                val b = Random.nextInt(255)
+                item.color = Triple(r, g, b)
 
-            val r = Random.nextInt(255)
-            val g = Random.nextInt(255)
-            val b = Random.nextInt(255)
-            item.color = Triple(r, g, b)
-
-            list.add(item)
+                list.add(item)
+            }
+            concatAdapter.addAdapter(adapter)
+            adapter.submitList(list)
         }
-
-        adapter.submitList(list)
 
         addMarginAndPadding(binding.viewPager)
     }
