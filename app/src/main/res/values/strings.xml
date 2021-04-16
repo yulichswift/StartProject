@@ -41,6 +41,7 @@
     <string name="text_gson">Gson</string>
     <string name="text_drag_drop">Drag and drop</string>
     <string name="text_custom">Custom views</string>
+    <string name="text_chart">Chart</string>
 
     <string name="message_file_not_found">File not found.</string>
     <string name="message_wait">Wait a second.</string>

@@ -22,6 +22,7 @@ import com.jeff.startproject.view.LiveDataAdvActivity
 import com.jeff.startproject.view.adbcmd.AdbCmdActivity
 import com.jeff.startproject.view.blur.BlurActivity
 import com.jeff.startproject.view.chain.ChainActivity
+import com.jeff.startproject.view.chart.ChartActivity
 import com.jeff.startproject.view.datastructure.DataStructureActivity
 import com.jeff.startproject.view.db.DbActivity
 import com.jeff.startproject.view.draw.DrawActivity
@@ -103,10 +104,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         lifecycleScope.launch {
             getBroadcastChannelFlow()
-                    .debounce(500L)
-                    .collectLatest {
-                        filterBtn(it)
-                    }
+                .debounce(500L)
+                .collectLatest {
+                    filterBtn(it)
+                }
         }
 
         binding.editTextSearch.addTextChangedListener {
@@ -304,6 +305,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.btnPopupMenu.setOnClickListener {
             showPopupWindow(binding.btnPopupMenu, 0, 0)
         }
+
+        binding.btnChart.setOnClickListener {
+            Intent(this, ChartActivity::class.java).also {
+                startActivity(it)
+            }
+        }
     }
 
     private fun addViewToDecorView(view: View) {
@@ -324,19 +331,19 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     private fun NestedScrollView.setAlphaByScroll(view: View) {
         setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             view.alpha =
-                    if (oldScrollY > scrollY) {
-                        1f
-                    } else {
-                        (scrollY - oldScrollY).let {
-                            view.alpha - it / 300f
-                        }
-                    }.let {
-                        when {
-                            it > 1f -> 1f
-                            it < .5f -> .5f
-                            else -> it
-                        }
+                if (oldScrollY > scrollY) {
+                    1f
+                } else {
+                    (scrollY - oldScrollY).let {
+                        view.alpha - it / 300f
                     }
+                }.let {
+                    when {
+                        it > 1f -> 1f
+                        it < .5f -> .5f
+                        else -> it
+                    }
+                }
         }
     }
 
