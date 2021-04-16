@@ -71,6 +71,7 @@
         <activity android:name=".view.ui.SeekBarActivity" />
         <activity android:name=".view.spec.SpecActivity" />
         <activity android:name=".view.LiveDataAdvActivity" />
+        <activity android:name=".view.chart.ChartActivity" />
 
         <activity-alias
             android:name="com.jeff.file"
