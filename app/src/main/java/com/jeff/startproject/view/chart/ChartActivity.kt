@@ -24,7 +24,6 @@ class ChartActivity : BaseActivity<ActivityChartBinding>() {
 
         binding.chart1.let {
             it.setUsePercentValues(true)
-            it.description.isEnabled = true
             it.setExtraOffsets(5f, 10f, 5f, 5f)
 
             it.dragDecelerationFrictionCoef = .95f
@@ -38,6 +37,7 @@ class ChartActivity : BaseActivity<ActivityChartBinding>() {
             it.holeRadius = 58f
             it.transparentCircleRadius = 61f
 
+            it.centerText = "MPAndroidChart"
             it.setDrawCenterText(true)
 
             it.rotationAngle = 0f
@@ -60,7 +60,7 @@ class ChartActivity : BaseActivity<ActivityChartBinding>() {
             //chart.setEntryLabelTypeface(tfRegular)
 
             // SetData
-            it.data = setData(4, 10f)
+            it.data = getData(5, 10f)
             // undo all highlights
             it.highlightValues(null)
             it.invalidate()
@@ -75,9 +75,14 @@ class ChartActivity : BaseActivity<ActivityChartBinding>() {
             it.yEntrySpace = 0f
             it.yOffset = 0f
         }
+
+        binding.chart1.description.also {
+            it.isEnabled = true
+            it.text = "Jeff"
+        }
     }
 
-    private fun setData(count: Int, range: Float): PieData {
+    private fun getData(count: Int, range: Float): PieData {
         val entries: ArrayList<PieEntry> = ArrayList()
 
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
@@ -91,7 +96,7 @@ class ChartActivity : BaseActivity<ActivityChartBinding>() {
                 )
             )
         }
-        val dataSet = PieDataSet(entries, "Election Results")
+        val dataSet = PieDataSet(entries, "Random results")
         dataSet.setDrawIcons(false)
         dataSet.sliceSpace = 3f
         dataSet.iconsOffset = MPPointF(0f, 40f)
