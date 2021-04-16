@@ -19,7 +19,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "API_HOST", '"https://api.github.com"'
+            buildConfigField 'String', 'API_HOST', '"https://api.github.com"'
             buildConfigField 'String', 'LOCAL_IP', "\"${InetAddress.localHost.hostAddress}\""
 
             zipAlignEnabled false
@@ -30,7 +30,7 @@ android {
             versionNameSuffix "-debug"
         }
         release {
-            buildConfigField "String", "API_HOST", '"https://api.github.com"'
+            buildConfigField 'String', 'API_HOST', '"https://api.github.com"'
             buildConfigField 'String', 'LOCAL_IP', '""'
 
             zipAlignEnabled true
@@ -59,70 +59,72 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':base-android')
 
-    testImplementation rootProject.ext.dependencies["junit"]
-    androidTestImplementation rootProject.ext.dependencies["test_ext_junit"]
-    androidTestImplementation rootProject.ext.dependencies["test_espresso_core"]
+    testImplementation rootProject.ext.dependencies['junit']
+    androidTestImplementation rootProject.ext.dependencies['test_ext_junit']
+    androidTestImplementation rootProject.ext.dependencies['test_espresso_core']
 
-    implementation rootProject.ext.dependencies["kotlin_std"]
-    implementation rootProject.ext.dependencies["appcompat"]
-    implementation rootProject.ext.dependencies["core_ktx"]
-    implementation rootProject.ext.dependencies["constraintlayout"]
-    implementation rootProject.ext.dependencies["material"]
-    implementation rootProject.ext.dependencies["coroutines"]
+    implementation rootProject.ext.dependencies['kotlin_std']
+    implementation rootProject.ext.dependencies['appcompat']
+    implementation rootProject.ext.dependencies['core_ktx']
+    implementation rootProject.ext.dependencies['constraintlayout']
+    implementation rootProject.ext.dependencies['material']
+    implementation rootProject.ext.dependencies['coroutines']
 
-    implementation rootProject.ext.dependencies["lifecycle_viewmodel"]
-    implementation rootProject.ext.dependencies["lifecycle_livedata"]
-    implementation rootProject.ext.dependencies["lifecycle_runtime"]
-    implementation rootProject.ext.dependencies["lifecycle_common"]
-    implementation rootProject.ext.dependencies["lifecycle_process"]
+    implementation rootProject.ext.dependencies['lifecycle_viewmodel']
+    implementation rootProject.ext.dependencies['lifecycle_livedata']
+    implementation rootProject.ext.dependencies['lifecycle_runtime']
+    implementation rootProject.ext.dependencies['lifecycle_common']
+    implementation rootProject.ext.dependencies['lifecycle_process']
 
-    implementation rootProject.ext.dependencies["koin_core"]
-    implementation rootProject.ext.dependencies["koin_core_ext"]
-    implementation rootProject.ext.dependencies["koin_scope"]
-    implementation rootProject.ext.dependencies["koin_viewmodel"]
-    implementation rootProject.ext.dependencies["koin_ext"]
+    implementation rootProject.ext.dependencies['koin_core']
+    implementation rootProject.ext.dependencies['koin_core_ext']
+    implementation rootProject.ext.dependencies['koin_scope']
+    implementation rootProject.ext.dependencies['koin_viewmodel']
+    implementation rootProject.ext.dependencies['koin_ext']
 
-    implementation rootProject.ext.dependencies["jflog"]
-    implementation rootProject.ext.dependencies["rounded_views"]
+    implementation rootProject.ext.dependencies['jflog']
+    implementation rootProject.ext.dependencies['rounded_views']
 
-    implementation rootProject.ext.dependencies["retrofit"]
-    implementation rootProject.ext.dependencies["retrofit_gson"]
-    implementation rootProject.ext.dependencies["retrofit_rxjava2"]
+    implementation rootProject.ext.dependencies['retrofit']
+    implementation rootProject.ext.dependencies['retrofit_gson']
+    implementation rootProject.ext.dependencies['retrofit_rxjava2']
 
-    implementation rootProject.ext.dependencies["rxandroid"]
-    implementation rootProject.ext.dependencies["rxkotlin"]
-    implementation rootProject.ext.dependencies["rxjava2"]
+    implementation rootProject.ext.dependencies['rxandroid']
+    implementation rootProject.ext.dependencies['rxkotlin']
+    implementation rootProject.ext.dependencies['rxjava2']
 
-    implementation rootProject.ext.dependencies["gson"]
+    implementation rootProject.ext.dependencies['gson']
 
-    implementation rootProject.ext.dependencies["live_event_bus"]
-    implementation rootProject.ext.dependencies["event_bus"]
+    implementation rootProject.ext.dependencies['live_event_bus']
+    implementation rootProject.ext.dependencies['event_bus']
 
-    implementation rootProject.ext.dependencies["room_runtime"]
-    kapt rootProject.ext.dependencies["room_compiler"]
-    implementation rootProject.ext.dependencies["room_ktx"]
+    implementation rootProject.ext.dependencies['room_runtime']
+    kapt rootProject.ext.dependencies['room_compiler']
+    implementation rootProject.ext.dependencies['room_ktx']
 
-    debugImplementation rootProject.ext.dependencies["leakcanary"]
+    debugImplementation rootProject.ext.dependencies['leakcanary']
 
-    implementation rootProject.ext.dependencies["paging_runtime"]
+    implementation rootProject.ext.dependencies['paging_runtime']
 
-    implementation rootProject.ext.dependencies["okhttp"]
-    implementation rootProject.ext.dependencies["okhttp_interceptor"]
+    implementation rootProject.ext.dependencies['okhttp']
+    implementation rootProject.ext.dependencies['okhttp_interceptor']
 
-    implementation rootProject.ext.dependencies["glide"]
-    kapt rootProject.ext.dependencies["glide_compiler"]
+    implementation rootProject.ext.dependencies['glide']
+    kapt rootProject.ext.dependencies['glide_compiler']
 
-    implementation rootProject.ext.dependencies["progress_hud"]
+    implementation rootProject.ext.dependencies['progress_hud']
 
-    implementation rootProject.ext.dependencies["swipe_refresh_layout"]
+    implementation rootProject.ext.dependencies['swipe_refresh_layout']
 
-    implementation rootProject.ext.dependencies["websocket"]
+    implementation rootProject.ext.dependencies['websocket']
 
-    implementation rootProject.ext.dependencies["navigation_fragment"]
-    implementation rootProject.ext.dependencies["navigation_ui"]
+    implementation rootProject.ext.dependencies['navigation_fragment']
+    implementation rootProject.ext.dependencies['navigation_ui']
 
-    implementation rootProject.ext.dependencies["data_store_preferences"]
-    implementation rootProject.ext.dependencies["data_store_core"]
-
+    implementation rootProject.ext.dependencies['data_store_preferences']
+    implementation rootProject.ext.dependencies['data_store_core']
+    
+    implementation rootProject.ext.dependencies['mp_android_chart']
+    
     implementation 'io.alterac.blurkit:blurkit:1.1.0'
 }
