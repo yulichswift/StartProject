@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
@@ -304,6 +305,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         binding.btnPopupMenu.setOnClickListener {
             showPopupWindow(binding.btnPopupMenu, 0, 0)
+            // showPopupWindowAtLocation(binding.btnPopupMenu)
         }
 
         binding.btnChart.setOnClickListener {
@@ -377,6 +379,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             setOnDismissListener {
             }
             showAsDropDown(anchor, xOffset, yOffset)
+        }
+    }
+
+    private fun showPopupWindowAtLocation(anchor: View) {
+        val rect = Rect().also { anchor.getGlobalVisibleRect(it) }
+        PopupWindow(this).apply {
+            width = rect.width()
+            height = WindowManager.LayoutParams.WRAP_CONTENT
+            contentView = CustomView3(this@MainActivity)
+            isTouchable = true
+            isFocusable = true
+            isOutsideTouchable = true
+            elevation = 9f
+            setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            setOnDismissListener {
+            }
+            showAtLocation(window.decorView, Gravity.TOP or Gravity.START, rect.left, rect.bottom)
         }
     }
 }
