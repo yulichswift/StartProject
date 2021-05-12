@@ -5,12 +5,10 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import android.widget.FrameLayout
 import android.widget.PopupWindow
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
@@ -111,6 +109,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                 }
         }
 
+        binding.editTextSearch.customInsertionActionModeCallback =
+            getActionModeCallback("Insertion paste")
+        binding.editTextSearch.customSelectionActionModeCallback =
+            getActionModeCallback("Selection paste")
         binding.editTextSearch.addTextChangedListener {
             broadcastChannel.offer(it.toString())
         }
@@ -396,6 +398,29 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             setOnDismissListener {
             }
             showAtLocation(window.decorView, Gravity.TOP or Gravity.START, rect.left, rect.bottom)
+        }
+    }
+
+    private fun getActionModeCallback(text: String) = object : ActionMode.Callback {
+        override fun onCreateActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            return true
+        }
+
+        override fun onPrepareActionMode(mode: ActionMode?, menu: Menu?): Boolean {
+            return false
+        }
+
+        override fun onActionItemClicked(mode: ActionMode?, item: MenuItem?): Boolean {
+            when (item?.itemId) {
+                android.R.id.paste -> {
+                    Toast.makeText(this@MainActivity, text, Toast.LENGTH_SHORT).show()
+                }
+            }
+            return false
+        }
+
+        override fun onDestroyActionMode(mode: ActionMode?) {
+
         }
     }
 }
