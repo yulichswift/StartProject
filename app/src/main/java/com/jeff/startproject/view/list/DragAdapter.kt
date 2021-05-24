@@ -1,5 +1,6 @@
 package com.jeff.startproject.view.list
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -48,18 +49,37 @@ class DragAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         list?.get(position)?.also {
-            (holder as? ViewHolder)?.bind(it)
+            (holder as? ViewHolder)?.bind(position, it)
         }
     }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemViewDragBinding.bind(view)
-        fun bind(string: String) {
-            binding.tvCenter.text = string
+
+        @SuppressLint("SetTextI18n")
+        fun bind(position: Int, string: String) {
+            binding.tvStart.text = string
+
+            binding.tvEnd.text =
+                (if (position == 0)
+                    "0"
+                else
+                    when (position % 2) {
+                        0 -> "111111111"
+                        1 -> "222222222222222222"
+                        else -> "-"
+                    }) + " ($position)"
+
+            /**
+            在ConstraintLayout的view同時設置下列兩個條件時, view計算寬度會不正確, 需執行requestLayout重新佈局.
+            1. android:layout_width="0dp"
+            2. app:layout_constraintWidth_max="wrap"
+             **/
+            binding.tvEnd.requestLayout()
         }
 
         init {
-            binding.tvCenter.setOnTouchListener { _, event ->
+            binding.tvStart.setOnTouchListener { _, event ->
                 if (event.action == MotionEvent.ACTION_DOWN) {
                     itemTouchHelper?.startDrag(this)
                 }
