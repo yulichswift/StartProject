@@ -18,18 +18,28 @@ class OverrideTransitionActivity : BaseActivity<ActivityOverrideTransitionBindin
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.tv1.text = currentPage.toString()
+        binding.tv1.text = when (currentPage) {
+            1 -> "None"
+            2 -> "Fade"
+            else -> "Normal"
+        }
 
         binding.btnNext.setOnClickListener {
             pageCount++
 
             startActivity(Intent(this, OverrideTransitionActivity::class.java))
-            if (currentPage % 2 == 0) overridePendingTransition(0, 0)
+            when (currentPage % 3) {
+                1 -> overridePendingTransition(0, 0)
+                2 -> overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            }
         }
     }
 
     override fun onBackPressed() {
         finish()
-        if (currentPage % 2 == 0) overridePendingTransition(0, 0)
+        when (currentPage % 3) {
+            1 -> overridePendingTransition(0, 0)
+            2 -> overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+        }
     }
 }
