@@ -40,6 +40,7 @@ import com.jeff.startproject.view.others.CustomActivity
 import com.jeff.startproject.view.others.OverrideTransitionActivity
 import com.jeff.startproject.view.pager.PagerActivity
 import com.jeff.startproject.view.preferences.PreferencesActivity
+import com.jeff.startproject.view.result.ResultActivity
 import com.jeff.startproject.view.runtimeexec.RuntimeExecActivity
 import com.jeff.startproject.view.sample.SampleActivity
 import com.jeff.startproject.view.sort.DataSortActivity
@@ -128,117 +129,79 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         binding.btnLiveEventBus.setOnClickListener {
-            Intent(this, LiveEventBusActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, LiveEventBusActivity::class.java))
         }
 
         binding.btnEdit.setOnClickListener {
-            Intent(this, EditTextActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, EditTextActivity::class.java))
         }
 
         binding.btnRoom.setOnClickListener {
-            Intent(this, DbActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, DbActivity::class.java))
         }
 
         binding.btnFlow.setOnClickListener {
-            Intent(this, FlowControlActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, FlowControlActivity::class.java))
         }
 
         binding.btnVector.setOnClickListener {
-            Intent(this, VectorActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, VectorActivity::class.java))
         }
 
         binding.btnSample.setOnClickListener {
-            Intent(this, SampleActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, SampleActivity::class.java))
         }
 
         binding.btnLogin.setOnClickListener {
-            Intent(this, LoginActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, LoginActivity::class.java))
         }
 
         binding.btnChain.setOnClickListener {
-            Intent(this, ChainActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, ChainActivity::class.java))
         }
 
         binding.btnWebsocket.setOnClickListener {
-            Intent(this, WebSocketActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, WebSocketActivity::class.java))
         }
 
         binding.btnNavigation.setOnClickListener {
-            Intent(this, NavigationActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, NavigationActivity::class.java))
         }
 
         binding.btnDraw.setOnClickListener {
-            Intent(this, DrawActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, DrawActivity::class.java))
         }
 
         binding.btnAdbCmd.setOnClickListener {
-            Intent(this, AdbCmdActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, AdbCmdActivity::class.java))
         }
 
         binding.btnRuntimeExec.setOnClickListener {
-            Intent(this, RuntimeExecActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, RuntimeExecActivity::class.java))
         }
 
         binding.btnFile.setOnClickListener {
-            Intent(this, FileActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, FileActivity::class.java))
         }
 
         binding.btnPager.setOnClickListener {
-            Intent(this, PagerActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, PagerActivity::class.java))
         }
 
         binding.btnDataStructure.setOnClickListener {
-            Intent(this, DataStructureActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, DataStructureActivity::class.java))
         }
 
         binding.btnPreference.setOnClickListener {
-            Intent(this, PreferencesActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, PreferencesActivity::class.java))
         }
 
         binding.btnBlur.setOnClickListener {
-            Intent(this, BlurActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, BlurActivity::class.java))
         }
 
         binding.btnFloating.setOnClickListener {
-            Intent(this, OpenFloatingActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, OpenFloatingActivity::class.java))
         }
 
         binding.btnVibrate.setOnClickListener {
@@ -246,63 +209,43 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         binding.btnTextView.setOnClickListener {
-            Intent(this, TextActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, TextActivity::class.java))
         }
 
         binding.btnSort.setOnClickListener {
-            Intent(this, DataSortActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, DataSortActivity::class.java))
         }
 
         binding.btnEncrypt.setOnClickListener {
-            Intent(this, EncryptActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, EncryptActivity::class.java))
         }
 
         binding.btnOverrideTransition.setOnClickListener {
-            Intent(this, OverrideTransitionActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, OverrideTransitionActivity::class.java))
         }
 
         binding.btnGson.setOnClickListener {
-            Intent(this, GsonActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, GsonActivity::class.java))
         }
 
         binding.btnDrag.setOnClickListener {
-            Intent(this, DragActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, DragActivity::class.java))
         }
 
         binding.btnCustom.setOnClickListener {
-            Intent(this, CustomActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, CustomActivity::class.java))
         }
 
         binding.btnSeekBar.setOnClickListener {
-            Intent(this, SeekBarActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, SeekBarActivity::class.java))
         }
 
         binding.btnSpec.setOnClickListener {
-            Intent(this, SpecActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, SpecActivity::class.java))
         }
 
         binding.btnLiveDataAdv.setOnClickListener {
-            Intent(this, LiveDataAdvActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, LiveDataAdvActivity::class.java))
         }
 
         binding.btnPopupMenu.setOnClickListener {
@@ -311,9 +254,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         }
 
         binding.btnChart.setOnClickListener {
-            Intent(this, ChartActivity::class.java).also {
-                startActivity(it)
-            }
+            startActivity(Intent(this, ChartActivity::class.java))
+        }
+
+        binding.btnActivityResult.setOnClickListener {
+            startActivity(Intent(this, ResultActivity::class.java))
         }
     }
 
