@@ -74,6 +74,7 @@
         <activity android:name=".view.chart.ChartActivity" />
         <activity android:name=".view.result.ReceiveActivity" />
         <activity android:name=".view.result.ResultActivity" />
+        <activity android:name=".view.colorpicker.ColorPickerActivity" />
 
         <activity-alias
             android:name="com.jeff.file"

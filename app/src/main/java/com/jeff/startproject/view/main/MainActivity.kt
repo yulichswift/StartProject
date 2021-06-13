@@ -22,6 +22,7 @@ import com.jeff.startproject.view.adbcmd.AdbCmdActivity
 import com.jeff.startproject.view.blur.BlurActivity
 import com.jeff.startproject.view.chain.ChainActivity
 import com.jeff.startproject.view.chart.ChartActivity
+import com.jeff.startproject.view.colorpicker.ColorPickerActivity
 import com.jeff.startproject.view.datastructure.DataStructureActivity
 import com.jeff.startproject.view.db.DbActivity
 import com.jeff.startproject.view.draw.DrawActivity
@@ -259,6 +260,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         binding.btnActivityResult.setOnClickListener {
             startActivity(Intent(this, ResultActivity::class.java))
+        }
+
+        binding.btnColorPicker.setOnClickListener {
+            startActivity(Intent(this, ColorPickerActivity::class.java))
         }
     }
 
