@@ -43,6 +43,7 @@
     <string name="text_custom">Custom views</string>
     <string name="text_chart">Chart</string>
     <string name="text_activity_result">Activity result</string>
+    <string name="text_color_picker">Color picker</string>
 
     <string name="message_file_not_found">File not found.</string>
     <string name="message_wait">Wait a second.</string>
