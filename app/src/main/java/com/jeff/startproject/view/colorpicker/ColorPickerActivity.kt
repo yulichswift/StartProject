@@ -15,6 +15,9 @@ class ColorPickerActivity : BaseActivity<ActivityColorPickerBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // -1: White
+        // 0: Black
+
         var aValue = "ff"
         var rValue = "ff"
         var gValue = "ff"
