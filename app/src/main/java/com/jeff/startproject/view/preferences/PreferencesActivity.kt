@@ -11,8 +11,6 @@ import kotlinx.coroutines.launch
 
 class PreferencesActivity : BaseActivity<ActivityPreferencesBinding>() {
 
-    private var dateStore = MyDateStore(this)
-
     override fun getViewBinding(): ActivityPreferencesBinding {
         return ActivityPreferencesBinding.inflate(layoutInflater)
     }
@@ -21,7 +19,7 @@ class PreferencesActivity : BaseActivity<ActivityPreferencesBinding>() {
         super.onCreate(savedInstanceState)
 
         lifecycleScope.launchWhenResumed {
-            dateStore.profileFlow
+            MyDateStore.profileFlow
                 .flowOn(Dispatchers.Main)
                 .collect {
                     binding.edit.setText(it)
@@ -30,7 +28,7 @@ class PreferencesActivity : BaseActivity<ActivityPreferencesBinding>() {
 
         binding.btnSend.setOnClickListener {
             lifecycleScope.launch {
-                dateStore.updateContent(binding.edit.text.toString())
+                MyDateStore.updateContent(binding.edit.text.toString())
             }
         }
     }
