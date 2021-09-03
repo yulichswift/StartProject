@@ -1,10 +1,9 @@
 package com.jeff.startproject.view.file
 
-import android.os.Environment
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
 import com.jeff.startproject.enums.ModelResult
 import com.log.JFLog
@@ -15,19 +14,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 
-class FileMenuViewModel : BaseViewModel() {
-    private val appContext = MyApplication.applicationContext()
+class FileMenuViewModel : BaseViewModel(), KoinComponent {
+    private val context: Context by inject()
 
-    private val rootPath = "${Environment.getExternalStorageDirectory().path}/scripts"
+    private val rootPath = "${context.getExternalFilesDir(null)!!.path}/scripts"
     val dirPath = "$rootPath/dir.sh"
     val mvPath = "$rootPath/mv.sh"
     val rmPath = "$rootPath/rm.sh"
 
-    private val _btnStartText = MutableLiveData(appContext.getString(R.string.text_start))
+    private val _btnStartText = MutableLiveData(context.getString(R.string.text_start))
     val btnStartText: LiveData<String> = _btnStartText
 
     private val _request = MutableLiveData<SingleEvent<ModelResult<Nothing>>>()
@@ -49,7 +50,7 @@ class FileMenuViewModel : BaseViewModel() {
                     val sbMv = StringBuilder()
                     val sbDel = StringBuilder()
 
-                    val inputStream = MyApplication.applicationContext().resources.openRawResource(R.raw.sample)
+                    val inputStream = context.resources.openRawResource(R.raw.sample)
                     val reader = BufferedReader(InputStreamReader(inputStream))
                     while (reader.ready()) {
                         val line = reader.readLine()
@@ -61,11 +62,11 @@ class FileMenuViewModel : BaseViewModel() {
 
                         when (first.fileExtension) {
                             ".xml" -> {
-                                sbDel.appendln("rm $first")
+                                sbDel.appendLine("rm $first")
                             }
                             else -> {
                                 val out = "mv $first $last"
-                                sbMv.appendln(out)
+                                sbMv.appendLine(out)
                             }
                         }
 
@@ -84,7 +85,7 @@ class FileMenuViewModel : BaseViewModel() {
                     if (dirList.isNotEmpty()) {
                         val sbDir = StringBuilder()
                         for (dir in dirList) {
-                            sbDir.appendln("mkdir $dir")
+                            sbDir.appendLine("mkdir $dir")
                         }
                         fileDir.appendText(sbDir.toString())
                     }
@@ -97,11 +98,11 @@ class FileMenuViewModel : BaseViewModel() {
                 }
                     .flowOn(Dispatchers.IO)
                     .onStart {
-                        _btnStartText.value = appContext.getString(R.string.text_processing)
+                        _btnStartText.value = context.getString(R.string.text_processing)
                         emit(ModelResult.loading())
                     }
                     .onCompletion {
-                        _btnStartText.value = appContext.getString(R.string.text_finish)
+                        _btnStartText.value = context.getString(R.string.text_finish)
                         emit(ModelResult.loaded())
                     }
                     .collect {
@@ -118,7 +119,7 @@ class FileMenuViewModel : BaseViewModel() {
                 File(mvPath).delete()
                 File(rmPath).delete()
 
-                _btnStartText.value = appContext.getString(R.string.text_start)
+                _btnStartText.value = context.getString(R.string.text_start)
 
                 delay(1000L)
             }
