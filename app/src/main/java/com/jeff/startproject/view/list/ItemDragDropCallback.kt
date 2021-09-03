@@ -4,18 +4,17 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.asFlow
 
 class ItemDragDropCallback : ItemTouchHelper.Callback() {
 
     private val onRowMoved = BroadcastChannel<Pair<Int, Int>>(Channel.BUFFERED)
-    fun onRowMoved() = onRowMoved.asFlow()
+    fun onRowMoved() = onRowMoved
 
     private val onRowSelected = BroadcastChannel<RecyclerView.ViewHolder>(Channel.BUFFERED)
-    fun onRowSelected() = onRowSelected.asFlow()
+    fun onRowSelected() = onRowSelected
 
     private val onRowClear = BroadcastChannel<RecyclerView.ViewHolder>(Channel.BUFFERED)
-    fun onRowClear() = onRowClear.asFlow()
+    fun onRowClear() = onRowClear
 
     override fun isLongPressDragEnabled(): Boolean {
         return false
@@ -30,8 +29,7 @@ class ItemDragDropCallback : ItemTouchHelper.Callback() {
     }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-        onRowMoved.offer(Pair(viewHolder.absoluteAdapterPosition, target.absoluteAdapterPosition))
-        return true
+        return onRowMoved.trySend(Pair(viewHolder.absoluteAdapterPosition, target.absoluteAdapterPosition)).isSuccess
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -40,7 +38,7 @@ class ItemDragDropCallback : ItemTouchHelper.Callback() {
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         viewHolder?.also {
             if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-                onRowSelected.offer(it)
+                onRowSelected.trySend(it)
             }
         }
 
@@ -50,6 +48,6 @@ class ItemDragDropCallback : ItemTouchHelper.Callback() {
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
 
-        onRowClear.offer(viewHolder)
+        onRowClear.trySend(viewHolder)
     }
 }

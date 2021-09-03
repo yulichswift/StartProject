@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jeff.startproject.databinding.ActivityDragBinding
 import com.view.base.BaseActivity
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.channels.consumeEach
 
 class DragActivity : BaseActivity<ActivityDragBinding>() {
     override fun getViewBinding() = ActivityDragBinding.inflate(layoutInflater)
@@ -33,19 +33,19 @@ class DragActivity : BaseActivity<ActivityDragBinding>() {
         adapter.setItemTouchHelper(touchHelper)
 
         lifecycleScope.launchWhenResumed {
-            itemDragDropCallback.onRowMoved().collectLatest {
+            itemDragDropCallback.onRowMoved().consumeEach {
                 adapter.swapItem(it.first, it.second)
             }
         }
 
         lifecycleScope.launchWhenResumed {
-            itemDragDropCallback.onRowSelected().collectLatest {
+            itemDragDropCallback.onRowSelected().consumeEach {
                 it.itemView.setBackgroundColor(Color.LTGRAY)
             }
         }
 
         lifecycleScope.launchWhenResumed {
-            itemDragDropCallback.onRowClear().collectLatest {
+            itemDragDropCallback.onRowClear().consumeEach {
                 it.itemView.setBackgroundColor(Color.TRANSPARENT)
             }
         }
