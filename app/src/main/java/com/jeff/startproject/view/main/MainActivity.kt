@@ -13,7 +13,9 @@ import androidx.activity.viewModels
 import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityMainBinding
@@ -53,17 +55,17 @@ import com.jeff.startproject.view.websocket.WebSocketActivity
 import com.jeff.startproject.widget.CustomView3
 import com.view.base.BaseActivity
 import com.yulichswift.roundedview.widget.RoundedTextView
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 /*
  * https://developer.android.google.cn/kotlin/ktx
  *
  * https://developer.android.google.cn/kotlin/coroutines
+ *
+ * https://developer.android.com/kotlin/flow/stateflow-and-sharedflow
+ *
+ * https://medium.com/androiddevelopers/migrating-from-livedata-to-kotlins-flow-379292f419fb
  *
  * https://source.android.com/setup/contribute/code-style#follow-field-naming-conventions
  *
@@ -88,9 +90,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val viewModel: MainViewModel by viewModels()
 
-    private val broadcastChannel = BroadcastChannel<String>(Channel.BUFFERED)
-    fun getBroadcastChannelFlow() = broadcastChannel.asFlow()
-
     override fun getViewBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
     }
@@ -104,11 +103,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.nestedScrollView.setAlphaByScroll(binding.backgroundView)
 
         lifecycleScope.launch {
-            getBroadcastChannelFlow()
-                .debounce(500L)
-                .collectLatest {
-                    filterBtn(it)
-                }
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.getSearchFlow()
+                    // flowWithLifecycle 為 repeatOnLifecycle 再封裝, 讓其感覺更直觀.
+                    // .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                    .debounce(500L)
+                    .collectLatest {
+                        it.takeIf { it.isNotBlank() }?.let(::filterBtn)
+                    }
+            }
         }
 
         binding.editTextSearch.customInsertionActionModeCallback =
@@ -116,7 +119,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.editTextSearch.customSelectionActionModeCallback =
             getActionModeCallback("Selection paste")
         binding.editTextSearch.addTextChangedListener {
-            broadcastChannel.offer(it.toString())
+            viewModel.search(it.toString())
         }
 
         binding.cardView.setOnClickListener {
