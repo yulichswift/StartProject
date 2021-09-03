@@ -1,16 +1,14 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    //id 'kotlin-android-extensions' // FindView
     id 'kotlin-kapt'
 }
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.jeff.startproject"
-        minSdkVersion 25
+        minSdkVersion 29
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -99,8 +97,7 @@ dependencies {
     implementation rootProject.ext.dependencies['event_bus']
 
     implementation rootProject.ext.dependencies['room_runtime']
-    kapt rootProject.ext.dependencies['room_compiler']
-    implementation rootProject.ext.dependencies['room_ktx']
+    annotationProcessor rootProject.ext.dependencies['room_compiler']
 
     debugImplementation rootProject.ext.dependencies['leakcanary']
 
