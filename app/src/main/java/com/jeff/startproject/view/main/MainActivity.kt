@@ -4,12 +4,14 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.ViewCompat
 import androidx.core.view.children
 import androidx.core.widget.NestedScrollView
 import androidx.core.widget.addTextChangedListener
@@ -97,8 +99,18 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        window.navigationBarColor = getColor(R.color.purple)
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
+                window.navigationBarColor = getColor(R.color.purple)
+                ViewCompat.getWindowInsetsController(window.decorView)?.apply {
+                    isAppearanceLightNavigationBars = true
+                }
+            }
+            else -> {
+                window.navigationBarColor = Color.WHITE
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            }
+        }
 
         binding.nestedScrollView.setAlphaByScroll(binding.backgroundView)
 
