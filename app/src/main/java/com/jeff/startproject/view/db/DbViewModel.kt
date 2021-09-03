@@ -12,8 +12,8 @@ import com.view.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class DbViewModel : BaseViewModel(), KoinComponent {
 
@@ -61,6 +61,7 @@ class DbViewModel : BaseViewModel(), KoinComponent {
                     }
                 }
                 .retryWhen { cause, attempt ->
+                    JFLog.d("retryWhen cause: $cause.")
                     JFLog.d("retryWhen attempt: $attempt")
                     attempt < 3
                 }

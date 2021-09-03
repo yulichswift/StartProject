@@ -8,8 +8,8 @@ import com.jeff.startproject.model.pref.Pref
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.net.HttpURLConnection
 
 class AuthInterceptor(private val pref: Pref) : Interceptor, KoinComponent {
