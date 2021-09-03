@@ -2,19 +2,35 @@ package com.jeff.startproject.view.list
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import java.lang.ref.WeakReference
 
 class ItemDragDropCallback : ItemTouchHelper.Callback() {
 
-    private val onRowMoved = BroadcastChannel<Pair<Int, Int>>(Channel.BUFFERED)
-    fun onRowMoved() = onRowMoved
+    private val onRowMoved = MutableSharedFlow<Pair<Int, Int>>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+    fun onRowMoved(): SharedFlow<Pair<Int, Int>> = onRowMoved
 
-    private val onRowSelected = BroadcastChannel<RecyclerView.ViewHolder>(Channel.BUFFERED)
-    fun onRowSelected() = onRowSelected
+    private val onRowSelected = MutableSharedFlow<WeakReference<RecyclerView.ViewHolder>>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
 
-    private val onRowClear = BroadcastChannel<RecyclerView.ViewHolder>(Channel.BUFFERED)
-    fun onRowClear() = onRowClear
+    fun onRowSelected(): SharedFlow<WeakReference<RecyclerView.ViewHolder>> = onRowSelected
+
+    private val onRowClear = MutableSharedFlow<WeakReference<RecyclerView.ViewHolder>>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST,
+    )
+
+    fun onRowClear(): SharedFlow<WeakReference<RecyclerView.ViewHolder>> = onRowClear
 
     override fun isLongPressDragEnabled(): Boolean {
         return false
@@ -29,7 +45,7 @@ class ItemDragDropCallback : ItemTouchHelper.Callback() {
     }
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-        return onRowMoved.trySend(Pair(viewHolder.absoluteAdapterPosition, target.absoluteAdapterPosition)).isSuccess
+        return onRowMoved.tryEmit(Pair(viewHolder.absoluteAdapterPosition, target.absoluteAdapterPosition))
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -38,7 +54,7 @@ class ItemDragDropCallback : ItemTouchHelper.Callback() {
     override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
         viewHolder?.also {
             if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-                onRowSelected.trySend(it)
+                onRowSelected.tryEmit(WeakReference(it))
             }
         }
 
@@ -48,6 +64,6 @@ class ItemDragDropCallback : ItemTouchHelper.Callback() {
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
 
-        onRowClear.trySend(viewHolder)
+        onRowClear.tryEmit(WeakReference(viewHolder))
     }
 }

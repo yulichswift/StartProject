@@ -2,12 +2,15 @@ package com.jeff.startproject.view.list
 
 import android.graphics.Color
 import android.os.Bundle
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jeff.startproject.databinding.ActivityDragBinding
 import com.view.base.BaseActivity
-import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class DragActivity : BaseActivity<ActivityDragBinding>() {
     override fun getViewBinding() = ActivityDragBinding.inflate(layoutInflater)
@@ -32,21 +35,27 @@ class DragActivity : BaseActivity<ActivityDragBinding>() {
 
         adapter.setItemTouchHelper(touchHelper)
 
-        lifecycleScope.launchWhenResumed {
-            itemDragDropCallback.onRowMoved().consumeEach {
-                adapter.swapItem(it.first, it.second)
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                itemDragDropCallback.onRowMoved().collectLatest {
+                    adapter.swapItem(it.first, it.second)
+                }
             }
         }
 
-        lifecycleScope.launchWhenResumed {
-            itemDragDropCallback.onRowSelected().consumeEach {
-                it.itemView.setBackgroundColor(Color.LTGRAY)
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                itemDragDropCallback.onRowSelected().collectLatest {
+                    it.get()?.itemView?.setBackgroundColor(Color.LTGRAY)
+                }
             }
         }
 
-        lifecycleScope.launchWhenResumed {
-            itemDragDropCallback.onRowClear().consumeEach {
-                it.itemView.setBackgroundColor(Color.TRANSPARENT)
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                itemDragDropCallback.onRowClear().collectLatest {
+                    it.get()?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+                }
             }
         }
     }
