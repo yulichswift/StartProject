@@ -94,7 +94,9 @@ dependencies {
     implementation rootProject.ext.dependencies['event_bus']
 
     implementation rootProject.ext.dependencies['room_runtime']
-    annotationProcessor rootProject.ext.dependencies['room_compiler']
+    kapt rootProject.ext.dependencies['room_compiler']
+    // 正式版不需要 implementation ktx
+    implementation rootProject.ext.dependencies['room_ktx']
 
     debugImplementation rootProject.ext.dependencies['leakcanary']
 
