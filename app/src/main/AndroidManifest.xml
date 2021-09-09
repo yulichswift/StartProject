@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.jeff.startproject">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.jeff.startproject">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INSTALL_SHORTCUT"/>
-    <uses-permission android:name="android.permission.UNINSTALL_SHORTCUT"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.UNINSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:name=".MyApplication"
@@ -22,46 +22,49 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
         <activity
-            android:name=".view.main.MainActivity"
-            android:theme="@style/TransparentBarTheme">
+            android:name=".view.splash.SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.eventbus.EventBusActivity"/>
-        <activity android:name=".view.eventbus.LiveEventBusActivity"/>
-        <activity android:name=".view.edittext.EditTextActivity"/>
-        <activity android:name=".view.db.DbActivity"/>
-        <activity android:name=".view.flowcontrol.FlowControlActivity"/>
-        <activity android:name=".view.sample.SampleActivity"/>
+        <activity
+            android:name=".view.main.MainActivity"
+            android:theme="@style/TransparentBarTheme" />
+        <activity android:name=".view.eventbus.EventBusActivity" />
+        <activity android:name=".view.eventbus.LiveEventBusActivity" />
+        <activity android:name=".view.edittext.EditTextActivity" />
+        <activity android:name=".view.db.DbActivity" />
+        <activity android:name=".view.flowcontrol.FlowControlActivity" />
+        <activity android:name=".view.sample.SampleActivity" />
         <activity
             android:name=".view.vector.VectorActivity"
-            android:theme="@style/TransparentBarTheme"/>
+            android:theme="@style/TransparentBarTheme" />
         <activity
             android:name=".view.login.LoginActivity"
-            android:theme="@style/TransparentBarTheme"/>
-        <activity android:name=".view.chain.ChainActivity"/>
-        <activity android:name=".view.websocket.WebSocketActivity"/>
-        <activity android:name=".view.navigation.NavigationActivity"/>
-        <activity android:name=".view.draw.DrawActivity"/>
-        <activity android:name=".view.adbcmd.AdbCmdActivity"/>
-        <activity android:name=".view.runtimeexec.RuntimeExecActivity"/>
+            android:theme="@style/TransparentBarTheme" />
+        <activity android:name=".view.chain.ChainActivity" />
+        <activity android:name=".view.websocket.WebSocketActivity" />
+        <activity android:name=".view.navigation.NavigationActivity" />
+        <activity android:name=".view.draw.DrawActivity" />
+        <activity android:name=".view.adbcmd.AdbCmdActivity" />
+        <activity android:name=".view.runtimeexec.RuntimeExecActivity" />
         <activity
             android:name=".view.file.FileActivity"
             android:taskAffinity="com.jeff.file.${applicationId}"
-            android:theme="@style/TranslucentTheme"/>
-        <activity android:name=".view.pager.PagerActivity"/>
-        <activity android:name=".view.datastructure.DataStructureActivity"/>
-        <activity android:name=".view.preferences.PreferencesActivity"/>
+            android:theme="@style/TranslucentTheme" />
+        <activity android:name=".view.pager.PagerActivity" />
+        <activity android:name=".view.datastructure.DataStructureActivity" />
+        <activity android:name=".view.preferences.PreferencesActivity" />
         <activity
             android:name=".view.blur.BlurActivity"
-            android:taskAffinity="com.jeff.blur.${applicationId}"/>
-        <activity android:name=".view.floating.OpenFloatingActivity"/>
-        <activity android:name=".view.text.TextActivity"/>
+            android:taskAffinity="com.jeff.blur.${applicationId}" />
+        <activity android:name=".view.floating.OpenFloatingActivity" />
+        <activity android:name=".view.text.TextActivity" />
         <activity android:name=".view.sort.DataSortActivity" />
         <activity android:name=".view.encrypt.EncryptActivity" />
         <activity android:name=".view.others.OverrideTransitionActivity" />
@@ -85,14 +88,14 @@
             android:taskAffinity="com.jeff.file.${applicationId}"
             android:theme="@style/AppTheme">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
                 <!-- Android TV launcher intent -->
                 <!--<category android:name="android.intent.category.LEANBACK_LAUNCHER" />-->
             </intent-filter>
         </activity-alias>
 
-        <service android:name=".widget.floating.FloatingWindowService"/>
+        <service android:name=".widget.floating.FloatingWindowService" />
     </application>
 
 </manifest>
