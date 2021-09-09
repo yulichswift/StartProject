@@ -70,7 +70,7 @@
         <activity android:name=".view.others.CustomActivity" />
         <activity android:name=".view.ui.SeekBarActivity" />
         <activity android:name=".view.spec.SpecActivity" />
-        <activity android:name=".view.LiveDataAdvActivity" />
+        <activity android:name=".view.livedata.LiveDataAdvActivity" />
         <activity android:name=".view.chart.ChartActivity" />
         <activity android:name=".view.result.ReceiveActivity" />
         <activity android:name=".view.result.ResultActivity" />

@@ -21,7 +21,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityMainBinding
-import com.jeff.startproject.view.LiveDataAdvActivity
 import com.jeff.startproject.view.adbcmd.AdbCmdActivity
 import com.jeff.startproject.view.blur.BlurActivity
 import com.jeff.startproject.view.chain.ChainActivity
@@ -39,6 +38,7 @@ import com.jeff.startproject.view.floating.OpenFloatingActivity
 import com.jeff.startproject.view.flowcontrol.FlowControlActivity
 import com.jeff.startproject.view.gson.GsonActivity
 import com.jeff.startproject.view.list.DragActivity
+import com.jeff.startproject.view.livedata.LiveDataAdvActivity
 import com.jeff.startproject.view.login.LoginActivity
 import com.jeff.startproject.view.navigation.NavigationActivity
 import com.jeff.startproject.view.others.CustomActivity

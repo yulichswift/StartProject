@@ -1,9 +1,8 @@
-package com.jeff.startproject.view
+package com.jeff.startproject.view.livedata
 
 import android.os.Bundle
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.observe
 import com.jeff.startproject.databinding.ActivityLiveDataAdvBinding
 import com.log.JFLog
 import com.view.base.BaseActivity
