@@ -4,8 +4,7 @@ apply from: "versions/versions.gradle"
 buildscript {
     repositories {
         google()
-        jcenter()
-        
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.0'
