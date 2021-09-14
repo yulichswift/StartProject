@@ -8,16 +8,19 @@ import com.jeff.startproject.R
 import com.jeff.startproject.enums.ModelResult
 import com.utils.lifecycle.SingleEvent
 import com.view.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.io.File
+import javax.inject.Inject
 
-class FileContentViewModel : BaseViewModel(), KoinComponent {
-    private val context: Context by inject()
+@HiltViewModel
+class FileContentViewModel @Inject internal constructor(
+    @ApplicationContext private val context: Context
+) : BaseViewModel() {
 
     private val _status = MutableLiveData<SingleEvent<ModelResult<String>>>()
     val status: LiveData<SingleEvent<ModelResult<String>>> = _status

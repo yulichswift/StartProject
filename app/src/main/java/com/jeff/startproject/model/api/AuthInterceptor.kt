@@ -8,13 +8,10 @@ import com.jeff.startproject.model.pref.Pref
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.net.HttpURLConnection
+import javax.inject.Inject
 
-class AuthInterceptor(private val pref: Pref) : Interceptor, KoinComponent {
-
-    private val apiRepository: ApiRepository by inject()
+class AuthInterceptor @Inject constructor(private val pref: Pref) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
 

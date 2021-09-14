@@ -14,16 +14,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.jeff.startproject.di.apiModule
-import com.jeff.startproject.di.appModule
-import com.jeff.startproject.di.dbModule
 import com.jeff.startproject.view.blur.BlurActivity
 import com.jeff.startproject.view.floating.OpenFloatingActivity
 import com.log.JFLog
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class MyApplication : Application(), LifecycleObserver {
 
     companion object {
@@ -55,12 +51,6 @@ class MyApplication : Application(), LifecycleObserver {
         super.onCreate()
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-
-        startKoin {
-            androidLogger()
-            androidContext(this@MyApplication)
-            modules(listOf(appModule, dbModule, apiModule))
-        }
 
         addDynamicShortcut(
             this,

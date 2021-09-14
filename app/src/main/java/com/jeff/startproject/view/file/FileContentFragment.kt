@@ -16,7 +16,9 @@ import com.jeff.startproject.view.base.ProgressFragment
 import com.jeff.startproject.view.diaglog.ConfirmDialogFragment
 import com.log.JFLog
 import com.view.base.NavigateItem
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FileContentFragment : ProgressFragment<FragmentFileContentBinding>() {
 
     val viewModel: FileContentViewModel by viewModels()

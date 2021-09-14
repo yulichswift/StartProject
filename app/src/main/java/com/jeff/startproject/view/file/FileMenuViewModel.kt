@@ -10,18 +10,21 @@ import com.log.JFLog
 import com.utils.extension.fileExtension
 import com.utils.lifecycle.SingleEvent
 import com.view.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
+import javax.inject.Inject
 
-class FileMenuViewModel : BaseViewModel(), KoinComponent {
-    private val context: Context by inject()
+@HiltViewModel
+class FileMenuViewModel @Inject internal constructor(
+    @ApplicationContext private val context: Context
+) : BaseViewModel() {
 
     private val rootPath = "${context.getExternalFilesDir(null)!!.path}/scripts"
     val dirPath = "$rootPath/dir.sh"

@@ -7,7 +7,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.jeff.startproject.databinding.ActivityFileBinding
 import com.view.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FileActivity : BaseActivity<ActivityFileBinding>() {
 
     override fun getViewBinding(): ActivityFileBinding {

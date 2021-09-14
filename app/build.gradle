@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -74,9 +75,6 @@ dependencies {
     implementation rootProject.ext.dependencies['lifecycle_common']
     implementation rootProject.ext.dependencies['lifecycle_process']
 
-    implementation rootProject.ext.dependencies['koin_core']
-    implementation rootProject.ext.dependencies['koin_android']
-
     implementation rootProject.ext.dependencies['jflog']
     implementation rootProject.ext.dependencies['rounded_views']
 
@@ -124,6 +122,9 @@ dependencies {
 
     implementation rootProject.ext.dependencies["activity"]
     implementation rootProject.ext.dependencies["fragment"]
+
+    implementation rootProject.ext.dependencies["hilt"]
+    kapt rootProject.ext.dependencies["hilt_compiler"]
 
     implementation 'io.alterac.blurkit:blurkit:1.1.0'
 }

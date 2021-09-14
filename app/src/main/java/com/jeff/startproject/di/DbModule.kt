@@ -5,24 +5,32 @@ import com.jeff.startproject.Constant
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.dao.UserDao
 import com.jeff.startproject.model.db.AppDatabase
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-val dbModule = module {
-    single { provideAppDatabase() }
-    single { provideUserDao(get()) }
-}
+@Module
+@InstallIn(SingletonComponent::class)
+class DbModule {
 
-fun provideAppDatabase(): AppDatabase {
-    return Room.databaseBuilder(
-        MyApplication.applicationContext(),
-        AppDatabase::class.java,
-        Constant.DB_NAME
-    )
-        .allowMainThreadQueries()
-        .fallbackToDestructiveMigration()
-        .build()
-}
+    @Singleton
+    @Provides
+    fun provideAppDatabase(): AppDatabase {
+        return Room.databaseBuilder(
+            MyApplication.applicationContext(),
+            AppDatabase::class.java,
+            Constant.DB_NAME
+        )
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
+            .build()
+    }
 
-fun provideUserDao(appDatabase: AppDatabase): UserDao {
-    return appDatabase.userDao()
+    @Singleton
+    @Provides
+    fun provideUserDao(appDatabase: AppDatabase): UserDao {
+        return appDatabase.userDao()
+    }
 }

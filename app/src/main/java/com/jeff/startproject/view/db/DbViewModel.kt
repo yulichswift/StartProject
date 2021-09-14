@@ -9,19 +9,20 @@ import com.jeff.startproject.model.db.User
 import com.log.JFLog
 import com.utils.lifecycle.SingleEvent
 import com.view.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import javax.inject.Inject
 
-class DbViewModel : BaseViewModel(), KoinComponent {
+@HiltViewModel
+class DbViewModel @Inject internal constructor(
+    private val userDao: UserDao,
+) : BaseViewModel() {
 
     companion object {
         private const val METHOD = 2
     }
-
-    private val userDao: UserDao by inject()
 
     private val _dbSingleResult = MutableLiveData<SingleEvent<DbResult<User>>>()
     val dbSingleResult: LiveData<SingleEvent<DbResult<User>>> = _dbSingleResult

@@ -15,8 +15,10 @@ import com.jeff.startproject.view.diaglog.ConfirmDialogFragment
 import com.log.JFLog
 import com.view.base.BaseFragment
 import com.view.base.NavigateItem
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class FileMenuFragment : BaseFragment<FragmentFileMenuBinding>() {
 
     val viewModel: FileMenuViewModel by viewModels()

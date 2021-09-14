@@ -8,7 +8,9 @@ import com.jeff.startproject.model.db.DbResult
 import com.jeff.startproject.model.db.User
 import com.log.JFLog
 import com.view.base.BaseActivity
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DbActivity : BaseActivity<ActivityDbBinding>() {
 
     private val viewModel: DbViewModel by viewModels()
