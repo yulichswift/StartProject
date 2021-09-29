@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:name="com.jeff.startproject.MyApplication"
+        android:allowBackup="false"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
+        <activity
+            android:name="com.jeff.startproject.view.splash.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.jeff.startproject.view.main.MainActivity"
+            android:theme="@style/TransparentBarTheme" />
+        <activity android:name="com.jeff.startproject.view.eventbus.EventBusActivity" />
+        <activity android:name="com.jeff.startproject.view.eventbus.LiveEventBusActivity" />
+        <activity android:name="com.jeff.startproject.view.edittext.EditTextActivity" />
+        <activity android:name="com.jeff.startproject.view.db.DbActivity" />
+        <activity android:name="com.jeff.startproject.view.flowcontrol.FlowControlActivity" />
+        <activity android:name="com.jeff.startproject.view.sample.SampleActivity" />
+        <activity
+            android:name="com.jeff.startproject.view.vector.VectorActivity"
+            android:theme="@style/TransparentBarTheme" />
+        <activity
+            android:name="com.jeff.startproject.view.login.LoginActivity"
+            android:theme="@style/TransparentBarTheme" />
+        <activity android:name="com.jeff.startproject.view.chain.ChainActivity" />
+        <activity android:name="com.jeff.startproject.view.websocket.WebSocketActivity" />
+        <activity android:name="com.jeff.startproject.view.navigation.NavigationActivity" />
+        <activity android:name="com.jeff.startproject.view.draw.DrawActivity" />
+        <activity android:name="com.jeff.startproject.view.adbcmd.AdbCmdActivity" />
+        <activity android:name="com.jeff.startproject.view.runtimeexec.RuntimeExecActivity" />
+        <activity
+            android:name="com.jeff.startproject.view.file.FileActivity"
+            android:taskAffinity="com.jeff.file.${applicationId}"
+            android:theme="@style/TranslucentTheme" />
+        <activity android:name="com.jeff.startproject.view.pager.PagerActivity" />
+        <activity android:name="com.jeff.startproject.view.datastructure.DataStructureActivity" />
+        <activity android:name="com.jeff.startproject.view.preferences.PreferencesActivity" />
+        <activity
+            android:name="com.jeff.startproject.view.blur.BlurActivity"
+            android:taskAffinity="com.jeff.blur.${applicationId}" />
+        <activity android:name="com.jeff.startproject.view.floating.OpenFloatingActivity" />
+        <activity android:name="com.jeff.startproject.view.text.TextActivity" />
+        <activity android:name="com.jeff.startproject.view.sort.DataSortActivity" />
+        <activity android:name="com.jeff.startproject.view.encrypt.EncryptActivity" />
+        <activity android:name="com.jeff.startproject.view.others.OverrideTransitionActivity" />
+        <activity android:name="com.jeff.startproject.view.gson.GsonActivity" />
+        <activity android:name="com.jeff.startproject.view.list.DragActivity" />
+        <activity android:name="com.jeff.startproject.view.others.CustomActivity" />
+        <activity android:name="com.jeff.startproject.view.ui.SeekBarActivity" />
+        <activity android:name="com.jeff.startproject.view.spec.SpecActivity" />
+        <activity android:name="com.jeff.startproject.view.livedata.LiveDataAdvActivity" />
+        <activity android:name="com.jeff.startproject.view.chart.ChartActivity" />
+        <activity android:name="com.jeff.startproject.view.result.ReceiveActivity" />
+        <activity android:name="com.jeff.startproject.view.result.ResultActivity" />
+        <activity android:name="com.jeff.startproject.view.colorpicker.ColorPickerActivity" />
+        <activity android:name="com.jeff.startproject.view.appmanager.AppManagerActivity" />
+
+        <activity-alias
+            android:name="com.jeff.file"
+            android:enabled="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="FileActivity"
+            android:targetActivity="com.jeff.startproject.view.file.FileActivity"
+            android:taskAffinity="com.jeff.file.${applicationId}"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <!-- Android TV launcher intent -->
+                <!--<category android:name="android.intent.category.LEANBACK_LAUNCHER" />-->
+            </intent-filter>
+        </activity-alias>
+
+        <service android:name="com.jeff.startproject.widget.floating.FloatingWindowService" />
+    </application>
+
+</manifest>

@@ -40,6 +40,17 @@ android {
         }
     }
 
+    flavorDimensions 'prod'
+    productFlavors {
+        full {
+            dimension 'prod'
+        }
+        pkg {
+            dimension 'prod'
+            applicationIdSuffix '.pkg'
+        }
+    }
+
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
