@@ -12,7 +12,7 @@ import com.jeff.startproject.R
 class MyPagerAdapter : ListAdapter<MyPagerItem, RecyclerView.ViewHolder>(DiffCallback) {
 
     companion object {
-        val DiffCallback = object : DiffUtil.ItemCallback<MyPagerItem>() {
+        private val DiffCallback = object : DiffUtil.ItemCallback<MyPagerItem>() {
             override fun areItemsTheSame(oldItem: MyPagerItem, newItem: MyPagerItem): Boolean {
                 return oldItem.title == newItem.title
             }

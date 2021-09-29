@@ -37,14 +37,14 @@ class DragAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return list?.size ?: 0
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = inflateWithLayout(parent, R.layout.item_view_drag)
-        return ViewHolder(view)
-    }
-
     private fun inflateWithLayout(viewGroup: ViewGroup, @LayoutRes layoutRes: Int): View {
         val layoutInflater = LayoutInflater.from(viewGroup.context)
         return layoutInflater.inflate(layoutRes, viewGroup, false)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val view = inflateWithLayout(parent, R.layout.item_view_drag)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
