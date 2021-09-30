@@ -3,6 +3,7 @@ package com.jeff.startproject.di
 import androidx.room.Room
 import com.jeff.startproject.Constant
 import com.jeff.startproject.MyApplication
+import com.jeff.startproject.dao.RecentAppsDao
 import com.jeff.startproject.dao.UserDao
 import com.jeff.startproject.model.db.AppDatabase
 import dagger.Module
@@ -32,5 +33,11 @@ class DbModule {
     @Provides
     fun provideUserDao(appDatabase: AppDatabase): UserDao {
         return appDatabase.userDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRecentAppsDao(appDatabase: AppDatabase): RecentAppsDao {
+        return appDatabase.recentAppsDao()
     }
 }

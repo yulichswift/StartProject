@@ -10,5 +10,5 @@ data class User(
 
     @ColumnInfo(name = "user_name") var userName: String? = null,
 
-    @ColumnInfo(name = "age") var age: Int
+    @ColumnInfo(name = "age") var age: Int,
 )

@@ -251,7 +251,7 @@ class DbViewModel @Inject internal constructor(
     private fun queryUserByName2(name: String) {
         viewModelScope.launch {
             flow {
-                userDao.queryUserByName(name).also {
+                userDao.queryUserWithName(name).also {
                     emit(DbResult.success(it))
                 }
             }
