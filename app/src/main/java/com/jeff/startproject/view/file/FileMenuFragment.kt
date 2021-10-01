@@ -21,6 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 @AndroidEntryPoint
 class FileMenuFragment : BaseFragment<FragmentFileMenuBinding>() {
@@ -45,20 +46,20 @@ class FileMenuFragment : BaseFragment<FragmentFileMenuBinding>() {
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                launch {
-                    viewModel.existActiveTask.collect {
-                        if (it) {
-                            ConfirmDialogFragment(getString(R.string.message_wait), false).show(parentFragmentManager, "Confirm")
+                supervisorScope {
+                    launch {
+                        viewModel.existActiveTask.collect {
+                            if (it) {
+                                ConfirmDialogFragment(getString(R.string.message_wait), false).show(parentFragmentManager, "Confirm")
+                            }
                         }
                     }
 
-                }
-
-                launch {
-                    viewModel.request.collectLatest {
-                        JFLog.d("Request result: $it")
+                    launch {
+                        viewModel.request.collectLatest {
+                            JFLog.d("Request result: $it")
+                        }
                     }
-
                 }
             }
         }

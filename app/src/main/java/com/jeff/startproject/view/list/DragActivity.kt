@@ -11,6 +11,7 @@ import com.jeff.startproject.databinding.ActivityDragBinding
 import com.view.base.BaseActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 class DragActivity : BaseActivity<ActivityDragBinding>() {
     override fun getViewBinding() = ActivityDragBinding.inflate(layoutInflater)
@@ -37,21 +38,23 @@ class DragActivity : BaseActivity<ActivityDragBinding>() {
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                launch {
-                    itemDragDropCallback.onRowMoved().collectLatest {
-                        adapter.swapItem(it.first, it.second)
+                supervisorScope {
+                    launch {
+                        itemDragDropCallback.onRowMoved().collectLatest {
+                            adapter.swapItem(it.first, it.second)
+                        }
                     }
-                }
 
-                launch {
-                    itemDragDropCallback.onRowSelected().collectLatest {
-                        it.get()?.itemView?.setBackgroundColor(Color.LTGRAY)
+                    launch {
+                        itemDragDropCallback.onRowSelected().collectLatest {
+                            it.get()?.itemView?.setBackgroundColor(Color.LTGRAY)
+                        }
                     }
-                }
 
-                launch {
-                    itemDragDropCallback.onRowClear().collectLatest {
-                        it.get()?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+                    launch {
+                        itemDragDropCallback.onRowClear().collectLatest {
+                            it.get()?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+                        }
                     }
                 }
             }

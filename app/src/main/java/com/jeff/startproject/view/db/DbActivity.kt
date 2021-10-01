@@ -13,6 +13,7 @@ import com.view.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 @AndroidEntryPoint
 class DbActivity : BaseActivity<ActivityDbBinding>() {
@@ -28,48 +29,50 @@ class DbActivity : BaseActivity<ActivityDbBinding>() {
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                launch {
-                    viewModel.dbSingleResult.collectLatest {
-                        JFLog.d("$it")
+                supervisorScope {
+                    launch {
+                        viewModel.dbSingleResult.collectLatest {
+                            JFLog.d("$it")
 
-                        when (it) {
-                            is DbResult.Loading -> {
-                                binding.layoutQuery.error = ""
-                            }
-                            is DbResult.Loaded -> {
-                            }
-                            is DbResult.Failure -> {
-                                binding.layoutQuery.error = it.throwable.localizedMessage
-                            }
-                            is DbResult.SuccessNoContent -> {
-                                binding.layoutQuery.error = "Db result empty"
-                            }
-                            is DbResult.Success -> {
+                            when (it) {
+                                is DbResult.Loading -> {
+                                    binding.layoutQuery.error = ""
+                                }
+                                is DbResult.Loaded -> {
+                                }
+                                is DbResult.Failure -> {
+                                    binding.layoutQuery.error = it.throwable.localizedMessage
+                                }
+                                is DbResult.SuccessNoContent -> {
+                                    binding.layoutQuery.error = "Db result empty"
+                                }
+                                is DbResult.Success -> {
+                                }
                             }
                         }
                     }
-                }
 
-                launch {
-                    viewModel.dbListResult.collectLatest {
-                        JFLog.d("$it")
+                    launch {
+                        viewModel.dbListResult.collectLatest {
+                            JFLog.d("$it")
 
-                        when (it) {
-                            is DbResult.Loading -> {
-                                binding.layoutQuery.error = ""
-                            }
-                            is DbResult.Loaded -> {
-                            }
-                            is DbResult.Failure -> {
-                                binding.layoutQuery.error = it.throwable.localizedMessage
-                            }
-                            is DbResult.SuccessNoContent -> {
-                                binding.layoutQuery.error = "Db result empty"
-                            }
-                            is DbResult.Success -> {
-                                JFLog.d("Query result:")
-                                it.data.forEach { user ->
-                                    JFLog.d("$user")
+                            when (it) {
+                                is DbResult.Loading -> {
+                                    binding.layoutQuery.error = ""
+                                }
+                                is DbResult.Loaded -> {
+                                }
+                                is DbResult.Failure -> {
+                                    binding.layoutQuery.error = it.throwable.localizedMessage
+                                }
+                                is DbResult.SuccessNoContent -> {
+                                    binding.layoutQuery.error = "Db result empty"
+                                }
+                                is DbResult.Success -> {
+                                    JFLog.d("Query result:")
+                                    it.data.forEach { user ->
+                                        JFLog.d("$user")
+                                    }
                                 }
                             }
                         }

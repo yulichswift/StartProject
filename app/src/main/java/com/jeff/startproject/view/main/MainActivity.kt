@@ -60,6 +60,7 @@ import com.view.base.BaseActivity
 import com.yulichswift.roundedview.widget.RoundedTextView
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 /*
  * https://developer.android.google.cn/kotlin/ktx
@@ -117,13 +118,17 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.getSearchFlow()
-                    // flowWithLifecycle 為 repeatOnLifecycle 再封裝, 讓其感覺更直觀.
-                    // .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
-                    .debounce(500L)
-                    .collectLatest {
-                        it.takeIf { it.isNotBlank() }?.let(::filterBtn)
+                supervisorScope {
+                    launch {
+                        viewModel.getSearchFlow()
+                            // flowWithLifecycle 為 repeatOnLifecycle 再封裝, 讓其感覺更直觀.
+                            // .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                            .debounce(500L)
+                            .collectLatest {
+                                it.takeIf { it.isNotBlank() }?.let(::filterBtn)
+                            }
                     }
+                }
             }
         }
 

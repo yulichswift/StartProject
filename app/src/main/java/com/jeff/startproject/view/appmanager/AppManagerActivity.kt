@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 @AndroidEntryPoint
 class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
@@ -61,52 +62,54 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                launch {
-                    viewModel.onListFlow()
-                        .collectLatest {
-                            binding.totalLabel.text = "Installed ${it.size}"
-                            adapter.submitList(it)
-                        }
-                }
-
-                launch {
-                    filterFlow
-                        .debounce(500L)
-                        .collectLatest { viewModel.filterCurrentList(it) }
-                }
-
-                launch {
-                    adapter.onRowSelected()
-                        .throttleFirst(1_000L)
-                        .collectLatest {
-                            try {
-                                val intent = packageManager.getLaunchIntentForPackage(it.packageName)
-                                startActivity(intent)
-
-                                viewModel.selectedApp(it.packageName)
-                            } catch (e: Exception) {
-                                JFLog.e(e)
-                                Toast.makeText(this@AppManagerActivity, "Fail", Toast.LENGTH_LONG).show()
+                supervisorScope {
+                    launch {
+                        viewModel.onListFlow()
+                            .collectLatest {
+                                binding.totalLabel.text = "Installed ${it.size}"
+                                adapter.submitList(it)
                             }
-                        }
-                }
+                    }
 
-                launch {
-                    adapter.onClickedRemove()
-                        .throttleFirst(1_000L)
-                        .collectLatest {
-                            when (it.appType) {
-                                AppManagerViewModel.AppType.Recent -> viewModel.clearRecentApp(packageManager, it.packageName)
-                                else -> {
-                                    val intent = Intent().apply {
-                                        action = Intent.ACTION_DELETE
-                                        data = Uri.parse("package:${it.packageName}")
-                                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                    }
+                    launch {
+                        filterFlow
+                            .debounce(500L)
+                            .collectLatest { viewModel.filterCurrentList(it) }
+                    }
+
+                    launch {
+                        adapter.onRowSelected()
+                            .throttleFirst(1_000L)
+                            .collectLatest {
+                                try {
+                                    val intent = packageManager.getLaunchIntentForPackage(it.packageName)
                                     startActivity(intent)
+
+                                    viewModel.selectedApp(it.packageName)
+                                } catch (e: Exception) {
+                                    JFLog.e(e)
+                                    Toast.makeText(this@AppManagerActivity, "Fail", Toast.LENGTH_LONG).show()
                                 }
                             }
-                        }
+                    }
+
+                    launch {
+                        adapter.onClickedRemove()
+                            .throttleFirst(1_000L)
+                            .collectLatest {
+                                when (it.appType) {
+                                    AppManagerViewModel.AppType.Recent -> viewModel.clearRecentApp(packageManager, it.packageName)
+                                    else -> {
+                                        val intent = Intent().apply {
+                                            action = Intent.ACTION_DELETE
+                                            data = Uri.parse("package:${it.packageName}")
+                                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                        }
+                                        startActivity(intent)
+                                    }
+                                }
+                            }
+                    }
                 }
             }
         }

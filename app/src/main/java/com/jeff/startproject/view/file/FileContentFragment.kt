@@ -21,6 +21,7 @@ import com.view.base.NavigateItem
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.supervisorScope
 
 @AndroidEntryPoint
 class FileContentFragment : ProgressFragment<FragmentFileContentBinding>() {
@@ -42,33 +43,35 @@ class FileContentFragment : ProgressFragment<FragmentFileContentBinding>() {
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                launch {
-                    viewModel.status.collectLatest { result ->
-                        when (result) {
-                            ModelResult.Loading -> progressHUD.show()
-                            ModelResult.Loaded -> progressHUD.dismiss()
-                            else -> Unit
-                        }
-
-                        when (result) {
-                            is ModelResult.Success -> {
-                                result.data
+                supervisorScope {
+                    launch {
+                        viewModel.status.collectLatest { result ->
+                            when (result) {
+                                ModelResult.Loading -> progressHUD.show()
+                                ModelResult.Loaded -> progressHUD.dismiss()
+                                else -> Unit
                             }
-                            is ModelResult.Failure -> {
-                                result.throwable.localizedMessage
-                            }
-                            else -> null
-                        }?.also {
-                            binding.tvContent.text = it
-                        }
 
-                        when (result) {
-                            is ModelResult.Success -> R.color.silver
-                            is ModelResult.Failure -> R.color.orange_red
-                            ModelResult.Loading -> R.color.black
-                            else -> null
-                        }?.also {
-                            binding.viewStatus.setBackgroundColor(resources.getColor(it, null))
+                            when (result) {
+                                is ModelResult.Success -> {
+                                    result.data
+                                }
+                                is ModelResult.Failure -> {
+                                    result.throwable.localizedMessage
+                                }
+                                else -> null
+                            }?.also {
+                                binding.tvContent.text = it
+                            }
+
+                            when (result) {
+                                is ModelResult.Success -> R.color.silver
+                                is ModelResult.Failure -> R.color.orange_red
+                                ModelResult.Loading -> R.color.black
+                                else -> null
+                            }?.also {
+                                binding.viewStatus.setBackgroundColor(resources.getColor(it, null))
+                            }
                         }
                     }
                 }
