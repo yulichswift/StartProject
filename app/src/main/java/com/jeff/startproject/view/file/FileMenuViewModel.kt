@@ -37,7 +37,7 @@ class FileMenuViewModel @Inject internal constructor(
     private val _request by lazy {
         MutableSharedFlow<ModelResult<Nothing>>(
             replay = 0,
-            extraBufferCapacity = 1,
+            extraBufferCapacity = 3,
             onBufferOverflow = BufferOverflow.DROP_OLDEST,
         )
     }

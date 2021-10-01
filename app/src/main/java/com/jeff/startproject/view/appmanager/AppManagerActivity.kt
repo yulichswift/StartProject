@@ -19,9 +19,7 @@ import com.log.JFLog
 import com.utils.extension.throttleFirst
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 
@@ -65,19 +63,17 @@ class AppManagerActivity : ProgressActivity<ActivityAppManagerBinding>() {
                 supervisorScope {
                     launch {
                         viewModel.onListFlow()
-                            .collectLatest {
+                            .collect {
                                 when (it) {
                                     ApiResult.Loading -> setRefreshing(true)
                                     is ApiResult.Success -> {
                                         val data = it.data
                                         binding.totalLabel.text = "Installed ${data.size}"
                                         adapter.submitList(data)
-
-                                        setRefreshing(false)
                                     }
                                     ApiResult.SuccessNoContent -> TODO()
                                     is ApiResult.Failure -> TODO()
-                                    ApiResult.Loaded -> TODO()
+                                    ApiResult.Loaded -> setRefreshing(false)
                                 }
                             }
                     }

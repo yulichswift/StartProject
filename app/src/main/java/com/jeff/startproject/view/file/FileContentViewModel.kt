@@ -23,7 +23,7 @@ class FileContentViewModel @Inject internal constructor(
     private val _status by lazy {
         MutableSharedFlow<ModelResult<String>>(
             replay = 0,
-            extraBufferCapacity = 1,
+            extraBufferCapacity = 3,
             onBufferOverflow = BufferOverflow.DROP_OLDEST,
         )
     }

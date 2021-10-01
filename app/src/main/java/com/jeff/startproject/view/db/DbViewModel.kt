@@ -25,7 +25,7 @@ class DbViewModel @Inject internal constructor(
     private val _dbSingleResult by lazy {
         MutableSharedFlow<DbResult<User>>(
             replay = 0,
-            extraBufferCapacity = 1,
+            extraBufferCapacity = 3,
             onBufferOverflow = BufferOverflow.DROP_OLDEST,
         )
     }
@@ -34,7 +34,7 @@ class DbViewModel @Inject internal constructor(
     private val _dbListResult by lazy {
         MutableSharedFlow<DbResult<List<User>>>(
             replay = 0,
-            extraBufferCapacity = 1,
+            extraBufferCapacity = 3,
             onBufferOverflow = BufferOverflow.DROP_OLDEST,
         )
     }

@@ -58,74 +58,74 @@ class AppManagerViewModel @Inject internal constructor(
 
     private val listFlow = MutableSharedFlow<ApiResult<List<CustomApplicationInfo>>>(
         replay = 0,
-        extraBufferCapacity = 1,
+        extraBufferCapacity = 3,
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
     fun onListFlow(): SharedFlow<ApiResult<List<CustomApplicationInfo>>> = listFlow
 
     fun loadList(packageManager: PackageManager, type: AppType) {
-        listFlow.tryEmit(ApiResult.loading())
-
-        currentAppType = type
-        when (type) {
-            AppType.All -> getInstalledPackage(packageManager)
-            AppType.NonSystem -> getNonSystemPackage(packageManager)
-            AppType.System -> getSystemPackage(packageManager)
-            AppType.Recent -> getRecentApps(packageManager)
-        }
-    }
-
-    private fun getInstalledPackage(packageManager: PackageManager) {
-        val result = packageManager.getInstalledApplications(0).map { CustomApplicationInfo(AppType.typeWithAppInfo(it), it) }
-        updateList(packageManager, result)
-    }
-
-    private fun getNonSystemPackage(packageManager: PackageManager) {
-        val result = packageManager.getInstalledApplications(0).filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 0 }.map { CustomApplicationInfo(AppType.NonSystem, it) }
-        updateList(packageManager, result)
-    }
-
-    private fun getSystemPackage(packageManager: PackageManager) {
-        val result = packageManager.getInstalledApplications(0).filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 1 }.map { CustomApplicationInfo(AppType.System, it) }
-        updateList(packageManager, result)
-    }
-
-    private fun getRecentApps(packageManager: PackageManager) {
-        viewModelScope.launch {
-            recentDao.queryAppsFlow()
-                .flowOn(Dispatchers.IO)
-                .map { dbList ->
-                    val result = mutableListOf<CustomApplicationInfo>()
-                    for (dbData in dbList) {
-                        try {
-                            val info = packageManager.getApplicationInfo(dbData.packageName, 0)
-                            result.add(CustomApplicationInfo(AppType.Recent, info))
-                        } catch (e: Exception) {
-                            recentDao.deleteApp(dbData)
-                            JFLog.e(e)
-                        }
-                    }
-                    result
-                }
-                .collect {
-                    updateList(packageManager, it)
-                }
-        }
-    }
-
-    private fun updateList(packageManager: PackageManager, list: List<CustomApplicationInfo>) {
         viewModelScope.launch(Dispatchers.IO) {
             cancelPreviousThenRun {
-                searchList.clear()
-                for (app in list) {
-                    searchList.add(app.appInfo.loadLabel(packageManager))
+                when (type) {
+                    AppType.All -> getInstalledPackage(packageManager)
+                    AppType.NonSystem -> getNonSystemPackage(packageManager)
+                    AppType.System -> getSystemPackage(packageManager)
+                    AppType.Recent -> getRecentApps(packageManager)
+                }.map { list ->
+                    searchList.clear()
+                    for (app in list) {
+                        searchList.add(app.appInfo.loadLabel(packageManager))
+                    }
+
+                    currentAppType = type
+                    currentList = list
+
+                    ApiResult.success(list)
+                }.onStart {
+                    emit(ApiResult.loading())
+                }.onCompletion {
+                    emit(ApiResult.loaded())
+                }.catch {
+                    emit(ApiResult.failure(it))
+                }.collect {
+                    listFlow.tryEmit(it)
                 }
-                currentList = list
-                listFlow.tryEmit(ApiResult.success(list))
             }
         }
     }
+
+    private fun getInstalledPackage(packageManager: PackageManager) =
+        flow {
+            val result = packageManager.getInstalledApplications(0).map { CustomApplicationInfo(AppType.typeWithAppInfo(it), it) }
+            emit(result)
+        }
+
+    private fun getNonSystemPackage(packageManager: PackageManager) =
+        flow {
+            val result = packageManager.getInstalledApplications(0).filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 0 }.map { CustomApplicationInfo(AppType.NonSystem, it) }
+            emit(result)
+        }
+
+    private fun getSystemPackage(packageManager: PackageManager) =
+        flow {
+            val result = packageManager.getInstalledApplications(0).filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 1 }.map { CustomApplicationInfo(AppType.System, it) }
+            emit(result)
+        }
+
+    private fun getRecentApps(packageManager: PackageManager) =
+        flow {
+            recentDao.queryApps().mapNotNull { dbData ->
+                try {
+                    val info = packageManager.getApplicationInfo(dbData.packageName, 0)
+                    CustomApplicationInfo(AppType.Recent, info)
+                } catch (e: Exception) {
+                    recentDao.deleteApp(dbData)
+                    JFLog.e(e)
+                    null
+                }
+            }.also { emit(it) }
+        }
 
     fun filterCurrentList(filter: CharSequence?) {
         if (filter == null || filter.isEmpty()) {
