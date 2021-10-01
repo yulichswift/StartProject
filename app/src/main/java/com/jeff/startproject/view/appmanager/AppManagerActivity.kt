@@ -13,12 +13,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityAppManagerBinding
+import com.jeff.startproject.model.api.ApiResult
+import com.jeff.startproject.view.base.ProgressActivity
 import com.log.JFLog
 import com.utils.extension.throttleFirst
-import com.view.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
@@ -26,7 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 
 @AndroidEntryPoint
-class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
+class AppManagerActivity : ProgressActivity<ActivityAppManagerBinding>() {
 
     override fun getViewBinding(): ActivityAppManagerBinding {
         return ActivityAppManagerBinding.inflate(layoutInflater)
@@ -66,8 +66,19 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
                     launch {
                         viewModel.onListFlow()
                             .collectLatest {
-                                binding.totalLabel.text = "Installed ${it.size}"
-                                adapter.submitList(it)
+                                when (it) {
+                                    ApiResult.Loading -> setRefreshing(true)
+                                    is ApiResult.Success -> {
+                                        val data = it.data
+                                        binding.totalLabel.text = "Installed ${data.size}"
+                                        adapter.submitList(data)
+
+                                        setRefreshing(false)
+                                    }
+                                    ApiResult.SuccessNoContent -> TODO()
+                                    is ApiResult.Failure -> TODO()
+                                    ApiResult.Loaded -> TODO()
+                                }
                             }
                     }
 
@@ -121,8 +132,6 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
         binding.refreshLayout.setOnRefreshListener {
             lifecycleScope.launch {
                 viewModel.loadList(packageManager, viewModel.currentAppType)
-                delay(1_000L)
-                binding.refreshLayout.isRefreshing = false
             }
         }
 
@@ -135,6 +144,17 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
             ArrayAdapter(this@AppManagerActivity, R.layout.simple_dropdown_item, AppManagerViewModel.IconType.values().map { it.name }).also { binding.autoImageText.setAdapter(it) }
 
             viewModel.loadList(packageManager, initAppType)
+        }
+    }
+
+    private fun setRefreshing(isRefreshing: Boolean) {
+        if (isRefreshing) {
+            if (!binding.refreshLayout.isRefreshing) {
+                progressHUD.show()
+            }
+        } else {
+            progressHUD.dismiss()
+            binding.refreshLayout.isRefreshing = isRefreshing
         }
     }
 }

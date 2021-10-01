@@ -4,6 +4,7 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.lifecycle.viewModelScope
 import com.jeff.startproject.dao.RecentAppsDao
+import com.jeff.startproject.model.api.ApiResult
 import com.jeff.startproject.model.db.RecentApp
 import com.log.JFLog
 import com.view.base.BaseViewModel
@@ -55,15 +56,17 @@ class AppManagerViewModel @Inject internal constructor(
     private val searchList: MutableList<CharSequence> = mutableListOf()
     private var currentList: List<CustomApplicationInfo> = emptyList()
 
-    private val listFlow = MutableSharedFlow<List<CustomApplicationInfo>>(
+    private val listFlow = MutableSharedFlow<ApiResult<List<CustomApplicationInfo>>>(
         replay = 0,
         extraBufferCapacity = 1,
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
-    fun onListFlow(): SharedFlow<List<CustomApplicationInfo>> = listFlow
+    fun onListFlow(): SharedFlow<ApiResult<List<CustomApplicationInfo>>> = listFlow
 
     fun loadList(packageManager: PackageManager, type: AppType) {
+        listFlow.tryEmit(ApiResult.loading())
+
         currentAppType = type
         when (type) {
             AppType.All -> getInstalledPackage(packageManager)
@@ -119,14 +122,14 @@ class AppManagerViewModel @Inject internal constructor(
                     searchList.add(app.appInfo.loadLabel(packageManager))
                 }
                 currentList = list
-                listFlow.tryEmit(list)
+                listFlow.tryEmit(ApiResult.success(list))
             }
         }
     }
 
     fun filterCurrentList(filter: CharSequence?) {
         if (filter == null || filter.isEmpty()) {
-            listFlow.tryEmit(currentList)
+            listFlow.tryEmit(ApiResult.success(currentList))
         } else {
             viewModelScope.launch(Dispatchers.IO) {
                 cancelPreviousThenRun {
@@ -136,7 +139,7 @@ class AppManagerViewModel @Inject internal constructor(
                             result.add(currentList[i])
                         }
                     }
-                    listFlow.tryEmit(result)
+                    listFlow.tryEmit(ApiResult.success(result))
                 }
             }
         }
