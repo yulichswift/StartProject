@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.FragmentFileContentBinding
@@ -17,6 +19,8 @@ import com.jeff.startproject.view.diaglog.ConfirmDialogFragment
 import com.log.JFLog
 import com.view.base.NavigateItem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class FileContentFragment : ProgressFragment<FragmentFileContentBinding>() {
@@ -36,35 +40,40 @@ class FileContentFragment : ProgressFragment<FragmentFileContentBinding>() {
             ConfirmDialogFragment(getString(R.string.message_back_disable), false).show(parentFragmentManager, "Confirm")
         }
 
-        viewModel.status.observe(viewLifecycleOwner, Observer { event ->
-            event.getContentIfNotHandled()?.also { result ->
-                when (result) {
-                    ModelResult.Loading -> progressHUD.show()
-                    ModelResult.Loaded -> progressHUD.dismiss()
-                }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                launch {
+                    viewModel.status.collectLatest { result ->
+                        when (result) {
+                            ModelResult.Loading -> progressHUD.show()
+                            ModelResult.Loaded -> progressHUD.dismiss()
+                            else -> Unit
+                        }
 
-                when (result) {
-                    is ModelResult.Success -> {
-                        result.data
-                    }
-                    is ModelResult.Failure -> {
-                        result.throwable.localizedMessage
-                    }
-                    else -> null
-                }?.also {
-                    binding.tvContent.text = it
-                }
+                        when (result) {
+                            is ModelResult.Success -> {
+                                result.data
+                            }
+                            is ModelResult.Failure -> {
+                                result.throwable.localizedMessage
+                            }
+                            else -> null
+                        }?.also {
+                            binding.tvContent.text = it
+                        }
 
-                when (result) {
-                    is ModelResult.Success -> R.color.silver
-                    is ModelResult.Failure -> R.color.orange_red
-                    ModelResult.Loading -> R.color.black
-                    else -> null
-                }?.also {
-                    binding.viewStatus.setBackgroundColor(resources.getColor(it, null))
+                        when (result) {
+                            is ModelResult.Success -> R.color.silver
+                            is ModelResult.Failure -> R.color.orange_red
+                            ModelResult.Loading -> R.color.black
+                            else -> null
+                        }?.also {
+                            binding.viewStatus.setBackgroundColor(resources.getColor(it, null))
+                        }
+                    }
                 }
             }
-        })
+        }
 
         arguments?.getString("path")?.also {
             viewModel.readFile(it, true)

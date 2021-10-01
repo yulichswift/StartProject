@@ -1,16 +1,14 @@
 package com.jeff.startproject.view.db
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jeff.startproject.dao.UserDao
 import com.jeff.startproject.model.db.DbResult
 import com.jeff.startproject.model.db.User
 import com.log.JFLog
-import com.utils.lifecycle.SingleEvent
 import com.view.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,11 +22,23 @@ class DbViewModel @Inject internal constructor(
         private const val METHOD = 2
     }
 
-    private val _dbSingleResult = MutableLiveData<SingleEvent<DbResult<User>>>()
-    val dbSingleResult: LiveData<SingleEvent<DbResult<User>>> = _dbSingleResult
+    private val _dbSingleResult by lazy {
+        MutableSharedFlow<DbResult<User>>(
+            replay = 0,
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        )
+    }
+    val dbSingleResult: SharedFlow<DbResult<User>> get() = _dbSingleResult
 
-    private val _dbListResult = MutableLiveData<SingleEvent<DbResult<List<User>>>>()
-    val dbListResult: LiveData<SingleEvent<DbResult<List<User>>>> = _dbListResult
+    private val _dbListResult by lazy {
+        MutableSharedFlow<DbResult<List<User>>>(
+            replay = 0,
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        )
+    }
+    val dbListResult: SharedFlow<DbResult<List<User>>> get() = _dbListResult
 
     private fun insertUserFlow(users: List<User>) = flow {
         JFLog.d("insertUserFlow start")
@@ -101,8 +111,7 @@ class DbViewModel @Inject internal constructor(
 
     fun queryUserByName(name: String) {
         when {
-            name.isBlank() -> _dbSingleResult.value =
-                SingleEvent(DbResult.failure(RuntimeException("Please input something")))
+            name.isBlank() -> _dbSingleResult.tryEmit(DbResult.failure(RuntimeException("Please input something")))
             else -> {
                 when (METHOD) {
                     1 -> queryUserByName1(name)
@@ -114,8 +123,7 @@ class DbViewModel @Inject internal constructor(
 
     fun queryUserLikeName(name: String) {
         when {
-            name.isBlank() -> _dbListResult.value =
-                SingleEvent(DbResult.failure(RuntimeException("Please input something")))
+            name.isBlank() -> _dbListResult.tryEmit(DbResult.failure(RuntimeException("Please input something")))
             else -> {
                 when (METHOD) {
                     1 -> queryUserLikeName1(name)
@@ -295,10 +303,10 @@ class DbViewModel @Inject internal constructor(
     }
 
     private fun collectResult(result: DbResult<User>) {
-        _dbSingleResult.value = SingleEvent(result)
+        _dbSingleResult.tryEmit(result)
     }
 
     private fun collectListResult(result: DbResult<List<User>>) {
-        _dbListResult.value = SingleEvent(result)
+        _dbListResult.tryEmit(result)
     }
 }

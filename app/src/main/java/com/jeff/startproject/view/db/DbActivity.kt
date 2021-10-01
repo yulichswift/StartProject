@@ -2,13 +2,17 @@ package com.jeff.startproject.view.db
 
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.jeff.startproject.databinding.ActivityDbBinding
 import com.jeff.startproject.model.db.DbResult
 import com.jeff.startproject.model.db.User
 import com.log.JFLog
 import com.view.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DbActivity : BaseActivity<ActivityDbBinding>() {
@@ -22,53 +26,57 @@ class DbActivity : BaseActivity<ActivityDbBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.dbSingleResult.observe(this, Observer { event ->
-            event.getContentIfNotHandled()?.also {
-                JFLog.d("$it")
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                launch {
+                    viewModel.dbSingleResult.collectLatest {
+                        JFLog.d("$it")
 
-                when (it) {
-                    is DbResult.Loading -> {
-                        binding.layoutQuery.error = ""
-                    }
-                    is DbResult.Loaded -> {
-                    }
-                    is DbResult.Failure -> {
-                        binding.layoutQuery.error = it.throwable.localizedMessage
-                    }
-                    is DbResult.SuccessNoContent -> {
-                        binding.layoutQuery.error = "Db result empty"
-                    }
-                    is DbResult.Success -> {
+                        when (it) {
+                            is DbResult.Loading -> {
+                                binding.layoutQuery.error = ""
+                            }
+                            is DbResult.Loaded -> {
+                            }
+                            is DbResult.Failure -> {
+                                binding.layoutQuery.error = it.throwable.localizedMessage
+                            }
+                            is DbResult.SuccessNoContent -> {
+                                binding.layoutQuery.error = "Db result empty"
+                            }
+                            is DbResult.Success -> {
+                            }
+                        }
                     }
                 }
-            }
-        })
 
-        viewModel.dbListResult.observe(this, Observer { event ->
-            event.getContentIfNotHandled()?.also {
-                JFLog.d("$it")
+                launch {
+                    viewModel.dbListResult.collectLatest {
+                        JFLog.d("$it")
 
-                when (it) {
-                    is DbResult.Loading -> {
-                        binding.layoutQuery.error = ""
-                    }
-                    is DbResult.Loaded -> {
-                    }
-                    is DbResult.Failure -> {
-                        binding.layoutQuery.error = it.throwable.localizedMessage
-                    }
-                    is DbResult.SuccessNoContent -> {
-                        binding.layoutQuery.error = "Db result empty"
-                    }
-                    is DbResult.Success -> {
-                        JFLog.d("Query result:")
-                        it.data.forEach { user ->
-                            JFLog.d("$user")
+                        when (it) {
+                            is DbResult.Loading -> {
+                                binding.layoutQuery.error = ""
+                            }
+                            is DbResult.Loaded -> {
+                            }
+                            is DbResult.Failure -> {
+                                binding.layoutQuery.error = it.throwable.localizedMessage
+                            }
+                            is DbResult.SuccessNoContent -> {
+                                binding.layoutQuery.error = "Db result empty"
+                            }
+                            is DbResult.Success -> {
+                                JFLog.d("Query result:")
+                                it.data.forEach { user ->
+                                    JFLog.d("$user")
+                                }
+                            }
                         }
                     }
                 }
             }
-        })
+        }
 
         binding.btnInsert.setOnClickListener {
             mutableListOf<User>().also {

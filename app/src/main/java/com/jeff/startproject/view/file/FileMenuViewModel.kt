@@ -8,11 +8,11 @@ import com.jeff.startproject.R
 import com.jeff.startproject.enums.ModelResult
 import com.log.JFLog
 import com.utils.extension.fileExtension
-import com.utils.lifecycle.SingleEvent
 import com.view.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -34,8 +34,14 @@ class FileMenuViewModel @Inject internal constructor(
     private val _btnStartText = MutableLiveData(context.getString(R.string.text_start))
     val btnStartText: LiveData<String> = _btnStartText
 
-    private val _request = MutableLiveData<SingleEvent<ModelResult<Nothing>>>()
-    val request: LiveData<SingleEvent<ModelResult<Nothing>>> = _request
+    private val _request by lazy {
+        MutableSharedFlow<ModelResult<Nothing>>(
+            replay = 0,
+            extraBufferCapacity = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST,
+        )
+    }
+    val request: SharedFlow<ModelResult<Nothing>> get() = _request
 
     fun start() {
         viewModelScope.launch {
@@ -109,7 +115,7 @@ class FileMenuViewModel @Inject internal constructor(
                         emit(ModelResult.loaded())
                     }
                     .collect {
-                        _request.value = SingleEvent(it)
+                        _request.tryEmit(it)
                     }
             }
         }

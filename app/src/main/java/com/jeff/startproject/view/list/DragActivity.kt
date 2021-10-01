@@ -37,24 +37,22 @@ class DragActivity : BaseActivity<ActivityDragBinding>() {
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                itemDragDropCallback.onRowMoved().collectLatest {
-                    adapter.swapItem(it.first, it.second)
+                launch {
+                    itemDragDropCallback.onRowMoved().collectLatest {
+                        adapter.swapItem(it.first, it.second)
+                    }
                 }
-            }
-        }
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                itemDragDropCallback.onRowSelected().collectLatest {
-                    it.get()?.itemView?.setBackgroundColor(Color.LTGRAY)
+                launch {
+                    itemDragDropCallback.onRowSelected().collectLatest {
+                        it.get()?.itemView?.setBackgroundColor(Color.LTGRAY)
+                    }
                 }
-            }
-        }
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                itemDragDropCallback.onRowClear().collectLatest {
-                    it.get()?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+                launch {
+                    itemDragDropCallback.onRowClear().collectLatest {
+                        it.get()?.itemView?.setBackgroundColor(Color.TRANSPARENT)
+                    }
                 }
             }
         }

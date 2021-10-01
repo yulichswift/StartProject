@@ -6,8 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.FragmentFileMenuBinding
@@ -16,6 +18,8 @@ import com.log.JFLog
 import com.view.base.BaseFragment
 import com.view.base.NavigateItem
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -39,19 +43,25 @@ class FileMenuFragment : BaseFragment<FragmentFileMenuBinding>() {
 
         binding.viewStatus.layoutParams.height = MyApplication.getStatusBarHeight()
 
-        viewModel.existActiveTask.observe(viewLifecycleOwner, Observer { event ->
-            event.getContentIfNotHandled()?.also {
-                if (it) {
-                    ConfirmDialogFragment(getString(R.string.message_wait), false).show(parentFragmentManager, "Confirm")
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                launch {
+                    viewModel.existActiveTask.collect {
+                        if (it) {
+                            ConfirmDialogFragment(getString(R.string.message_wait), false).show(parentFragmentManager, "Confirm")
+                        }
+                    }
+
+                }
+
+                launch {
+                    viewModel.request.collectLatest {
+                        JFLog.d("Request result: $it")
+                    }
+
                 }
             }
-        })
-
-        viewModel.request.observe(viewLifecycleOwner, Observer { event ->
-            event.getContentIfNotHandled()?.also {
-                JFLog.d("Request result: $it")
-            }
-        })
+        }
 
         viewModel.btnStartText.observe(viewLifecycleOwner, Observer {
             binding.btnStart.text = it
