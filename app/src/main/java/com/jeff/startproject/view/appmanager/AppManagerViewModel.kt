@@ -1,12 +1,13 @@
 package com.jeff.startproject.view.appmanager
 
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
 import androidx.lifecycle.viewModelScope
 import com.jeff.startproject.dao.RecentAppsDao
+import com.jeff.startproject.repository.appmanager.PackageRepository
+import com.jeff.startproject.view.appmanager.enums.AppType
+import com.jeff.startproject.view.appmanager.enums.ViewType
+import com.jeff.startproject.view.appmanager.vo.AppViewData
 import com.jeff.startproject.vo.api.ApiResource
 import com.jeff.startproject.vo.db.RecentApp
-import com.log.JFLog
 import com.view.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,73 +18,44 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppManagerViewModel @Inject internal constructor(
-    private val recentDao: RecentAppsDao
+    private val packageRepository: PackageRepository,
+    private val recentDao: RecentAppsDao,
 ) : BaseViewModel() {
 
     companion object {
         var enableRemove = true
     }
 
-    enum class AppType {
-        All,
-        NonSystem,
-        System,
-        Recent,
-        ;
+    val currentAppType get() = packageRepository.currentAppType
 
-        companion object {
-            fun typeWithAppInfo(appInfo: ApplicationInfo): AppType {
-                return if ((appInfo.flags and ApplicationInfo.FLAG_SYSTEM) == 1) {
-                    System
-                } else {
-                    NonSystem
-                }
-            }
+    private val placeholderItem = mutableListOf<AppViewData>().apply {
+        repeat(9) {
+            add(AppViewData(viewType = ViewType.Loading))
         }
     }
 
-    enum class IconType {
-        Logo,
-        Icon,
-        Unbadged,
-        Banner,
-        ;
-    }
-
-    var currentAppType = AppType.Recent
-        private set
-
-    private val searchList: MutableList<CharSequence> = mutableListOf()
-    private var currentList: List<CustomApplicationInfo> = emptyList()
-
-    private val listFlow = MutableSharedFlow<ApiResource<List<CustomApplicationInfo>>>(
+    private val listFlow = MutableSharedFlow<ApiResource<List<AppViewData>>>(
         replay = 0,
         extraBufferCapacity = 3,
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
-    fun onListFlow(): SharedFlow<ApiResource<List<CustomApplicationInfo>>> = listFlow
+    fun onListFlow(): SharedFlow<ApiResource<List<AppViewData>>> = listFlow
 
-    fun loadList(packageManager: PackageManager, type: AppType) {
+    fun loadList(type: AppType) {
         viewModelScope.launch(Dispatchers.IO) {
             cancelPreviousThenRun {
                 when (type) {
-                    AppType.All -> getInstalledPackage(packageManager)
-                    AppType.NonSystem -> getNonSystemPackage(packageManager)
-                    AppType.System -> getSystemPackage(packageManager)
-                    AppType.Recent -> getRecentApps(packageManager)
-                }.map { list ->
-                    searchList.clear()
-                    for (app in list) {
-                        searchList.add(app.appInfo.loadLabel(packageManager))
-                    }
-
-                    currentAppType = type
-                    currentList = list
-
-                    ApiResource.success(list)
+                    AppType.All -> packageRepository.getInstalledPackage()
+                    AppType.NonSystem -> packageRepository.getNonSystemPackage()
+                    AppType.System -> packageRepository.getSystemPackage()
+                    AppType.Recent -> packageRepository.getRecentApps()
+                }.flatMapConcat { list ->
+                    packageRepository.updateCacheData(type, list).getCacheData()
+                }.map {
+                    ApiResource.success(it)
                 }.onStart {
-                    emit(ApiResource.loading())
+                    emit(ApiResource.loading(placeholderItem))
                 }.onCompletion {
                     emit(ApiResource.loaded())
                 }.catch {
@@ -95,52 +67,13 @@ class AppManagerViewModel @Inject internal constructor(
         }
     }
 
-    private fun getInstalledPackage(packageManager: PackageManager) =
-        flow {
-            val result = packageManager.getInstalledApplications(0).map { CustomApplicationInfo(AppType.typeWithAppInfo(it), it) }
-            emit(result)
-        }
-
-    private fun getNonSystemPackage(packageManager: PackageManager) =
-        flow {
-            val result = packageManager.getInstalledApplications(0).filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 0 }.map { CustomApplicationInfo(AppType.NonSystem, it) }
-            emit(result)
-        }
-
-    private fun getSystemPackage(packageManager: PackageManager) =
-        flow {
-            val result = packageManager.getInstalledApplications(0).filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 1 }.map { CustomApplicationInfo(AppType.System, it) }
-            emit(result)
-        }
-
-    private fun getRecentApps(packageManager: PackageManager) =
-        flow {
-            recentDao.queryApps().mapNotNull { dbData ->
-                try {
-                    val info = packageManager.getApplicationInfo(dbData.packageName, 0)
-                    CustomApplicationInfo(AppType.Recent, info)
-                } catch (e: Exception) {
-                    recentDao.deleteApp(dbData)
-                    JFLog.e(e)
-                    null
-                }
-            }.also { emit(it) }
-        }
-
     fun filterCurrentList(filter: CharSequence?) {
-        if (filter == null || filter.isEmpty()) {
-            listFlow.tryEmit(ApiResource.success(currentList))
-        } else {
-            viewModelScope.launch(Dispatchers.IO) {
-                cancelPreviousThenRun {
-                    val result = arrayListOf<CustomApplicationInfo>()
-                    for (i in 0 until searchList.size) {
-                        if (searchList[i].contains(filter, true)) {
-                            result.add(currentList[i])
-                        }
+        viewModelScope.launch(Dispatchers.IO) {
+            cancelPreviousThenRun {
+                packageRepository.setFilter(filter).getCacheData()
+                    .collect { list ->
+                        listFlow.tryEmit(ApiResource.success(list))
                     }
-                    listFlow.tryEmit(ApiResource.success(result))
-                }
             }
         }
     }
@@ -157,11 +90,11 @@ class AppManagerViewModel @Inject internal constructor(
         }
     }
 
-    fun clearRecentApp(packageManager: PackageManager, packageName: String) {
+    fun clearRecentApp(packageName: String) {
         viewModelScope.launch(Dispatchers.IO) {
             cancelPreviousThenRun {
                 recentDao.deleteApp(packageName)
-                loadList(packageManager, AppType.Recent)
+                loadList(AppType.Recent)
             }
         }
     }

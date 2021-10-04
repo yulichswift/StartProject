@@ -14,21 +14,31 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ItemViewPackageInfoBinding
+import com.jeff.startproject.view.appmanager.enums.AppType
+import com.jeff.startproject.view.appmanager.enums.IconType
+import com.jeff.startproject.view.appmanager.enums.ViewType
+import com.jeff.startproject.view.appmanager.vo.AppViewData
+import com.jeff.startproject.view.appmanager.vo.PassAppInfo
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
-class AppAdapter(private val packageManager: PackageManager) : ListAdapter<CustomApplicationInfo, RecyclerView.ViewHolder>(DiffCallback) {
+class AppAdapter(private val packageManager: PackageManager) : ListAdapter<AppViewData, RecyclerView.ViewHolder>(DiffCallback) {
 
     companion object {
-        private val DiffCallback = object : DiffUtil.ItemCallback<CustomApplicationInfo>() {
-            override fun areItemsTheSame(oldItem: CustomApplicationInfo, newItem: CustomApplicationInfo): Boolean {
-                // 不比對 AppType 當 recyclerView 更新時, 會移動到相同 App 的位置, 物件不會更新.
-                return (oldItem.appInfo.packageName == newItem.appInfo.packageName) && (oldItem.appType == newItem.appType)
+        private val DiffCallback = object : DiffUtil.ItemCallback<AppViewData>() {
+            override fun areItemsTheSame(oldItem: AppViewData, newItem: AppViewData): Boolean {
+                return when (oldItem.viewType == newItem.viewType) {
+                    true -> when (oldItem.viewType) {
+                        ViewType.Loading -> true
+                        ViewType.Normal -> oldItem.appInfo?.packageName == newItem.appInfo?.packageName && (oldItem.appType == newItem.appType)
+                    }
+                    false -> false
+                }
             }
 
-            override fun areContentsTheSame(oldItem: CustomApplicationInfo, newItem: CustomApplicationInfo): Boolean {
-                return oldItem.appInfo.labelRes == newItem.appInfo.labelRes
+            override fun areContentsTheSame(oldItem: AppViewData, newItem: AppViewData): Boolean {
+                return oldItem.appInfo?.labelRes == newItem.appInfo?.labelRes
             }
         }
     }
@@ -53,12 +63,16 @@ class AppAdapter(private val packageManager: PackageManager) : ListAdapter<Custo
 
     fun onClickedRemove(): SharedFlow<PassAppInfo> = onRowRemove
 
-    var iconType = AppManagerViewModel.IconType.Icon
+    var iconType = IconType.Icon
         @SuppressLint("NotifyDataSetChanged")
         set(value) {
             field = value
             notifyDataSetChanged()
         }
+
+    override fun getItemViewType(position: Int): Int {
+        return getItem(position).viewType.ordinal
+    }
 
     private fun inflateWithLayout(viewGroup: ViewGroup, @LayoutRes layoutRes: Int): View {
         val layoutInflater = LayoutInflater.from(viewGroup.context)
@@ -66,13 +80,20 @@ class AppAdapter(private val packageManager: PackageManager) : ListAdapter<Custo
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = inflateWithLayout(parent, R.layout.item_view_package_info)
-        return ViewHolder(view)
+        return when (viewType) {
+            ViewType.Loading.ordinal -> LoadingViewHolder(inflateWithLayout(parent, R.layout.item_view_package_loading))
+            else -> ViewHolder(inflateWithLayout(parent, R.layout.item_view_package_info))
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ViewHolder).bind(getItem(position))
+        when (holder) {
+            is ViewHolder -> holder.bind(getItem(position))
+            else -> Unit
+        }
     }
+
+    inner class LoadingViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemViewPackageInfoBinding.bind(view)
@@ -95,21 +116,21 @@ class AppAdapter(private val packageManager: PackageManager) : ListAdapter<Custo
             }
         }
 
-        private var appType: AppManagerViewModel.AppType? = null
+        private var appType: AppType? = null
         private var packageName: String? = null
 
         @SuppressLint("SetTextI18n")
-        fun bind(customAppInfo: CustomApplicationInfo) {
+        fun bind(customAppInfo: AppViewData) {
             appType = customAppInfo.appType
-            val appInfo = customAppInfo.appInfo
+            val appInfo = customAppInfo.appInfo!!
             packageName = appInfo.packageName
 
             binding.icon.setImageDrawable(
                 when (iconType) {
-                    AppManagerViewModel.IconType.Logo -> appInfo.loadLogo(packageManager)
-                    AppManagerViewModel.IconType.Icon -> appInfo.loadIcon(packageManager)
-                    AppManagerViewModel.IconType.Unbadged -> appInfo.loadUnbadgedIcon(packageManager)
-                    AppManagerViewModel.IconType.Banner -> appInfo.loadBanner(packageManager)
+                    IconType.Logo -> appInfo.loadLogo(packageManager)
+                    IconType.Icon -> appInfo.loadIcon(packageManager)
+                    IconType.Unbadged -> appInfo.loadUnbadgedIcon(packageManager)
+                    IconType.Banner -> appInfo.loadBanner(packageManager)
                 }
             )
 
@@ -118,16 +139,16 @@ class AppAdapter(private val packageManager: PackageManager) : ListAdapter<Custo
             binding.descLabel.text = appInfo.loadDescription(packageManager)
 
             when (appType) {
-                AppManagerViewModel.AppType.NonSystem -> colorTrashNonSystem
-                AppManagerViewModel.AppType.System -> colorTrashSystem
-                AppManagerViewModel.AppType.Recent -> colorTrashRecent
+                AppType.NonSystem -> colorTrashNonSystem
+                AppType.System -> colorTrashSystem
+                AppType.Recent -> colorTrashRecent
                 else -> null
             }?.let {
                 ImageViewCompat.setImageTintList(binding.btnRemove, it)
             }
 
             binding.btnRemove.visibility = when (appType) {
-                AppManagerViewModel.AppType.Recent -> View.VISIBLE
+                AppType.Recent -> View.VISIBLE
                 else -> if (AppManagerViewModel.enableRemove) View.VISIBLE else View.GONE
             }
         }

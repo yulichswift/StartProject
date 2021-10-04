@@ -13,10 +13,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityAppManagerBinding
-import com.jeff.startproject.view.base.ProgressActivity
+import com.jeff.startproject.view.appmanager.enums.AppType
+import com.jeff.startproject.view.appmanager.enums.IconType
 import com.jeff.startproject.vo.api.ApiResource
 import com.log.JFLog
 import com.utils.extension.throttleFirst
+import com.view.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
@@ -24,7 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 
 @AndroidEntryPoint
-class AppManagerActivity : ProgressActivity<ActivityAppManagerBinding>() {
+class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
 
     override fun getViewBinding(): ActivityAppManagerBinding {
         return ActivityAppManagerBinding.inflate(layoutInflater)
@@ -48,12 +50,12 @@ class AppManagerActivity : ProgressActivity<ActivityAppManagerBinding>() {
         binding.recyclerView.adapter = adapter
 
         binding.autoAppText.setOnItemClickListener { _, _, position, _ ->
-            AppManagerViewModel.AppType.values().getOrNull(position)?.also {
-                viewModel.loadList(packageManager, it)
+            AppType.values().getOrNull(position)?.also {
+                viewModel.loadList(it)
             }
         }
         binding.autoImageText.setOnItemClickListener { _, _, position, _ ->
-            AppManagerViewModel.IconType.values().getOrNull(position)?.also {
+            IconType.values().getOrNull(position)?.also {
                 adapter.iconType = it
             }
         }
@@ -66,7 +68,11 @@ class AppManagerActivity : ProgressActivity<ActivityAppManagerBinding>() {
                             .collect {
                                 when (it) {
                                     ApiResource.Loading -> setRefreshing(true)
-                                    is ApiResource.LoadingData -> TODO("setRefreshing(true)")
+                                    is ApiResource.LoadingContent -> {
+                                        setRefreshing(true)
+                                        binding.totalLabel.text = "Loading..."
+                                        adapter.submitList(it.data)
+                                    }
                                     is ApiResource.Success -> {
                                         val data = it.data
                                         binding.totalLabel.text = "Installed ${data.size}"
@@ -106,7 +112,7 @@ class AppManagerActivity : ProgressActivity<ActivityAppManagerBinding>() {
                             .throttleFirst(1_000L)
                             .collectLatest {
                                 when (it.appType) {
-                                    AppManagerViewModel.AppType.Recent -> viewModel.clearRecentApp(packageManager, it.packageName)
+                                    AppType.Recent -> viewModel.clearRecentApp(it.packageName)
                                     else -> {
                                         val intent = Intent().apply {
                                             action = Intent.ACTION_DELETE
@@ -128,7 +134,7 @@ class AppManagerActivity : ProgressActivity<ActivityAppManagerBinding>() {
 
         binding.refreshLayout.setOnRefreshListener {
             lifecycleScope.launch {
-                viewModel.loadList(packageManager, viewModel.currentAppType)
+                viewModel.loadList(viewModel.currentAppType)
             }
         }
 
@@ -137,20 +143,18 @@ class AppManagerActivity : ProgressActivity<ActivityAppManagerBinding>() {
 
             binding.autoAppText.setText(initAppType.name)
             binding.autoImageText.setText(adapter.iconType.name)
-            ArrayAdapter(this@AppManagerActivity, R.layout.simple_dropdown_item, AppManagerViewModel.AppType.values().map { it.name }).also { binding.autoAppText.setAdapter(it) }
-            ArrayAdapter(this@AppManagerActivity, R.layout.simple_dropdown_item, AppManagerViewModel.IconType.values().map { it.name }).also { binding.autoImageText.setAdapter(it) }
+            ArrayAdapter(this@AppManagerActivity, R.layout.simple_dropdown_item, AppType.values().map { it.name }).also { binding.autoAppText.setAdapter(it) }
+            ArrayAdapter(this@AppManagerActivity, R.layout.simple_dropdown_item, IconType.values().map { it.name }).also { binding.autoImageText.setAdapter(it) }
 
-            viewModel.loadList(packageManager, initAppType)
+            viewModel.loadList(initAppType)
         }
     }
 
     private fun setRefreshing(isRefreshing: Boolean) {
         if (isRefreshing) {
             if (!binding.refreshLayout.isRefreshing) {
-                progressHUD.show()
             }
         } else {
-            progressHUD.dismiss()
             binding.refreshLayout.isRefreshing = isRefreshing
         }
     }
