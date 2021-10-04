@@ -5,7 +5,7 @@ import com.jeff.startproject.Constant
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.dao.RecentAppsDao
 import com.jeff.startproject.dao.UserDao
-import com.jeff.startproject.model.db.AppDatabase
+import com.jeff.startproject.vo.db.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

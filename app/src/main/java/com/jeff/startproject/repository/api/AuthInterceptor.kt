@@ -1,10 +1,10 @@
-package com.jeff.startproject.model.api
+package com.jeff.startproject.repository.api
 
 import android.text.TextUtils
 import com.jeff.startproject.BuildConfig
-import com.jeff.startproject.model.api.ApiRepository.Companion.AUTHORIZATION
-import com.jeff.startproject.model.api.ApiRepository.Companion.X_APP_VERSION
-import com.jeff.startproject.model.pref.Pref
+import com.jeff.startproject.repository.api.ApiRepository.Companion.AUTHORIZATION
+import com.jeff.startproject.repository.api.ApiRepository.Companion.X_APP_VERSION
+import com.jeff.startproject.vo.pref.Pref
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response

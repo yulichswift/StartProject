@@ -3,7 +3,7 @@ package com.jeff.startproject.view.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.jeff.startproject.model.sample.LoginUser
+import com.jeff.startproject.vo.sample.LoginUser
 import com.utils.lifecycle.EditTextLiveData
 import com.utils.lifecycle.EditTextMutableLiveData
 import com.view.base.BaseViewModel

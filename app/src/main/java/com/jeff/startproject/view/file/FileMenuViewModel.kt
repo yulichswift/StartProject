@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.jeff.startproject.R
-import com.jeff.startproject.enums.ModelResult
+import com.jeff.startproject.enums.ModelResource
 import com.log.JFLog
 import com.utils.extension.fileExtension
 import com.view.base.BaseViewModel
@@ -35,13 +35,13 @@ class FileMenuViewModel @Inject internal constructor(
     val btnStartText: LiveData<String> = _btnStartText
 
     private val _request by lazy {
-        MutableSharedFlow<ModelResult<Nothing>>(
+        MutableSharedFlow<ModelResource<Nothing>>(
             replay = 0,
             extraBufferCapacity = 3,
             onBufferOverflow = BufferOverflow.DROP_OLDEST,
         )
     }
-    val request: SharedFlow<ModelResult<Nothing>> get() = _request
+    val request: SharedFlow<ModelResource<Nothing>> get() = _request
 
     fun start() {
         viewModelScope.launch {
@@ -103,16 +103,16 @@ class FileMenuViewModel @Inject internal constructor(
                     JFLog.d("Finish: ${System.currentTimeMillis() - startTime} ns")
 
                     delay(5000L)
-                    emit(ModelResult.success(null))
+                    emit(ModelResource.success(null))
                 }
                     .flowOn(Dispatchers.IO)
                     .onStart {
                         _btnStartText.value = context.getString(R.string.text_processing)
-                        emit(ModelResult.loading())
+                        emit(ModelResource.loading())
                     }
                     .onCompletion {
                         _btnStartText.value = context.getString(R.string.text_finish)
-                        emit(ModelResult.loaded())
+                        emit(ModelResource.loaded())
                     }
                     .collect {
                         _request.tryEmit(it)

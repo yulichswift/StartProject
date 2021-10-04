@@ -1,4 +1,4 @@
-package com.jeff.startproject.model.pref
+package com.jeff.startproject.vo.pref
 
 import android.content.Context
 import android.text.TextUtils

@@ -4,8 +4,8 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.lifecycle.viewModelScope
 import com.jeff.startproject.dao.RecentAppsDao
-import com.jeff.startproject.model.api.ApiResult
-import com.jeff.startproject.model.db.RecentApp
+import com.jeff.startproject.vo.api.ApiResource
+import com.jeff.startproject.vo.db.RecentApp
 import com.log.JFLog
 import com.view.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -56,13 +56,13 @@ class AppManagerViewModel @Inject internal constructor(
     private val searchList: MutableList<CharSequence> = mutableListOf()
     private var currentList: List<CustomApplicationInfo> = emptyList()
 
-    private val listFlow = MutableSharedFlow<ApiResult<List<CustomApplicationInfo>>>(
+    private val listFlow = MutableSharedFlow<ApiResource<List<CustomApplicationInfo>>>(
         replay = 0,
         extraBufferCapacity = 3,
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
-    fun onListFlow(): SharedFlow<ApiResult<List<CustomApplicationInfo>>> = listFlow
+    fun onListFlow(): SharedFlow<ApiResource<List<CustomApplicationInfo>>> = listFlow
 
     fun loadList(packageManager: PackageManager, type: AppType) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -81,13 +81,13 @@ class AppManagerViewModel @Inject internal constructor(
                     currentAppType = type
                     currentList = list
 
-                    ApiResult.success(list)
+                    ApiResource.success(list)
                 }.onStart {
-                    emit(ApiResult.loading())
+                    emit(ApiResource.loading())
                 }.onCompletion {
-                    emit(ApiResult.loaded())
+                    emit(ApiResource.loaded())
                 }.catch {
-                    emit(ApiResult.failure(it))
+                    emit(ApiResource.failure(it))
                 }.collect {
                     listFlow.tryEmit(it)
                 }
@@ -129,7 +129,7 @@ class AppManagerViewModel @Inject internal constructor(
 
     fun filterCurrentList(filter: CharSequence?) {
         if (filter == null || filter.isEmpty()) {
-            listFlow.tryEmit(ApiResult.success(currentList))
+            listFlow.tryEmit(ApiResource.success(currentList))
         } else {
             viewModelScope.launch(Dispatchers.IO) {
                 cancelPreviousThenRun {
@@ -139,7 +139,7 @@ class AppManagerViewModel @Inject internal constructor(
                             result.add(currentList[i])
                         }
                     }
-                    listFlow.tryEmit(ApiResult.success(result))
+                    listFlow.tryEmit(ApiResource.success(result))
                 }
             }
         }

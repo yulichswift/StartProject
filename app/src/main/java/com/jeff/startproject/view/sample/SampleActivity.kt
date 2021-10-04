@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.jeff.startproject.databinding.ActivitySampleBinding
-import com.jeff.startproject.enums.ModelResult
+import com.jeff.startproject.enums.ModelResource
 import com.log.JFLog
 import com.view.base.BaseActivity
 
@@ -23,48 +23,48 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
             binding.textLog.text = message
         })
 
-        ModelResult.Success("Happy").also {
+        ModelResource.Success("Happy").also {
             handleStringResult(it)
             transformResult(it)
         }
 
-        ModelResult.Success(999).also {
+        ModelResource.Success(999).also {
             handleIntResult(it)
             transformResult(it)
         }
 
-        ModelResult.Failure(Exception("Help!")).also {
-            handleStringResult(it)
-            handleIntResult(it)
-            transformResult(it)
-        }
-
-        ModelResult.Failure(RuntimeException("Crash!")).also {
+        ModelResource.Failure(Exception("Help!")).also {
             handleStringResult(it)
             handleIntResult(it)
             transformResult(it)
         }
 
-        ModelResult.Loading.also {
+        ModelResource.Failure(RuntimeException("Crash!")).also {
+            handleStringResult(it)
+            handleIntResult(it)
+            transformResult(it)
+        }
+
+        ModelResource.Loading.also {
             handleStringResult(it)
             handleIntResult(it)
             transformResult(it)
         }
     }
 
-    private fun handleStringResult(modelResult: ModelResult<String>) {
-        when (modelResult) {
-            is ModelResult.Success -> {
-                JFLog.d("Data: ${modelResult.data}").also {
+    private fun handleStringResult(modelResource: ModelResource<String>) {
+        when (modelResource) {
+            is ModelResource.Success -> {
+                JFLog.d("Data: ${modelResource.data}").also {
                     viewModel.appendMessage(it)
                 }
             }
-            is ModelResult.Failure -> {
-                JFLog.e("Failure: ${modelResult.throwable.message}").also {
+            is ModelResource.Failure -> {
+                JFLog.e("Failure: ${modelResource.throwable.message}").also {
                     viewModel.appendMessage(it)
                 }
             }
-            ModelResult.Loading -> {
+            ModelResource.Loading -> {
                 JFLog.d("Loading").also {
                     viewModel.appendMessage(it)
                 }
@@ -72,19 +72,19 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
         }
     }
 
-    private fun handleIntResult(modelResult: ModelResult<Int>) {
-        when (modelResult) {
-            is ModelResult.Success -> {
-                JFLog.d("Data: ${modelResult.data}").also {
+    private fun handleIntResult(modelResource: ModelResource<Int>) {
+        when (modelResource) {
+            is ModelResource.Success -> {
+                JFLog.d("Data: ${modelResource.data}").also {
                     viewModel.appendMessage(it)
                 }
             }
-            is ModelResult.Failure -> {
-                JFLog.e("Failure: ${modelResult.throwable.message}").also {
+            is ModelResource.Failure -> {
+                JFLog.e("Failure: ${modelResource.throwable.message}").also {
                     viewModel.appendMessage(it)
                 }
             }
-            ModelResult.Loading -> {
+            ModelResource.Loading -> {
                 JFLog.d("Loading").also {
                     viewModel.appendMessage(it)
                 }
@@ -92,8 +92,8 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
         }
     }
 
-    private fun transformResult(modelResult: ModelResult<Any>) {
-        modelResult.transform.also {
+    private fun transformResult(modelResource: ModelResource<Any>) {
+        modelResource.transform.also {
             JFLog.d(it).also {
                 viewModel.appendMessage(it)
             }
@@ -105,11 +105,11 @@ class SampleActivity : BaseActivity<ActivitySampleBinding>() {
 
     private val <T> T.transform: String
         get() = when (this) {
-            is ModelResult.Success<*> -> "Success"
-            ModelResult.SuccessNoContent -> "SuccessNoContent"
-            is ModelResult.Failure -> "Failure"
-            ModelResult.Loading -> "Loading"
-            ModelResult.Loaded -> "Loaded"
+            is ModelResource.Success<*> -> "Success"
+            ModelResource.SuccessNoContent -> "SuccessNoContent"
+            is ModelResource.Failure -> "Failure"
+            ModelResource.Loading -> "Loading"
+            ModelResource.Loaded -> "Loaded"
             else -> "?"
         }
 }

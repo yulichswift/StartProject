@@ -1,4 +1,4 @@
-package com.jeff.startproject.model.db
+package com.jeff.startproject.vo.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

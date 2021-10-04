@@ -1,7 +1,6 @@
-package com.jeff.startproject.model.pref
+package com.jeff.startproject.vo.pref
 
 import com.google.gson.Gson
-import com.jeff.startproject.model.pref.token.TokenData
 
 class Pref(private val gson: Gson, preferenceFileName: String) :
     AbstractPref(preferenceFileName) {

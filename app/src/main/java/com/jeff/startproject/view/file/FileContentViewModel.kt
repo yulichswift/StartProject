@@ -3,7 +3,7 @@ package com.jeff.startproject.view.file
 import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.jeff.startproject.R
-import com.jeff.startproject.enums.ModelResult
+import com.jeff.startproject.enums.ModelResource
 import com.view.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -21,13 +21,13 @@ class FileContentViewModel @Inject internal constructor(
 ) : BaseViewModel() {
 
     private val _status by lazy {
-        MutableSharedFlow<ModelResult<String>>(
+        MutableSharedFlow<ModelResource<String>>(
             replay = 0,
             extraBufferCapacity = 3,
             onBufferOverflow = BufferOverflow.DROP_OLDEST,
         )
     }
-    val status: SharedFlow<ModelResult<String>> get() = _status
+    val status: SharedFlow<ModelResource<String>> get() = _status
 
     fun readFile(path: String, isInit: Boolean = false) {
         viewModelScope.launch {
@@ -48,19 +48,19 @@ class FileContentViewModel @Inject internal constructor(
                         for (line in lines) {
                             sb.appendln(line)
                         }
-                        emit(ModelResult.success(sb.toString()))
+                        emit(ModelResource.success(sb.toString()))
                     }
                 }
             }
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
-                    emit(ModelResult.failure(e))
+                    emit(ModelResource.failure(e))
                 }
                 .onStart {
-                    emit(ModelResult.loading())
+                    emit(ModelResource.loading())
                 }
                 .onCompletion {
-                    emit(ModelResult.loaded())
+                    emit(ModelResource.loaded())
                 }
                 .collect {
                     _status.tryEmit(it)

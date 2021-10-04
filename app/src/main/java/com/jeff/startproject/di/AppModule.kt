@@ -2,7 +2,7 @@ package com.jeff.startproject.di
 
 import com.google.gson.Gson
 import com.jeff.startproject.Constant
-import com.jeff.startproject.model.pref.Pref
+import com.jeff.startproject.vo.pref.Pref
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

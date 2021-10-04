@@ -1,4 +1,4 @@
-package com.jeff.startproject.model.sample
+package com.jeff.startproject.vo.sample
 
 import android.util.Patterns
 

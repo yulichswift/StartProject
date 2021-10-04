@@ -2,8 +2,8 @@ package com.jeff.startproject.view.db
 
 import androidx.lifecycle.viewModelScope
 import com.jeff.startproject.dao.UserDao
-import com.jeff.startproject.model.db.DbResult
-import com.jeff.startproject.model.db.User
+import com.jeff.startproject.vo.db.DbResource
+import com.jeff.startproject.vo.db.User
 import com.log.JFLog
 import com.view.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,33 +23,33 @@ class DbViewModel @Inject internal constructor(
     }
 
     private val _dbSingleResult by lazy {
-        MutableSharedFlow<DbResult<User>>(
+        MutableSharedFlow<DbResource<User>>(
             replay = 0,
             extraBufferCapacity = 3,
             onBufferOverflow = BufferOverflow.DROP_OLDEST,
         )
     }
-    val dbSingleResult: SharedFlow<DbResult<User>> get() = _dbSingleResult
+    val dbSingleResource: SharedFlow<DbResource<User>> get() = _dbSingleResult
 
     private val _dbListResult by lazy {
-        MutableSharedFlow<DbResult<List<User>>>(
+        MutableSharedFlow<DbResource<List<User>>>(
             replay = 0,
             extraBufferCapacity = 3,
             onBufferOverflow = BufferOverflow.DROP_OLDEST,
         )
     }
-    val dbListResult: SharedFlow<DbResult<List<User>>> get() = _dbListResult
+    val dbListResource: SharedFlow<DbResource<List<User>>> get() = _dbListResult
 
     private fun insertUserFlow(users: List<User>) = flow {
         JFLog.d("insertUserFlow start")
         userDao.insertUser(users)
-        emit(DbResult.success("insertUserFlow"))
+        emit(DbResource.success("insertUserFlow"))
     }
 
     private fun insertOrReplaceUserFlow(users: List<User>) = flow {
         JFLog.d("insertOrReplaceUserFlow start")
         userDao.insertOrReplaceUser(users)
-        emit(DbResult.success("insertOrReplaceUserFlow"))
+        emit(DbResource.success("insertOrReplaceUserFlow"))
     }
 
     fun nukeTable() {
@@ -63,7 +63,7 @@ class DbViewModel @Inject internal constructor(
             insertUserFlow(users)
                 .flatMapConcat {
                     when (it) {
-                        is DbResult.Success -> {
+                        is DbResource.Success -> {
                             insertOrReplaceUserFlow(users)
                         }
                         else -> {
@@ -78,20 +78,20 @@ class DbViewModel @Inject internal constructor(
                 }
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
-                    emit(DbResult.failure(e))
+                    emit(DbResource.failure(e))
                 }
                 .onStart {
-                    emit(DbResult.loading())
+                    emit(DbResource.loading())
                 }
                 .onCompletion {
-                    emit(DbResult.loaded())
+                    emit(DbResource.loaded())
                 }
                 .collect {
                     when (it) {
-                        is DbResult.Success -> {
+                        is DbResource.Success -> {
                             JFLog.i("Db: $it")
                         }
-                        is DbResult.Failure -> {
+                        is DbResource.Failure -> {
                             JFLog.e("Db: ${it.throwable}")
                         }
                         else -> {
@@ -111,7 +111,7 @@ class DbViewModel @Inject internal constructor(
 
     fun queryUserByName(name: String) {
         when {
-            name.isBlank() -> _dbSingleResult.tryEmit(DbResult.failure(RuntimeException("Please input something")))
+            name.isBlank() -> _dbSingleResult.tryEmit(DbResource.failure(RuntimeException("Please input something")))
             else -> {
                 when (METHOD) {
                     1 -> queryUserByName1(name)
@@ -123,7 +123,7 @@ class DbViewModel @Inject internal constructor(
 
     fun queryUserLikeName(name: String) {
         when {
-            name.isBlank() -> _dbListResult.tryEmit(DbResult.failure(RuntimeException("Please input something")))
+            name.isBlank() -> _dbListResult.tryEmit(DbResource.failure(RuntimeException("Please input something")))
             else -> {
                 when (METHOD) {
                     1 -> queryUserLikeName1(name)
@@ -149,16 +149,16 @@ class DbViewModel @Inject internal constructor(
                             it
                         }
 
-                    DbResult.success(data)
+                    DbResource.success(data)
                 }
                 .catch { e ->
-                    emit(DbResult.failure(e))
+                    emit(DbResource.failure(e))
                 }
                 .onStart {
-                    emit(DbResult.loading())
+                    emit(DbResource.loading())
                 }
                 .onCompletion {
-                    emit(DbResult.loaded())
+                    emit(DbResource.loaded())
                 }
                 .collect {
                     collectListResult(it)
@@ -175,16 +175,16 @@ class DbViewModel @Inject internal constructor(
             userDao.queryUserByNameFlow(name)
                 .flowOn(Dispatchers.IO)
                 .map {
-                    DbResult.success(it)
+                    DbResource.success(it)
                 }
                 .catch { e ->
-                    emit(DbResult.failure(e))
+                    emit(DbResource.failure(e))
                 }
                 .onStart {
-                    emit(DbResult.loading())
+                    emit(DbResource.loading())
                 }
                 .onCompletion {
-                    emit(DbResult.loaded())
+                    emit(DbResource.loaded())
                 }
                 .collect {
                     collectResult(it)
@@ -201,16 +201,16 @@ class DbViewModel @Inject internal constructor(
             userDao.queryUserLikeNameFlow(name)
                 .flowOn(Dispatchers.IO)
                 .map {
-                    DbResult.success(it)
+                    DbResource.success(it)
                 }
                 .catch { e ->
-                    emit(DbResult.failure(e))
+                    emit(DbResource.failure(e))
                 }
                 .onStart {
-                    emit(DbResult.loading())
+                    emit(DbResource.loading())
                 }
                 .onCompletion {
-                    emit(DbResult.loaded())
+                    emit(DbResource.loaded())
                 }
                 .collect {
                     collectResult(it)
@@ -230,7 +230,7 @@ class DbViewModel @Inject internal constructor(
                     it
                 }
 
-            emit(DbResult.success(data))
+            emit(DbResource.success(data))
         }
     }
 
@@ -239,13 +239,13 @@ class DbViewModel @Inject internal constructor(
             flowQueryUsers2
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
-                    emit(DbResult.failure(e))
+                    emit(DbResource.failure(e))
                 }
                 .onStart {
-                    emit(DbResult.loading())
+                    emit(DbResource.loading())
                 }
                 .onCompletion {
-                    emit(DbResult.loaded())
+                    emit(DbResource.loaded())
                 }
                 .collect {
                     collectListResult(it)
@@ -260,18 +260,18 @@ class DbViewModel @Inject internal constructor(
         viewModelScope.launch {
             flow {
                 userDao.queryUserWithName(name).also {
-                    emit(DbResult.success(it))
+                    emit(DbResource.success(it))
                 }
             }
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
-                    emit(DbResult.failure(e))
+                    emit(DbResource.failure(e))
                 }
                 .onStart {
-                    emit(DbResult.loading())
+                    emit(DbResource.loading())
                 }
                 .onCompletion {
-                    emit(DbResult.loaded())
+                    emit(DbResource.loaded())
                 }
                 .collect {
                     collectResult(it)
@@ -283,18 +283,18 @@ class DbViewModel @Inject internal constructor(
         viewModelScope.launch {
             flow {
                 userDao.queryUserLikeName(name).also {
-                    emit(DbResult.success(it))
+                    emit(DbResource.success(it))
                 }
             }
                 .flowOn(Dispatchers.IO)
                 .catch { e ->
-                    emit(DbResult.failure(e))
+                    emit(DbResource.failure(e))
                 }
                 .onStart {
-                    emit(DbResult.loading())
+                    emit(DbResource.loading())
                 }
                 .onCompletion {
-                    emit(DbResult.loaded())
+                    emit(DbResource.loaded())
                 }
                 .collect {
                     collectResult(it)
@@ -302,11 +302,11 @@ class DbViewModel @Inject internal constructor(
         }
     }
 
-    private fun collectResult(result: DbResult<User>) {
-        _dbSingleResult.tryEmit(result)
+    private fun collectResult(resource: DbResource<User>) {
+        _dbSingleResult.tryEmit(resource)
     }
 
-    private fun collectListResult(result: DbResult<List<User>>) {
-        _dbListResult.tryEmit(result)
+    private fun collectListResult(resource: DbResource<List<User>>) {
+        _dbListResult.tryEmit(resource)
     }
 }

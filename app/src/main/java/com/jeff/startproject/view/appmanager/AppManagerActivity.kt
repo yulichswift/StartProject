@@ -13,8 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityAppManagerBinding
-import com.jeff.startproject.model.api.ApiResult
 import com.jeff.startproject.view.base.ProgressActivity
+import com.jeff.startproject.vo.api.ApiResource
 import com.log.JFLog
 import com.utils.extension.throttleFirst
 import dagger.hilt.android.AndroidEntryPoint
@@ -65,15 +65,16 @@ class AppManagerActivity : ProgressActivity<ActivityAppManagerBinding>() {
                         viewModel.onListFlow()
                             .collect {
                                 when (it) {
-                                    ApiResult.Loading -> setRefreshing(true)
-                                    is ApiResult.Success -> {
+                                    ApiResource.Loading -> setRefreshing(true)
+                                    is ApiResource.LoadingData -> TODO("setRefreshing(true)")
+                                    is ApiResource.Success -> {
                                         val data = it.data
                                         binding.totalLabel.text = "Installed ${data.size}"
                                         adapter.submitList(data)
                                     }
-                                    ApiResult.SuccessNoContent -> TODO()
-                                    is ApiResult.Failure -> TODO()
-                                    ApiResult.Loaded -> setRefreshing(false)
+                                    ApiResource.SuccessEmpty -> TODO("setRefreshing(false)")
+                                    is ApiResource.Failure -> TODO("setRefreshing(false)")
+                                    is ApiResource.Loaded -> setRefreshing(false)
                                 }
                             }
                     }

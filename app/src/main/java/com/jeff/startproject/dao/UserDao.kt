@@ -1,7 +1,7 @@
 package com.jeff.startproject.dao
 
 import androidx.room.*
-import com.jeff.startproject.model.db.User
+import com.jeff.startproject.vo.db.User
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,7 +1,7 @@
-package com.jeff.startproject.model.api
+package com.jeff.startproject.repository.api
 
-import com.jeff.startproject.model.api.vo.UserDetailItem
-import com.jeff.startproject.model.api.vo.UserItem
+import com.jeff.startproject.vo.api.UserDetailItem
+import com.jeff.startproject.vo.api.UserItem
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

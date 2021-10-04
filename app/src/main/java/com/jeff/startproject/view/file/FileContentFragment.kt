@@ -13,7 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.FragmentFileContentBinding
-import com.jeff.startproject.enums.ModelResult
+import com.jeff.startproject.enums.ModelResource
 import com.jeff.startproject.view.base.ProgressFragment
 import com.jeff.startproject.view.diaglog.ConfirmDialogFragment
 import com.log.JFLog
@@ -47,16 +47,16 @@ class FileContentFragment : ProgressFragment<FragmentFileContentBinding>() {
                     launch {
                         viewModel.status.collectLatest { result ->
                             when (result) {
-                                ModelResult.Loading -> progressHUD.show()
-                                ModelResult.Loaded -> progressHUD.dismiss()
+                                ModelResource.Loading -> progressHUD.show()
+                                ModelResource.Loaded -> progressHUD.dismiss()
                                 else -> Unit
                             }
 
                             when (result) {
-                                is ModelResult.Success -> {
+                                is ModelResource.Success -> {
                                     result.data
                                 }
-                                is ModelResult.Failure -> {
+                                is ModelResource.Failure -> {
                                     result.throwable.localizedMessage
                                 }
                                 else -> null
@@ -65,9 +65,9 @@ class FileContentFragment : ProgressFragment<FragmentFileContentBinding>() {
                             }
 
                             when (result) {
-                                is ModelResult.Success -> R.color.silver
-                                is ModelResult.Failure -> R.color.orange_red
-                                ModelResult.Loading -> R.color.black
+                                is ModelResource.Success -> R.color.silver
+                                is ModelResource.Failure -> R.color.orange_red
+                                ModelResource.Loading -> R.color.black
                                 else -> null
                             }?.also {
                                 binding.viewStatus.setBackgroundColor(resources.getColor(it, null))

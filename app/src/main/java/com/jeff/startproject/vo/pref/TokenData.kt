@@ -1,4 +1,4 @@
-package com.jeff.startproject.model.pref.token
+package com.jeff.startproject.vo.pref
 
 data class TokenData(
     var accessToken: String? = null,

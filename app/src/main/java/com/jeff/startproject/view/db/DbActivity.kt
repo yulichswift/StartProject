@@ -6,8 +6,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.jeff.startproject.databinding.ActivityDbBinding
-import com.jeff.startproject.model.db.DbResult
-import com.jeff.startproject.model.db.User
+import com.jeff.startproject.vo.db.DbResource
+import com.jeff.startproject.vo.db.User
 import com.log.JFLog
 import com.view.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -31,44 +31,44 @@ class DbActivity : BaseActivity<ActivityDbBinding>() {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
                 supervisorScope {
                     launch {
-                        viewModel.dbSingleResult.collectLatest {
+                        viewModel.dbSingleResource.collectLatest {
                             JFLog.d("$it")
 
                             when (it) {
-                                is DbResult.Loading -> {
+                                is DbResource.Loading -> {
                                     binding.layoutQuery.error = ""
                                 }
-                                is DbResult.Loaded -> {
+                                is DbResource.Loaded -> {
                                 }
-                                is DbResult.Failure -> {
+                                is DbResource.Failure -> {
                                     binding.layoutQuery.error = it.throwable.localizedMessage
                                 }
-                                is DbResult.SuccessNoContent -> {
+                                is DbResource.SuccessNoContent -> {
                                     binding.layoutQuery.error = "Db result empty"
                                 }
-                                is DbResult.Success -> {
+                                is DbResource.Success -> {
                                 }
                             }
                         }
                     }
 
                     launch {
-                        viewModel.dbListResult.collectLatest {
+                        viewModel.dbListResource.collectLatest {
                             JFLog.d("$it")
 
                             when (it) {
-                                is DbResult.Loading -> {
+                                is DbResource.Loading -> {
                                     binding.layoutQuery.error = ""
                                 }
-                                is DbResult.Loaded -> {
+                                is DbResource.Loaded -> {
                                 }
-                                is DbResult.Failure -> {
+                                is DbResource.Failure -> {
                                     binding.layoutQuery.error = it.throwable.localizedMessage
                                 }
-                                is DbResult.SuccessNoContent -> {
+                                is DbResource.SuccessNoContent -> {
                                     binding.layoutQuery.error = "Db result empty"
                                 }
-                                is DbResult.Success -> {
+                                is DbResource.Success -> {
                                     JFLog.d("Query result:")
                                     it.data.forEach { user ->
                                         JFLog.d("$user")

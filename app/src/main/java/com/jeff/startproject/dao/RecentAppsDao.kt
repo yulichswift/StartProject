@@ -1,7 +1,7 @@
 package com.jeff.startproject.dao
 
 import androidx.room.*
-import com.jeff.startproject.model.db.RecentApp
+import com.jeff.startproject.vo.db.RecentApp
 
 @Dao
 interface RecentAppsDao {

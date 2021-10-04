@@ -2,10 +2,10 @@ package com.jeff.startproject.di
 
 import com.jeff.startproject.BuildConfig
 import com.jeff.startproject.Constant
-import com.jeff.startproject.model.api.ApiRepository
-import com.jeff.startproject.model.api.ApiService
-import com.jeff.startproject.model.api.AuthInterceptor
-import com.jeff.startproject.model.pref.Pref
+import com.jeff.startproject.repository.api.ApiRepository
+import com.jeff.startproject.repository.api.ApiService
+import com.jeff.startproject.repository.api.AuthInterceptor
+import com.jeff.startproject.vo.pref.Pref
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
