@@ -138,4 +138,6 @@ dependencies {
     kapt rootProject.ext.dependencies["hilt_compiler"]
 
     implementation 'io.alterac.blurkit:blurkit:1.1.0'
+
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }

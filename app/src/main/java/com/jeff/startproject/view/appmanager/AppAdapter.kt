@@ -12,6 +12,7 @@ import androidx.core.widget.ImageViewCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ItemViewPackageInfoBinding
 import com.jeff.startproject.view.appmanager.enums.AppType
@@ -93,7 +94,35 @@ class AppAdapter(private val packageManager: PackageManager) : ListAdapter<AppVi
         }
     }
 
-    inner class LoadingViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+        when (holder) {
+            is LoadingViewHolder -> holder.isShimmer = true
+            else -> Unit
+        }
+
+        super.onViewAttachedToWindow(holder)
+    }
+
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+        when (holder) {
+            is LoadingViewHolder -> holder.isShimmer = false
+            else -> Unit
+        }
+
+        super.onViewDetachedFromWindow(holder)
+    }
+
+    inner class LoadingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val root = itemView as ShimmerFrameLayout
+
+        var isShimmer: Boolean = true
+            set(value) {
+                if (field != value) {
+                    field = value
+                    if (field) root.startShimmer() else root.stopShimmer()
+                }
+            }
+    }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemViewPackageInfoBinding.bind(view)
