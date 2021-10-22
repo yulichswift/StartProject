@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
         <activity
-            android:name="com.jeff.startproject.view.splash.SplashActivity"
+            android:name="com.jeff.startproject.ui.splash.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.jeff.startproject.view.appmanager.AppManagerActivity" />
+        <activity android:name="com.jeff.startproject.ui.appmanager.AppManagerActivity" />
     </application>
 
 </manifest>

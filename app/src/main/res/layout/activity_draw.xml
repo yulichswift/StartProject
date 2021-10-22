@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.jeff.startproject.view.draw.ArcView
+    <com.jeff.startproject.ui.draw.ArcView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:cornerRadius="60dp"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toTopOf="@id/tv_first"
         app:viewColor="#000" />
 
-    <com.jeff.startproject.view.draw.RoundView
+    <com.jeff.startproject.ui.draw.RoundView
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="20dp"

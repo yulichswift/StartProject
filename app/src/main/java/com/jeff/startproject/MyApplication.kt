@@ -14,8 +14,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.jeff.startproject.view.blur.BlurActivity
-import com.jeff.startproject.view.floating.OpenFloatingActivity
+import com.jeff.startproject.ui.blur.BlurActivity
+import com.jeff.startproject.ui.floating.OpenFloatingActivity
 import com.log.JFLog
 import dagger.hilt.android.HiltAndroidApp
 

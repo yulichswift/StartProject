@@ -3,8 +3,8 @@ package com.jeff.startproject.repository.appmanager
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import com.jeff.startproject.dao.RecentAppsDao
-import com.jeff.startproject.view.appmanager.enums.AppType
-import com.jeff.startproject.view.appmanager.vo.AppViewData
+import com.jeff.startproject.ui.appmanager.enums.AppType
+import com.jeff.startproject.ui.appmanager.vo.AppViewData
 import com.log.JFLog
 import dagger.Module
 import dagger.hilt.InstallIn

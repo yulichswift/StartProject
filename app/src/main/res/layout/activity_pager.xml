@@ -12,7 +12,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.jeff.startproject.view.pager.ViewPager2Indicator
+    <com.jeff.startproject.ui.pager.ViewPager2Indicator
         android:id="@+id/indicator"
         android:layout_width="match_parent"
         android:layout_height="20dp"

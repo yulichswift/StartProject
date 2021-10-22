@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_menu"
-        android:name="com.jeff.startproject.view.file.FileMenuFragment"
+        android:name="com.jeff.startproject.ui.file.FileMenuFragment"
         tools:layout="@layout/fragment_file_menu">
 
         <action
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/fragment_content"
-        android:name="com.jeff.startproject.view.file.FileContentFragment"
+        android:name="com.jeff.startproject.ui.file.FileContentFragment"
         tools:layout="@layout/fragment_file_content">
     </fragment>
 </navigation>
