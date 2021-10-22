@@ -18,6 +18,8 @@ import com.jeff.startproject.ui.appmanager.enums.IconType
 import com.jeff.startproject.vo.api.ApiResource
 import com.log.JFLog
 import com.ui.base.BaseActivity
+import com.utils.extension.hideKeyboard
+import com.utils.extension.registerHideKeyboardOnTouchContentView
 import com.utils.extension.throttleFirst
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.channels.BufferOverflow
@@ -43,6 +45,13 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        registerHideKeyboardOnTouchContentView()
+
+        binding.recyclerView.setOnTouchListener { _, _ ->
+            hideKeyboard()
+            false
+        }
 
         adapter = AppAdapter(packageManager)
 
