@@ -3,6 +3,7 @@ package com.jeff.startproject.ui.appmanager
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -15,6 +16,7 @@ import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityAppManagerBinding
 import com.jeff.startproject.ui.appmanager.enums.AppType
 import com.jeff.startproject.ui.appmanager.enums.IconType
+import com.jeff.startproject.utils.ContextUtil
 import com.jeff.startproject.vo.api.ApiResource
 import com.log.JFLog
 import com.ui.base.BaseActivity
@@ -26,9 +28,14 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
+import java.util.*
 
 @AndroidEntryPoint
 class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
+
+    companion object {
+        private const val ENABLE_LANGUAGE_SETTING = false
+    }
 
     override fun getViewBinding(): ActivityAppManagerBinding {
         return ActivityAppManagerBinding.inflate(layoutInflater)
@@ -36,6 +43,7 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
 
     private val viewModel: AppManagerViewModel by viewModels()
     private lateinit var adapter: AppAdapter
+    private val myLocales = arrayOf(Locale.TRADITIONAL_CHINESE, Locale.US)
 
     private val filterFlow = MutableSharedFlow<CharSequence?>(
         replay = 0,
@@ -47,6 +55,13 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
         super.onCreate(savedInstanceState)
 
         registerHideKeyboardOnTouchContentView()
+
+        binding.menuLanguage.visibility = when (ENABLE_LANGUAGE_SETTING) {
+            true -> View.VISIBLE
+            false -> View.GONE
+        }
+
+        wording()
 
         binding.recyclerView.setOnTouchListener { _, _ ->
             hideKeyboard()
@@ -68,6 +83,12 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
                 adapter.iconType = it
             }
         }
+        binding.autoLanguageText.setOnItemClickListener { _, _, position, _ ->
+            ContextUtil.updateContext(this, myLocales[position])
+            wording()
+            // or
+            // recreate()
+        }
 
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -79,12 +100,12 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
                                     ApiResource.Loading -> setRefreshing(true)
                                     is ApiResource.LoadingContent -> {
                                         setRefreshing(true)
-                                        binding.totalLabel.text = "Loading..."
+                                        binding.totalLabel.text = "${getString(R.string.text_loading)}..."
                                         adapter.submitList(it.data)
                                     }
                                     is ApiResource.Success -> {
                                         val data = it.data
-                                        binding.totalLabel.text = "Installed ${data.size}"
+                                        binding.totalLabel.text = "${getString(R.string.text_installed)} ${data.size}"
                                         adapter.submitList(data)
                                     }
                                     ApiResource.SuccessEmpty -> TODO("setRefreshing(false)")
@@ -154,9 +175,18 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
             binding.autoImageText.setText(adapter.iconType.name)
             ArrayAdapter(this@AppManagerActivity, R.layout.simple_dropdown_item, AppType.values().map { it.name }).also { binding.autoAppText.setAdapter(it) }
             ArrayAdapter(this@AppManagerActivity, R.layout.simple_dropdown_item, IconType.values().map { it.name }).also { binding.autoImageText.setAdapter(it) }
-
             viewModel.loadList(initAppType)
+
+            binding.autoLanguageText.setText(ContextUtil.getContextLocale(this@AppManagerActivity).displayName)
+            ArrayAdapter(this@AppManagerActivity, R.layout.simple_dropdown_item, myLocales.map { it.displayName }).also { binding.autoLanguageText.setAdapter(it) }
         }
+    }
+
+    private fun wording() {
+        binding.menuApp.setHint(R.string.text_app)
+        binding.menuImage.setHint(R.string.text_icon)
+        binding.menuLanguage.setHint(R.string.text_language)
+        binding.layoutFilter.setHint(R.string.text_search)
     }
 
     private fun setRefreshing(isRefreshing: Boolean) {

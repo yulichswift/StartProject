@@ -1,0 +1,8 @@
+<resources>
+    <string name="text_app">應用程式</string>
+    <string name="text_icon">圖標</string>
+    <string name="text_language">語言</string>
+    <string name="text_search">搜尋</string>
+    <string name="text_installed">已安裝</string>
+    <string name="text_loading">載入中</string>
+</resources>
