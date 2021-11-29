@@ -70,6 +70,7 @@
         <activity android:name="com.jeff.startproject.ui.result.ResultActivity" />
         <activity android:name="com.jeff.startproject.ui.colorpicker.ColorPickerActivity" />
         <activity android:name="com.jeff.startproject.ui.appmanager.AppManagerActivity" />
+        <activity android:name="com.jeff.startproject.ui.login.GoogleSignInActivity" />
 
         <activity-alias
             android:name="com.jeff.file"

@@ -6,6 +6,19 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('app.keystore')
+            keyAlias 'jeff'
+            storePassword 'test1234'
+            keyPassword 'test1234'
+            enableV1Signing true
+            enableV2Signing true
+            enableV3Signing true
+            enableV4Signing true
+        }
+    }
+
     compileSdkVersion compile_sdk_version
     defaultConfig {
         applicationId "com.jeff.startproject"
@@ -140,4 +153,7 @@ dependencies {
     implementation 'io.alterac.blurkit:blurkit:1.1.0'
 
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // Google auth
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
 }

@@ -40,6 +40,7 @@ import com.jeff.startproject.ui.flowcontrol.FlowControlActivity
 import com.jeff.startproject.ui.gson.GsonActivity
 import com.jeff.startproject.ui.list.DragActivity
 import com.jeff.startproject.ui.livedata.LiveDataAdvActivity
+import com.jeff.startproject.ui.login.GoogleSignInActivity
 import com.jeff.startproject.ui.login.LoginActivity
 import com.jeff.startproject.ui.navigation.NavigationActivity
 import com.jeff.startproject.ui.others.CustomActivity
@@ -289,6 +290,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         binding.btnPackageManager.setOnClickListener {
             startActivity(Intent(this, AppManagerActivity::class.java))
+        }
+
+        binding.btnGoogleLogin.setOnClickListener {
+            startActivity(Intent(this, GoogleSignInActivity::class.java))
         }
     }
 
