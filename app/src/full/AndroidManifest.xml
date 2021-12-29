@@ -14,6 +14,7 @@
         tools:replace="android:allowBackup">
         <activity
             android:name="com.jeff.startproject.ui.splash.SplashActivity"
+            android:exported="true"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -75,6 +76,7 @@
         <activity-alias
             android:name="com.jeff.file"
             android:enabled="true"
+            android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="FileActivity"
             android:targetActivity="com.jeff.startproject.ui.file.FileActivity"
