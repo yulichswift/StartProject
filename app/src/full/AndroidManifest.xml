@@ -13,9 +13,9 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
         <activity
-            android:name="com.jeff.startproject.ui.splash.SplashActivity"
+            android:name="com.jeff.startproject.ui.main.MainActivity"
             android:exported="true"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/Theme.App.Starting.TransparentBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -23,10 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name="com.jeff.startproject.ui.main.MainActivity"
-            android:theme="@style/TransparentBarTheme" />
         <activity android:name="com.jeff.startproject.ui.eventbus.EventBusActivity" />
         <activity android:name="com.jeff.startproject.ui.eventbus.LiveEventBusActivity" />
         <activity android:name="com.jeff.startproject.ui.edittext.EditTextActivity" />
@@ -70,7 +66,9 @@
         <activity android:name="com.jeff.startproject.ui.result.ReceiveActivity" />
         <activity android:name="com.jeff.startproject.ui.result.ResultActivity" />
         <activity android:name="com.jeff.startproject.ui.colorpicker.ColorPickerActivity" />
-        <activity android:name="com.jeff.startproject.ui.appmanager.AppManagerActivity" />
+        <activity
+            android:name="com.jeff.startproject.ui.appmanager.AppManagerActivity"
+            android:theme="@style/Theme.App.Starting.AppTheme" />
         <activity android:name="com.jeff.startproject.ui.login.GoogleSignInActivity" />
 
         <activity-alias

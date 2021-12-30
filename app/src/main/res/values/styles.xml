@@ -30,8 +30,16 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash_background</item>
+    <style name="Theme.App.Starting.TransparentBar" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#000</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_smile</item>
+        <item name="postSplashScreenTheme">@style/TransparentBarTheme</item>
+    </style>
+
+    <style name="Theme.App.Starting.AppTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#000</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_smile</item>
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
     </style>
 
     <style name="btn_size_14">
