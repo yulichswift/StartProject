@@ -10,5 +10,4 @@
     <uses-permission android:name="android.permission.UNINSTALL_SHORTCUT" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
-
 </manifest>

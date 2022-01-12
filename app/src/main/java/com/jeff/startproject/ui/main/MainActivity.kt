@@ -43,6 +43,7 @@ import com.jeff.startproject.ui.list.DragActivity
 import com.jeff.startproject.ui.livedata.LiveDataAdvActivity
 import com.jeff.startproject.ui.login.GoogleSignInActivity
 import com.jeff.startproject.ui.login.LoginActivity
+import com.jeff.startproject.ui.myclipboard.ClipboardActivity
 import com.jeff.startproject.ui.navigation.NavigationActivity
 import com.jeff.startproject.ui.others.CustomActivity
 import com.jeff.startproject.ui.others.OverrideTransitionActivity
@@ -129,7 +130,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                             // .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
                             .debounce(500L)
                             .collectLatest {
-                                it.takeIf { it.isNotBlank() }?.let(::filterBtn)
+                                it.takeIf { it.isNotBlank() }?.let(::filterBtn) ?: visibleAllBtn()
                             }
                     }
                 }
@@ -298,6 +299,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         binding.btnGoogleLogin.setOnClickListener {
             startActivity(Intent(this, GoogleSignInActivity::class.java))
         }
+
+        binding.btnClipboard.setOnClickListener {
+            startActivity(Intent(this, ClipboardActivity::class.java))
+        }
     }
 
     private fun addViewToDecorView(view: View) {
@@ -331,6 +336,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
                         else -> it
                     }
                 }
+        }
+    }
+
+    private fun visibleAllBtn() {
+        (binding.nestedScrollView.getChildAt(0) as ViewGroup).children.forEach {
+            it.visibility = View.VISIBLE
         }
     }
 

@@ -47,6 +47,7 @@
     <string name="text_color_picker">Color picker</string>
     <string name="text_package_manager">Package Manager</string>
     <string name="text_google_sign_in">Google Sign In</string>
+    <string name="text_clipboard">Clipboard</string>
 
     <string name="message_file_not_found">File not found.</string>
     <string name="message_wait">Wait a second.</string>
