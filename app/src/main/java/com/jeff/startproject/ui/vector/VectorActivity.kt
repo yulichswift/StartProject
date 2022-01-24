@@ -1,5 +1,6 @@
 package com.jeff.startproject.ui.vector
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.widget.Toast
 import com.jeff.startproject.R
@@ -37,5 +38,19 @@ class VectorActivity : BaseActivity<ActivityVectorBinding>() {
 
         binding.ivSmile.repeatAnimation()
         binding.ivCar.repeatAnimation()
+
+        var shareObjectAnimator: ObjectAnimator? = null
+        binding.ivShare.setOnClickListener {
+            shareObjectAnimator?.cancel()
+
+            val startValue = binding.ivShare.rotation
+            shareObjectAnimator = ObjectAnimator.ofFloat(binding.ivShare, "rotation", startValue, startValue + 45f).apply {
+                duration = 500L
+                start()
+            }
+
+            // Or use ValueAnimator
+            // ValueAnimator.ofFloat(startPoint, endPoint)
+        }
     }
 }
