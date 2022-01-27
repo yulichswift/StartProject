@@ -22,6 +22,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityMainBinding
+import com.jeff.startproject.databinding.LayoutMainContentBinding
 import com.jeff.startproject.ui.adbcmd.AdbCmdActivity
 import com.jeff.startproject.ui.appmanager.AppManagerActivity
 import com.jeff.startproject.ui.blur.BlurActivity
@@ -96,6 +97,7 @@ import kotlinx.coroutines.supervisorScope
 class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var stubBinding: LayoutMainContentBinding
 
     override fun getViewBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
@@ -119,6 +121,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
 
+        stubBinding = LayoutMainContentBinding.bind(binding.viewStub.inflate())
         binding.nestedScrollView.setAlphaByScroll(binding.backgroundView)
 
         lifecycleScope.launch {
@@ -137,170 +140,170 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             }
         }
 
-        binding.editTextSearch.customInsertionActionModeCallback =
+        stubBinding.editTextSearch.customInsertionActionModeCallback =
             getActionModeCallback("Insertion paste")
-        binding.editTextSearch.customSelectionActionModeCallback =
+        stubBinding.editTextSearch.customSelectionActionModeCallback =
             getActionModeCallback("Selection paste")
-        binding.editTextSearch.addTextChangedListener {
+        stubBinding.editTextSearch.addTextChangedListener {
             viewModel.search(it.toString())
         }
 
-        binding.cardView.setOnClickListener {
+        stubBinding.cardView.setOnClickListener {
             addViewToDecorView(it)
         }
 
-        binding.btnEventBus.setOnClickListener {
+        stubBinding.btnEventBus.setOnClickListener {
             Intent(this, EventBusActivity::class.java).also {
                 startActivity(it)
             }
         }
 
-        binding.btnLiveEventBus.setOnClickListener {
+        stubBinding.btnLiveEventBus.setOnClickListener {
             startActivity(Intent(this, LiveEventBusActivity::class.java))
         }
 
-        binding.btnEdit.setOnClickListener {
+        stubBinding.btnEdit.setOnClickListener {
             startActivity(Intent(this, EditTextActivity::class.java))
         }
 
-        binding.btnRoom.setOnClickListener {
+        stubBinding.btnRoom.setOnClickListener {
             startActivity(Intent(this, DbActivity::class.java))
         }
 
-        binding.btnFlow.setOnClickListener {
+        stubBinding.btnFlow.setOnClickListener {
             startActivity(Intent(this, FlowControlActivity::class.java))
         }
 
-        binding.btnVector.setOnClickListener {
+        stubBinding.btnVector.setOnClickListener {
             startActivity(Intent(this, VectorActivity::class.java))
         }
 
-        binding.btnSample.setOnClickListener {
+        stubBinding.btnSample.setOnClickListener {
             startActivity(Intent(this, SampleActivity::class.java))
         }
 
-        binding.btnLogin.setOnClickListener {
+        stubBinding.btnLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
 
-        binding.btnChain.setOnClickListener {
+        stubBinding.btnChain.setOnClickListener {
             startActivity(Intent(this, ChainActivity::class.java))
         }
 
-        binding.btnWebsocket.setOnClickListener {
+        stubBinding.btnWebsocket.setOnClickListener {
             startActivity(Intent(this, WebSocketActivity::class.java))
         }
 
-        binding.btnNavigation.setOnClickListener {
+        stubBinding.btnNavigation.setOnClickListener {
             startActivity(Intent(this, NavigationActivity::class.java))
         }
 
-        binding.btnDraw.setOnClickListener {
+        stubBinding.btnDraw.setOnClickListener {
             startActivity(Intent(this, DrawActivity::class.java))
         }
 
-        binding.btnAdbCmd.setOnClickListener {
+        stubBinding.btnAdbCmd.setOnClickListener {
             startActivity(Intent(this, AdbCmdActivity::class.java))
         }
 
-        binding.btnRuntimeExec.setOnClickListener {
+        stubBinding.btnRuntimeExec.setOnClickListener {
             startActivity(Intent(this, RuntimeExecActivity::class.java))
         }
 
-        binding.btnFile.setOnClickListener {
+        stubBinding.btnFile.setOnClickListener {
             startActivity(Intent(this, FileActivity::class.java))
         }
 
-        binding.btnPager.setOnClickListener {
+        stubBinding.btnPager.setOnClickListener {
             startActivity(Intent(this, PagerActivity::class.java))
         }
 
-        binding.btnDataStructure.setOnClickListener {
+        stubBinding.btnDataStructure.setOnClickListener {
             startActivity(Intent(this, DataStructureActivity::class.java))
         }
 
-        binding.btnPreference.setOnClickListener {
+        stubBinding.btnPreference.setOnClickListener {
             startActivity(Intent(this, PreferencesActivity::class.java))
         }
 
-        binding.btnBlur.setOnClickListener {
+        stubBinding.btnBlur.setOnClickListener {
             startActivity(Intent(this, BlurActivity::class.java))
         }
 
-        binding.btnFloating.setOnClickListener {
+        stubBinding.btnFloating.setOnClickListener {
             startActivity(Intent(this, OpenFloatingActivity::class.java))
         }
 
-        binding.btnVibrate.setOnClickListener {
+        stubBinding.btnVibrate.setOnClickListener {
             MyApplication.self.startVibrate()
         }
 
-        binding.btnTextView.setOnClickListener {
+        stubBinding.btnTextView.setOnClickListener {
             startActivity(Intent(this, TextActivity::class.java))
         }
 
-        binding.btnSort.setOnClickListener {
+        stubBinding.btnSort.setOnClickListener {
             startActivity(Intent(this, DataSortActivity::class.java))
         }
 
-        binding.btnEncrypt.setOnClickListener {
+        stubBinding.btnEncrypt.setOnClickListener {
             startActivity(Intent(this, EncryptActivity::class.java))
         }
 
-        binding.btnOverrideTransition.setOnClickListener {
+        stubBinding.btnOverrideTransition.setOnClickListener {
             startActivity(Intent(this, OverrideTransitionActivity::class.java))
         }
 
-        binding.btnGson.setOnClickListener {
+        stubBinding.btnGson.setOnClickListener {
             startActivity(Intent(this, GsonActivity::class.java))
         }
 
-        binding.btnDrag.setOnClickListener {
+        stubBinding.btnDrag.setOnClickListener {
             startActivity(Intent(this, DragActivity::class.java))
         }
 
-        binding.btnCustom.setOnClickListener {
+        stubBinding.btnCustom.setOnClickListener {
             startActivity(Intent(this, CustomActivity::class.java))
         }
 
-        binding.btnSeekBar.setOnClickListener {
+        stubBinding.btnSeekBar.setOnClickListener {
             startActivity(Intent(this, SeekBarActivity::class.java))
         }
 
-        binding.btnSpec.setOnClickListener {
+        stubBinding.btnSpec.setOnClickListener {
             startActivity(Intent(this, SpecActivity::class.java))
         }
 
-        binding.btnLiveDataAdv.setOnClickListener {
+        stubBinding.btnLiveDataAdv.setOnClickListener {
             startActivity(Intent(this, LiveDataAdvActivity::class.java))
         }
 
-        binding.btnPopupMenu.setOnClickListener {
-            showPopupWindow(binding.btnPopupMenu, 0, 0)
-            // showPopupWindowAtLocation(binding.btnPopupMenu)
+        stubBinding.btnPopupMenu.setOnClickListener {
+            showPopupWindow(stubBinding.btnPopupMenu, 0, 0)
+            // showPopupWindowAtLocation(stubBinding.btnPopupMenu)
         }
 
-        binding.btnChart.setOnClickListener {
+        stubBinding.btnChart.setOnClickListener {
             startActivity(Intent(this, ChartActivity::class.java))
         }
 
-        binding.btnActivityResult.setOnClickListener {
+        stubBinding.btnActivityResult.setOnClickListener {
             startActivity(Intent(this, ResultActivity::class.java))
         }
 
-        binding.btnColorPicker.setOnClickListener {
+        stubBinding.btnColorPicker.setOnClickListener {
             startActivity(Intent(this, ColorPickerActivity::class.java))
         }
 
-        binding.btnPackageManager.setOnClickListener {
+        stubBinding.btnPackageManager.setOnClickListener {
             startActivity(Intent(this, AppManagerActivity::class.java))
         }
 
-        binding.btnGoogleLogin.setOnClickListener {
+        stubBinding.btnGoogleLogin.setOnClickListener {
             startActivity(Intent(this, GoogleSignInActivity::class.java))
         }
 
-        binding.btnClipboard.setOnClickListener {
+        stubBinding.btnClipboard.setOnClickListener {
             startActivity(Intent(this, ClipboardActivity::class.java))
         }
     }
