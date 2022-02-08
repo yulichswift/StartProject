@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.yulichswift.roundedview.widget.RoundedTextView
+        android:id="@+id/addBtn"
+        style="@style/btn_size_14"
+        android:layout_marginTop="20dp"
+        android:text="Add"
+        app:btn_corner_radius="10dp"
+        app:btn_pressed_color="@android:color/darker_gray"
+        app:btn_solid_color="@color/design_default_color_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addBtn">
+
+        <!-- TableLaRow 各自列(row)寬度由行(row)最大元件決定 -->
+        <!-- Ex: row1 column1 size 是 50 dp, 即使 row2 column1 size 是 25dp, 但寬度還是會強制為 50dp -->
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <TableRow>
+
+                <ImageView
+                    android:id="@+id/row1Img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="#9f00" />
+
+                <TextView
+                    android:id="@+id/row1Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="R1" />
+            </TableRow>
+
+            <TableRow>
+
+                <ImageView
+                    android:id="@+id/row2Img"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="#eee" />
+
+                <TextView
+                    android:id="@+id/row2Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="R2" />
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

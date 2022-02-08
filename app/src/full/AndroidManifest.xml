@@ -71,6 +71,7 @@
             android:theme="@style/Theme.App.Starting.AppTheme" />
         <activity android:name="com.jeff.startproject.ui.login.GoogleSignInActivity" />
         <activity android:name="com.jeff.startproject.ui.myclipboard.ClipboardActivity" />
+        <activity android:name="com.jeff.startproject.ui.table.TableActivity" />
 
         <activity-alias
             android:name="com.jeff.file"

@@ -55,6 +55,7 @@ import com.jeff.startproject.ui.runtimeexec.RuntimeExecActivity
 import com.jeff.startproject.ui.sample.SampleActivity
 import com.jeff.startproject.ui.sort.DataSortActivity
 import com.jeff.startproject.ui.spec.SpecActivity
+import com.jeff.startproject.ui.table.TableActivity
 import com.jeff.startproject.ui.text.TextActivity
 import com.jeff.startproject.ui.ui.SeekBarActivity
 import com.jeff.startproject.ui.vector.VectorActivity
@@ -62,7 +63,8 @@ import com.jeff.startproject.ui.websocket.WebSocketActivity
 import com.jeff.startproject.widget.CustomView3
 import com.ui.base.BaseActivity
 import com.yulichswift.roundedview.widget.RoundedTextView
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 
@@ -305,6 +307,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         stubBinding.btnClipboard.setOnClickListener {
             startActivity(Intent(this, ClipboardActivity::class.java))
+        }
+
+        stubBinding.btnTable.setOnClickListener {
+            startActivity(Intent(this, TableActivity::class.java))
         }
     }
 
