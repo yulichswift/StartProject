@@ -47,8 +47,13 @@ class GoogleSignInActivity : BaseActivity<ActivityGoogleSignInBinding>() {
                     .setSupported(true)
                     // Your server's client ID, not your Android client ID.
                     .setServerClientId("564470664025-io1gighceql1q4m565j1v0j8bdfj91h4.apps.googleusercontent.com")
-                    // Only show accounts previously used to sign in.
-                    .setFilterByAuthorizedAccounts(true)
+
+                    // For some reason the same error code and error message will also be used if you specify setFilterByAuthorizedAccounts(true)
+                    // and you as a user don't have any Google accounts that are already authorized to sign in to your application.
+                    //
+                    // You could first use setFilterByAuthorizedAccounts(true) to help the user pick the same account as the last time
+                    // and then setFilterByAuthorizedAccounts(false) to make it possible to create a new user for the app.
+                    .setFilterByAuthorizedAccounts(false)
                     .build()
             )
             // Automatically sign in when exactly one credential is retrieved.
