@@ -49,6 +49,7 @@
     <string name="text_google_sign_in">Google Sign In</string>
     <string name="text_clipboard">Clipboard</string>
     <string name="text_table_layout">TableLayout</string>
+    <string name="text_bottom_sheet">Bottom Sheet</string>
 
     <string name="message_file_not_found">File not found.</string>
     <string name="message_wait">Wait a second.</string>
