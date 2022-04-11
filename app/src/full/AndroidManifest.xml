@@ -73,6 +73,7 @@
         <activity android:name="com.jeff.startproject.ui.myclipboard.ClipboardActivity" />
         <activity android:name="com.jeff.startproject.ui.table.TableActivity" />
         <activity android:name="com.jeff.startproject.ui.bottomsheet.BottomSheetActivity" />
+        <activity android:name="com.jeff.startproject.ui.bottomsheet.BottomSheetActivity2" />
 
         <activity-alias
             android:name="com.jeff.file"

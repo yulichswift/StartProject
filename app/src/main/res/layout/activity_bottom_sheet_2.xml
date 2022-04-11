@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/backgroundView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#222"
+        android:visibility="gone" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_bottom_sheet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:behavior_peekHeight="120dp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+            <LinearLayout
+                android:id="@+id/bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="#f00"
+                    android:gravity="center"
+                    android:text="Hello"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="#ff0"
+                    android:gravity="center"
+                    android:text="Kotlin"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="#00bfff"
+                    android:gravity="center"
+                    android:text="I'm Blue"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:alpha="0"
+                android:background="#000"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/expandedBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Expanded"
+                    app:layout_constraintEnd_toStartOf="@id/collapsedBtn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/collapsedBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Collapsed"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/expandedBtn"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/hideableBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Is not hideable"
+                    app:layout_constraintStart_toStartOf="@id/expandedBtn"
+                    app:layout_constraintTop_toBottomOf="@id/expandedBtn" />
+
+                <Button
+                    android:id="@+id/hiddenBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:text="Hidden"
+                    app:layout_constraintStart_toStartOf="@id/collapsedBtn"
+                    app:layout_constraintTop_toBottomOf="@id/expandedBtn" />
+
+                <Button
+                    android:id="@+id/draggableBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Is draggable"
+                    app:layout_constraintStart_toStartOf="@id/expandedBtn"
+                    app:layout_constraintTop_toBottomOf="@id/hideableBtn" />
+
+                <TextView
+                    android:id="@+id/onStateChangedTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    app:layout_constraintTop_toBottomOf="@id/draggableBtn" />
+
+                <TextView
+                    android:id="@+id/onSlideTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:paddingHorizontal="20dp"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    app:layout_constraintTop_toBottomOf="@id/onStateChangedTv" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

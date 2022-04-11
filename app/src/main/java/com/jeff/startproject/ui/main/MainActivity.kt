@@ -27,6 +27,7 @@ import com.jeff.startproject.ui.adbcmd.AdbCmdActivity
 import com.jeff.startproject.ui.appmanager.AppManagerActivity
 import com.jeff.startproject.ui.blur.BlurActivity
 import com.jeff.startproject.ui.bottomsheet.BottomSheetActivity
+import com.jeff.startproject.ui.bottomsheet.BottomSheetActivity2
 import com.jeff.startproject.ui.chain.ChainActivity
 import com.jeff.startproject.ui.chart.ChartActivity
 import com.jeff.startproject.ui.colorpicker.ColorPickerActivity
@@ -316,6 +317,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         stubBinding.btnBottomSheet.setOnClickListener {
             startActivity(Intent(this, BottomSheetActivity::class.java))
+        }
+
+        stubBinding.btnBottomSheet2.setOnClickListener {
+            startActivity(Intent(this, BottomSheetActivity2::class.java))
         }
     }
 
