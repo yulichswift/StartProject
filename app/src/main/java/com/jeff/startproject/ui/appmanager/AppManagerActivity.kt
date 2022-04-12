@@ -1,18 +1,23 @@
 package com.jeff.startproject.ui.appmanager
 
+import android.animation.ValueAnimator
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.updateLayoutParams
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityAppManagerBinding
 import com.jeff.startproject.ui.appmanager.enums.AppType
@@ -26,7 +31,10 @@ import com.utils.extension.registerHideKeyboardOnTouchContentView
 import com.utils.extension.throttleFirst
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import java.util.*
@@ -35,7 +43,7 @@ import java.util.*
 class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
 
     companion object {
-        private const val ENABLE_LANGUAGE_SETTING = false
+        private const val ENABLE_LANGUAGE_SETTING = true
     }
 
     override fun getViewBinding(): ActivityAppManagerBinding {
@@ -52,8 +60,12 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
         onBufferOverflow = BufferOverflow.DROP_OLDEST,
     )
 
+    private val density by lazy { resources.displayMetrics.density }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
+
+        window.navigationBarColor = Color.parseColor("#ccdddddd")
 
         super.onCreate(savedInstanceState)
 
@@ -67,6 +79,7 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
         wording()
 
         binding.recyclerView.setOnTouchListener { _, _ ->
+            binding.root.clearFocus()
             hideKeyboard()
             false
         }
@@ -183,6 +196,47 @@ class AppManagerActivity : BaseActivity<ActivityAppManagerBinding>() {
             binding.autoLanguageText.setText(ContextUtil.getContextLocale(this@AppManagerActivity).displayName)
             ArrayAdapter(this@AppManagerActivity, R.layout.simple_dropdown_item, myLocales.map { it.displayName }).also { binding.autoLanguageText.setAdapter(it) }
         }
+
+        val bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheetLayout)
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                        val dest = (30 * density).toInt()
+                        if (binding.bottomSheetIv.layoutParams.width == dest) {
+                            return
+                        }
+
+                        ValueAnimator.ofInt(binding.bottomSheetIv.layoutParams.width, dest).apply {
+                            duration = 100L
+                            addUpdateListener {
+                                binding.bottomSheetIv.updateLayoutParams<FrameLayout.LayoutParams> {
+                                    width = it.animatedValue as Int
+                                }
+                            }
+                        }.start()
+                    }
+                    else -> {
+                        val dest = (70 * density).toInt()
+                        if (binding.bottomSheetIv.layoutParams.width == dest) {
+                            return
+                        }
+
+                        ValueAnimator.ofInt(binding.bottomSheetIv.layoutParams.width, dest).apply {
+                            duration = 100L
+                            addUpdateListener {
+                                binding.bottomSheetIv.updateLayoutParams<FrameLayout.LayoutParams> {
+                                    width = it.animatedValue as Int
+                                }
+                            }
+                        }.start()
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
     }
 
     private fun wording() {
