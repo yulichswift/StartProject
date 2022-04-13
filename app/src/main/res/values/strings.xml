@@ -51,6 +51,7 @@
     <string name="text_table_layout">TableLayout</string>
     <string name="text_bottom_sheet">Bottom Sheet</string>
     <string name="text_bottom_sheet_2">Bottom Sheet 2</string>
+    <string name="text_blank">Blank</string>
 
     <string name="message_file_not_found">File not found.</string>
     <string name="message_wait">Wait a second.</string>

@@ -30,6 +30,18 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
+    <style name="TransparentActivity" parent="AppTheme">
+        <item name="colorPrimary">@color/orange_red</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
     <style name="Theme.App.Starting.TransparentBar" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#000</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_smile</item>

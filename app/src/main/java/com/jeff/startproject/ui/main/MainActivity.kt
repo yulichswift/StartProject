@@ -59,6 +59,7 @@ import com.jeff.startproject.ui.sort.DataSortActivity
 import com.jeff.startproject.ui.spec.SpecActivity
 import com.jeff.startproject.ui.table.TableActivity
 import com.jeff.startproject.ui.text.TextActivity
+import com.jeff.startproject.ui.ui.BlankActivity
 import com.jeff.startproject.ui.ui.SeekBarActivity
 import com.jeff.startproject.ui.vector.VectorActivity
 import com.jeff.startproject.ui.websocket.WebSocketActivity
@@ -321,6 +322,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         stubBinding.btnBottomSheet2.setOnClickListener {
             startActivity(Intent(this, BottomSheetActivity2::class.java))
+        }
+
+        stubBinding.btnBlankActivity.setOnClickListener {
+            startActivity(Intent(this, BlankActivity::class.java))
         }
     }
 
