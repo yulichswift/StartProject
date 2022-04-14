@@ -63,6 +63,7 @@ import com.jeff.startproject.ui.ui.BlankActivity
 import com.jeff.startproject.ui.ui.SeekBarActivity
 import com.jeff.startproject.ui.vector.VectorActivity
 import com.jeff.startproject.ui.websocket.WebSocketActivity
+import com.jeff.startproject.utils.SoftInputAssist
 import com.jeff.startproject.widget.CustomView3
 import com.ui.base.BaseActivity
 import com.yulichswift.roundedview.widget.RoundedTextView
@@ -112,6 +113,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         val splashScreen = installSplashScreen()
 
         super.onCreate(savedInstanceState)
+
+        SoftInputAssist(this, lifecycle, binding.root)
 
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.R -> {
