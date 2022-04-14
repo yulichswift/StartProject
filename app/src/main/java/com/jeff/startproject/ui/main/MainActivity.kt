@@ -327,6 +327,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         stubBinding.btnBlankActivity.setOnClickListener {
             startActivity(Intent(this, BlankActivity::class.java))
         }
+
+        stubBinding.btnAdjacent.setOnClickListener {
+            startActivity(Intent(this, BlankActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK)
+            })
+        }
     }
 
     private fun addViewToDecorView(view: View) {
