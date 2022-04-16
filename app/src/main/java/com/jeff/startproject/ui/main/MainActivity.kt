@@ -33,6 +33,7 @@ import com.jeff.startproject.ui.chart.ChartActivity
 import com.jeff.startproject.ui.colorpicker.ColorPickerActivity
 import com.jeff.startproject.ui.datastructure.DataStructureActivity
 import com.jeff.startproject.ui.db.DbActivity
+import com.jeff.startproject.ui.drag.DragHelperActivity
 import com.jeff.startproject.ui.draw.DrawActivity
 import com.jeff.startproject.ui.edittext.EditTextActivity
 import com.jeff.startproject.ui.encrypt.EncryptActivity
@@ -335,6 +336,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
             startActivity(Intent(this, BlankActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT or Intent.FLAG_ACTIVITY_NEW_TASK)
             })
+        }
+
+        stubBinding.btnDragHelper.setOnClickListener {
+            startActivity(Intent(this, DragHelperActivity::class.java))
         }
     }
 

@@ -77,6 +77,7 @@
         <activity
             android:name="com.jeff.startproject.ui.ui.BlankActivity"
             android:theme="@style/TransparentActivity" />
+        <activity android:name="com.jeff.startproject.ui.drag.DragHelperActivity" />
 
         <activity-alias
             android:name="com.jeff.file"
