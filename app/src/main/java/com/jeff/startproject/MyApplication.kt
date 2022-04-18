@@ -2,6 +2,7 @@ package com.jeff.startproject
 
 import android.app.Application
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
@@ -10,6 +11,7 @@ import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.util.DisplayMetrics
+import android.view.WindowManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
@@ -41,6 +43,19 @@ class MyApplication : Application(), LifecycleObserver {
 
         fun getScreenWidthPx() = display.widthPixels
         fun getScreenHeightPx() = display.heightPixels
+
+        private val fullScreenHeightValue by lazy {
+            val windowManager = applicationContext().getSystemService(Context.WINDOW_SERVICE) as WindowManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                windowManager.currentWindowMetrics.bounds.height()
+            } else {
+                val displayMetrics = DisplayMetrics()
+                windowManager.defaultDisplay.getMetrics(displayMetrics)
+                displayMetrics.heightPixels
+            }
+        }
+
+        fun getFullScreenHeightPx() = fullScreenHeightValue
     }
 
     init {

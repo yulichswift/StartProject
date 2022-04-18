@@ -36,15 +36,15 @@ class OpenFloatingActivity : BaseActivity<ActivityFloatingBinding>() {
         }
 
         binding.btnOpen2.setOnClickListener {
-            FloatingWindowUtil.createFloatingWindow(this, MovingDraggable())
+            FloatingWindowUtil.createDraggableWindow(this, MovingDraggable())
         }
 
         binding.btnOpen3.setOnClickListener {
-            FloatingWindowUtil.createFloatingWindow(this, SpringDraggable())
+            FloatingWindowUtil.createDraggableWindow(this, SpringDraggable())
         }
 
         binding.btnOpen4.setOnClickListener {
-            FloatingWindowUtil.createFloatingWindowWithHorizontalDraggable(this)
+            FloatingWindowUtil.createHorizontalDraggableWindow(this)
         }
 
         binding.btnOpen5.setOnClickListener {
@@ -52,7 +52,7 @@ class OpenFloatingActivity : BaseActivity<ActivityFloatingBinding>() {
             floatingLayout.findViewById<View>(R.id.btn).setOnClickListener {
                 windowManager.removeView(floatingLayout)
             }
-            FloatingWindowUtil.createFloatingWindow(this, false, floatingLayout)
+            FloatingWindowUtil.createFloatingWindow(this, isGlobal = false, view = floatingLayout, widthPercent = .85f)
         }
 
         binding.btnOpen6.setOnClickListener {

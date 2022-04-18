@@ -34,6 +34,7 @@
     <string name="text_preference">Preference</string>
     <string name="text_blur">Blur</string>
     <string name="text_floating">Floating</string>
+    <string name="text_floating_2">Floating 2</string>
     <string name="text_vibrate">Vibrate</string>
     <string name="text_view">TextView</string>
     <string name="text_sort">Sort</string>

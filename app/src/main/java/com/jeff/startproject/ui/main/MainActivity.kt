@@ -4,8 +4,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.PopupWindow
@@ -19,10 +21,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.button.MaterialButton
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
 import com.jeff.startproject.databinding.ActivityMainBinding
 import com.jeff.startproject.databinding.LayoutMainContentBinding
+import com.jeff.startproject.databinding.ViewFloating2Binding
+import com.jeff.startproject.databinding.ViewFloatingControlBinding
 import com.jeff.startproject.ui.adbcmd.AdbCmdActivity
 import com.jeff.startproject.ui.appmanager.AppManagerActivity
 import com.jeff.startproject.ui.blur.BlurActivity
@@ -66,6 +71,8 @@ import com.jeff.startproject.ui.vector.VectorActivity
 import com.jeff.startproject.ui.websocket.WebSocketActivity
 import com.jeff.startproject.utils.SoftInputAssist
 import com.jeff.startproject.widget.CustomView3
+import com.jeff.startproject.widget.floating.FloatingWindowUtil
+import com.jeff.startproject.widget.floating.draggable.SpringDraggable
 import com.ui.base.BaseActivity
 import com.yulichswift.roundedview.widget.RoundedTextView
 import kotlinx.coroutines.flow.collectLatest
@@ -241,6 +248,89 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         stubBinding.btnFloating.setOnClickListener {
             startActivity(Intent(this, OpenFloatingActivity::class.java))
+        }
+
+        stubBinding.btnFloating2.setOnClickListener {
+            if (!Settings.canDrawOverlays(this)) {
+                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
+                startActivity(intent)
+                return@setOnClickListener
+            }
+
+            val listViewBinding = ViewFloating2Binding.inflate(layoutInflater, null, false)
+            FloatingWindowUtil.createFloatingWindow(this, isFullScreen = true, view = listViewBinding.root, widthPercent = 1f, heightPercent = 1f)
+
+            val enableTouchFlag = FloatingWindowUtil.getEnableTouchFlag() or FloatingWindowUtil.getFullScreenFlag()
+            val disableTouchFlag = FloatingWindowUtil.getDisableTouchFlag() or FloatingWindowUtil.getFullScreenFlag()
+            fun isListViewTouchable() = disableTouchFlag != (listViewBinding.root.layoutParams as WindowManager.LayoutParams).flags
+            fun updateListViewLayoutParams(isTouchable: Boolean) {
+                val updateLayoutParams = (listViewBinding.root.layoutParams as WindowManager.LayoutParams).apply {
+                    flags = if (isTouchable) enableTouchFlag else disableTouchFlag
+                }
+                windowManager.updateViewLayout(listViewBinding.root, updateLayoutParams)
+            }
+
+            val viewFloatingControlBinding = ViewFloatingControlBinding.inflate(layoutInflater, null, false)
+            FloatingWindowUtil.createFloatingWindow(this, view = viewFloatingControlBinding.root, widthPercent = 1f)
+
+            val dragBtn = MaterialButton(this).apply {
+                text = "Restore"
+                visibility = View.GONE
+            }
+
+            fun isListViewVisible() = View.VISIBLE == listViewBinding.root.visibility
+            fun reverseFloatingVisible() {
+                val newState = isListViewVisible().not()
+
+                when (!newState) {
+                    true -> View.VISIBLE
+                    false -> View.GONE
+                }.also {
+                    dragBtn.visibility = it
+                }
+
+                when (newState) {
+                    true -> View.VISIBLE
+                    false -> View.GONE
+                }.also {
+                    listViewBinding.root.visibility = it
+                    viewFloatingControlBinding.root.visibility = it
+                }
+            }
+
+            dragBtn.setOnClickListener {
+                reverseFloatingVisible()
+            }
+
+            val dragBtnRemovedCallback = FloatingWindowUtil.createDraggableWindow(this, view = dragBtn, draggable = SpringDraggable())
+
+            viewFloatingControlBinding.also { binding ->
+                fun updateLockBtn(isTouchable: Boolean) {
+                    when (isTouchable) {
+                        true -> R.drawable.unlock
+                        false -> R.drawable.lock
+                    }.also(binding.lockBtn::setImageResource)
+                }
+
+                updateLockBtn(isListViewTouchable())
+
+                binding.lockBtn.setOnClickListener {
+                    val newState = isListViewTouchable().not()
+                    updateLockBtn(newState)
+                    updateListViewLayoutParams(newState)
+                }
+
+                binding.minimizeBtn.setOnClickListener {
+                    reverseFloatingVisible()
+                }
+
+                binding.removedBtn.setOnClickListener {
+                    windowManager.removeView(listViewBinding.root)
+                    windowManager.removeView(binding.root)
+                    dragBtnRemovedCallback()
+                    windowManager.removeView(dragBtn)
+                }
+            }
         }
 
         stubBinding.btnVibrate.setOnClickListener {
