@@ -1,6 +1,7 @@
 package com.jeff.startproject.ui.vector
 
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.os.Bundle
 import android.widget.Toast
 import com.jeff.startproject.R
@@ -52,5 +53,36 @@ class VectorActivity : BaseActivity<ActivityVectorBinding>() {
             // Or use ValueAnimator
             // ValueAnimator.ofFloat(startPoint, endPoint)
         }
+
+        binding.widthAniLayout.setOnClickListener {
+            doWidthAni()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        doWidthAni()
+    }
+
+    private fun doWidthAni() {
+        val paint = binding.textView.paint
+
+        /*
+        val bounds = Rect()
+        paint.getTextBounds(binding.textView.text, 0, binding.textView.text.length, bounds)
+        val textWidth = bounds.width()
+        */
+
+        val textWidth = paint.measureText(binding.textView.text.toString())
+
+        val ani = ValueAnimator.ofInt(0, textWidth.toInt() + 5 * 2 * 3)
+        ani.addUpdateListener {
+            val lp = binding.widthAniLayout.layoutParams
+            lp.width = it.animatedValue as Int
+            binding.widthAniLayout.layoutParams = lp
+        }
+        ani.duration = 2000L
+        ani.start()
     }
 }
