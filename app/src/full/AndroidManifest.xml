@@ -14,15 +14,7 @@
         tools:replace="android:allowBackup">
         <activity
             android:name="com.jeff.startproject.ui.main.MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.App.Starting.TransparentBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.App.Starting.TransparentBar" />
         <activity android:name="com.jeff.startproject.ui.eventbus.EventBusActivity" />
         <activity android:name="com.jeff.startproject.ui.eventbus.LiveEventBusActivity" />
         <activity android:name="com.jeff.startproject.ui.edittext.EditTextActivity" />
@@ -93,6 +85,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
                 <!-- Android TV launcher intent -->
                 <!--<category android:name="android.intent.category.LEANBACK_LAUNCHER" />-->
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name="com.jeff.startproject.entrance1"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:targetActivity=".ui.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name="com.jeff.startproject.entrance2"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/ic_smile"
+            android:label="@string/app_name"
+            android:targetActivity=".ui.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
 

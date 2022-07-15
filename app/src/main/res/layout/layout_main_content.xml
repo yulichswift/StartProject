@@ -33,6 +33,24 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.yulichswift.roundedview.widget.RoundedTextView
+        android:id="@+id/btnEntrance1"
+        style="@style/btn_size_14"
+        android:layout_marginTop="10dp"
+        android:text="Entrance 1"
+        app:btn_corner_radius="standard"
+        app:btn_pressed_color="@android:color/darker_gray"
+        app:btn_solid_color="@android:color/black" />
+
+    <com.yulichswift.roundedview.widget.RoundedTextView
+        android:id="@+id/btnEntrance2"
+        style="@style/btn_size_14"
+        android:layout_marginTop="10dp"
+        android:text="Entrance 2"
+        app:btn_corner_radius="standard"
+        app:btn_pressed_color="@android:color/darker_gray"
+        app:btn_solid_color="@android:color/black" />
+
+    <com.yulichswift.roundedview.widget.RoundedTextView
         android:id="@+id/btnPopupMenu"
         style="@style/btn_size_14"
         android:layout_marginTop="10dp"

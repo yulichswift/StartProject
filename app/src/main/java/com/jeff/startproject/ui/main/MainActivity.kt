@@ -1,6 +1,8 @@
 package com.jeff.startproject.ui.main
 
+import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
@@ -430,6 +432,34 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         stubBinding.btnDragHelper.setOnClickListener {
             startActivity(Intent(this, DragHelperActivity::class.java))
+        }
+
+        stubBinding.btnEntrance1.setOnClickListener {
+            packageManager.setComponentEnabledSetting(
+                ComponentName(this, "com.jeff.startproject.entrance1"),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
+
+            packageManager.setComponentEnabledSetting(
+                ComponentName(this, "com.jeff.startproject.entrance2"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP
+            )
+        }
+
+        stubBinding.btnEntrance2.setOnClickListener {
+            packageManager.setComponentEnabledSetting(
+                ComponentName(this, "com.jeff.startproject.entrance2"),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
+
+            packageManager.setComponentEnabledSetting(
+                ComponentName(this, "com.jeff.startproject.entrance1"),
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                PackageManager.DONT_KILL_APP
+            )
         }
     }
 
