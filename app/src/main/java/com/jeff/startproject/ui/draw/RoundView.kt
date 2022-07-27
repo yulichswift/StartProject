@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import com.jeff.startproject.R
 
-class RoundView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class RoundView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
 
     private var cornerRadius = 0f
         set(value) {
