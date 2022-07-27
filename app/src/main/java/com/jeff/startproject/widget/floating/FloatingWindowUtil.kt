@@ -1,5 +1,6 @@
 package com.jeff.startproject.widget.floating
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Build
@@ -9,8 +10,10 @@ import android.view.View
 import android.view.WindowManager
 import com.jeff.startproject.MyApplication
 import com.jeff.startproject.R
+import com.jeff.startproject.databinding.ViewOverScreenBinding
 import com.jeff.startproject.widget.floating.draggable.BaseDraggable
 import com.jeff.startproject.widget.view.draggable.TranslationXDraggable
+import com.jeff.startproject.widget.view.draggable.TranslationXYDraggable
 
 object FloatingWindowUtil {
 
@@ -83,6 +86,50 @@ object FloatingWindowUtil {
         floatingLayout.findViewById<View>(R.id.btn).setOnClickListener {
             draggable.removeTarget()
             windowManager.removeView(floatingLayout)
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    fun createXYDraggableWindow(context: Context) {
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+        val layoutParams = WindowManager.LayoutParams().apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            } else {
+                type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
+            }
+            flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+            format = PixelFormat.TRANSLUCENT
+            gravity = Gravity.TOP or Gravity.START
+            width = WindowManager.LayoutParams.MATCH_PARENT
+            height = WindowManager.LayoutParams.MATCH_PARENT
+            x = 0
+            y = 0
+        }
+
+        val binding = ViewOverScreenBinding.inflate(inflater)
+
+        windowManager.addView(binding.root, layoutParams)
+
+        val draggable = TranslationXYDraggable()
+
+        draggable.setTargetView(binding.layoutContent)
+
+        binding.btn.setOnClickListener {
+            draggable.removeTarget()
+            windowManager.removeView(binding.root)
+        }
+
+        binding.btnZoomIn.setOnClickListener {
+            binding.layoutContent.scaleX += 0.1f
+            binding.layoutContent.scaleY += 0.1f
+        }
+
+        binding.btnZoomOut.setOnClickListener {
+            binding.layoutContent.scaleX -= 0.1f
+            binding.layoutContent.scaleY -= 0.1f
         }
     }
 

@@ -56,6 +56,7 @@ class TranslationXDraggable : BaseViewDraggable() {
                 return event.x !in (downX - clickedDiffValue)..(downX + clickedDiffValue)
             }
         }
+
         return false
     }
 

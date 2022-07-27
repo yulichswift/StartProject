@@ -47,6 +47,10 @@ class OpenFloatingActivity : BaseActivity<ActivityFloatingBinding>() {
             FloatingWindowUtil.createHorizontalDraggableWindow(this)
         }
 
+        binding.btnOpenXY.setOnClickListener {
+            FloatingWindowUtil.createXYDraggableWindow(this)
+        }
+
         binding.btnOpen5.setOnClickListener {
             val floatingLayout = layoutInflater.inflate(R.layout.view_floating, null)
             floatingLayout.findViewById<View>(R.id.btn).setOnClickListener {

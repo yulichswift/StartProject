@@ -14,15 +14,15 @@ abstract class BaseViewDraggable : OnTouchListener {
         targetView?.get()?.setOnTouchListener(this)
     }
 
-    fun removeTarget() {
+    open fun removeTarget() {
         targetView = null
     }
 
-    protected fun moveLocation(x: Float, y: Float) {
+    protected open fun moveLocation(x: Float, y: Float) {
         moveLocation(x.toInt(), y.toInt())
     }
 
-    protected fun moveLocation(x: Int, y: Int) {
+    protected open fun moveLocation(x: Int, y: Int) {
         if (x == 0 && y == 0) return
 
         targetView?.get()?.apply {
