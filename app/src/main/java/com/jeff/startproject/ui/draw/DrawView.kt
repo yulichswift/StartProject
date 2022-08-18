@@ -47,9 +47,6 @@ class DrawView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
     private var w = 0f
     private var h = 0f
     private var radius = 0f
-    private var currentDegrees = 0f
-    private var currentTranslateX = 0f
-    private var currentTranslateY = 0f
     private var showRightSlashLive = true
     private val rightSlashTextRect = Rect()
     private val leftSlashTextRect = Rect()
@@ -190,34 +187,10 @@ class DrawView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
         initList()
     }
 
-    private fun Canvas.toDegrees(to: Float) {
-        if (currentDegrees == to) return
-
-        rotate(to - currentDegrees)
-        currentDegrees = to
-    }
-
-    private fun Canvas.toTranslate(toX: Float, toY: Float) {
-        if (currentTranslateX == toX && currentTranslateY == toY) return
-
-        translate(toX - currentTranslateX, toY - currentTranslateY)
-        currentTranslateX = toX
-        currentTranslateY = toY
-    }
-
-    private fun Canvas.resetData() {
-        toDegrees(0f)
-        toTranslate(0f, 0f)
-    }
-
     override fun onDraw(canvas: Canvas?) {
         JFLog.d("onDraw")
 
         super.onDraw(canvas)
-
-        currentDegrees = 0f
-        currentTranslateX = 0f
-        currentTranslateY = 0f
 
         canvas?.apply {
             lineList.forEach {
@@ -231,8 +204,10 @@ class DrawView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
             }
 
             if (showRightSlashLive) {
-                toTranslate(w / 2, h / 2)
-                toDegrees(45f)
+                save()
+
+                translate(w / 2, h / 2)
+                rotate(45f)
 
                 // 畫右斜線文字外框
                 tempSlashTextRect.set(rightSlashTextRect)
@@ -243,10 +218,12 @@ class DrawView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                 // 畫右斜線文字
                 drawText(text1, 0f, rightSlashTextRect.height() / 2f, text8Paint)
 
-                resetData()
+                restore()
             } else {
-                toTranslate(w / 2, h / 2)
-                toDegrees(-45f)
+                save()
+
+                translate(w / 2, h / 2)
+                rotate(-45f)
 
                 // 畫左斜線文字外框
                 tempSlashTextRect.set(leftSlashTextRect)
@@ -257,8 +234,7 @@ class DrawView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
                 // 畫左斜線文字
                 drawText(text1, 0f, rightSlashTextRect.height() / 2f, text8Paint)
 
-                toDegrees(0f)
-                toTranslate(0f, 0f)
+                restore()
             }
 
             // 垂直文字
