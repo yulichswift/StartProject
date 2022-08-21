@@ -12,10 +12,12 @@ class DrawView2 @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private val linePaint = Paint()
     private val selectedLinePaint = Paint()
     private val pointPaint = Paint()
+    private val trianglePaint = Paint()
     private var w = 0f
     private var h = 0f
     private var currentDegrees = 0f
-    private lateinit var aroundPath: Path
+    private val aroundPath = Path()
+    private val trianglePath = Path()
 
     init {
         val density = context.resources.displayMetrics.density
@@ -39,6 +41,15 @@ class DrawView2 @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             style = Paint.Style.FILL_AND_STROKE
             strokeWidth = 3f * density
             isAntiAlias = true
+        }
+
+        trianglePaint.apply {
+            color = Color.BLUE
+            style = Paint.Style.FILL_AND_STROKE
+            strokeWidth = density
+            isAntiAlias = true
+            // 圓角
+            pathEffect = CornerPathEffect(10 * density)
         }
     }
 
@@ -108,6 +119,11 @@ class DrawView2 @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
             drawPath(aroundPath, linePaint)
 
+            canvas.save()
+            canvas.translate(w / 2f, h / 2f)
+            drawPath(trianglePath, trianglePaint)
+            canvas.restore()
+
             val pointList = listOf(
                 PointF(0f, 0f),
                 PointF(200f, 25f),
@@ -128,12 +144,24 @@ class DrawView2 @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     }
 
     private fun initPath() {
-        aroundPath = Path().also {
+        aroundPath.also {
+            it.reset()
             it.moveTo(0f, 0f)
             it.lineTo(w, 0f)
             it.lineTo(w, h)
             it.lineTo(0f, h)
             it.lineTo(0f, 0f)
+        }
+
+        val dp = resources.displayMetrics.density
+        val l = 50 * dp
+
+        trianglePath.also {
+            it.reset()
+            it.moveTo(0f, 0f)
+            it.lineTo(l, 0f)
+            it.lineTo(l / 2f, l)
+            it.close()
         }
     }
 }
