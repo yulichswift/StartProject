@@ -7,19 +7,10 @@ import android.view.MotionEvent
 import android.view.View
 import com.log.JFLog
 
-class DrawView2 @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
-
-    private val linePaint = Paint()
-    private val selectedLinePaint = Paint()
-    private val pointPaint = Paint()
-    private val trianglePaint = Paint()
-    private var w = 0f
-    private var h = 0f
-    private var currentDegrees = 0f
-    private val aroundPath = Path()
-    private val trianglePath = Path()
-
-    init {
+class DrawView2 : View {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         val density = context.resources.displayMetrics.density
 
         linePaint.apply {
@@ -52,6 +43,16 @@ class DrawView2 @JvmOverloads constructor(context: Context, attrs: AttributeSet?
             pathEffect = CornerPathEffect(10 * density)
         }
     }
+
+    private val linePaint = Paint()
+    private val selectedLinePaint = Paint()
+    private val pointPaint = Paint()
+    private val trianglePaint = Paint()
+    private var w = 0f
+    private var h = 0f
+    private var currentDegrees = 0f
+    private val aroundPath = Path()
+    private val trianglePath = Path()
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event?.also { motionEvent ->
@@ -106,8 +107,6 @@ class DrawView2 @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
     override fun onDraw(canvas: Canvas?) {
         JFLog.d("onDraw")
-
-        super.onDraw(canvas)
 
         canvas?.apply {
             fun toDegrees(to: Float) {

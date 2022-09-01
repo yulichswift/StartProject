@@ -6,12 +6,10 @@ import android.util.AttributeSet
 import android.view.View
 import com.jeff.startproject.R
 
-class ArcView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-
-    private var cornerRadius = 0f
-    private val paint = Paint()
-
-    init {
+class ArcView : View {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ArcView)
         val viewColor = typedArray.getColor(R.styleable.ArcView_viewColor, Color.TRANSPARENT)
         cornerRadius = typedArray.getDimension(R.styleable.ArcView_cornerRadius, 0f)
@@ -20,6 +18,10 @@ class ArcView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paint.color = viewColor
         paint.isAntiAlias = true
     }
+
+    private var cornerRadius = 0f
+
+    private val paint = Paint()
 
     private val path by lazy {
         Path()
@@ -37,8 +39,6 @@ class ArcView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-
         canvas?.also {
             drawLeftTop(canvas)
             drawRightTop(canvas)

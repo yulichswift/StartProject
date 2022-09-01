@@ -34,31 +34,10 @@ data class HintObject(
     }
 }
 
-class DrawView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
-
-    private val linePaint = Paint()
-    private val selectedLinePaint = Paint()
-    private val rectPaint = Paint()
-    private val textRectPaint = Paint()
-    private val text8Paint = Paint()
-    private val text12Paint = Paint()
-    private val lineList = mutableListOf<LineObject>()
-    private val hintList = mutableListOf<HintObject>()
-    private var w = 0f
-    private var h = 0f
-    private var radius = 0f
-    private var showRightSlashLive = true
-    private val rightSlashTextRect = Rect()
-    private val leftSlashTextRect = Rect()
-    private val tempSlashTextRect = RectF()
-    private var dp3 = 0f
-    private var dp5 = 0f
-    private var dp8 = 0f
-    private var dp12 = 0f
-    private var text1 = "LIVE"
-    private var text2 = "1:4"
-
-    init {
+class DrawView : View {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         val density = context.resources.displayMetrics.density
 
         radius = 24f * density
@@ -110,6 +89,28 @@ class DrawView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
             isAntiAlias = true
         }
     }
+
+    private val linePaint = Paint()
+    private val selectedLinePaint = Paint()
+    private val rectPaint = Paint()
+    private val textRectPaint = Paint()
+    private val text8Paint = Paint()
+    private val text12Paint = Paint()
+    private val lineList = mutableListOf<LineObject>()
+    private val hintList = mutableListOf<HintObject>()
+    private var w = 0f
+    private var h = 0f
+    private var radius = 0f
+    private var showRightSlashLive = true
+    private val rightSlashTextRect = Rect()
+    private val leftSlashTextRect = Rect()
+    private val tempSlashTextRect = RectF()
+    private var dp3 = 0f
+    private var dp5 = 0f
+    private var dp8 = 0f
+    private var dp12 = 0f
+    private var text1 = "LIVE"
+    private var text2 = "1:4"
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event?.also { motionEvent ->
@@ -189,8 +190,6 @@ class DrawView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
 
     override fun onDraw(canvas: Canvas?) {
         JFLog.d("onDraw")
-
-        super.onDraw(canvas)
 
         canvas?.apply {
             lineList.forEach {

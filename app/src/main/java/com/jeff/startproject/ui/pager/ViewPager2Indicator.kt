@@ -60,8 +60,6 @@ class ViewPager2Indicator(context: Context, attrs: AttributeSet) : View(context,
     }
 
     override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-
         if (mCycleNumber <= 0) {
             return
         }

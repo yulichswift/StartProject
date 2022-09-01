@@ -6,17 +6,10 @@ import android.util.AttributeSet
 import android.view.View
 import com.jeff.startproject.R
 
-class RoundView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
-
-    private var cornerRadius = 0f
-        set(value) {
-            field = value
-            cornerArray = floatArrayOf(value, value, value, value, value, value, value, value)
-        }
-
-    private val paint = Paint()
-
-    init {
+class RoundView : View {
+    constructor(context: Context) : this(context, null)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.RoundView)
         val backgroundColor = typedArray.getColor(R.styleable.RoundView_viewColor, Color.TRANSPARENT)
         cornerRadius = typedArray.getDimension(R.styleable.RoundView_cornerRadius, 0f)
@@ -25,6 +18,14 @@ class RoundView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
         paint.color = backgroundColor
         paint.isAntiAlias = true
     }
+
+    private var cornerRadius = 0f
+        set(value) {
+            field = value
+            cornerArray = floatArrayOf(value, value, value, value, value, value, value, value)
+        }
+
+    private val paint = Paint()
 
     private val rectF by lazy {
         RectF(0f, 0f, width.toFloat(), height.toFloat())
@@ -44,8 +45,6 @@ class RoundView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     private lateinit var cornerArray: FloatArray
 
     override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-
         canvas?.also {
             path.reset()
             path.addRoundRect(rectF, cornerArray, Path.Direction.CW)
