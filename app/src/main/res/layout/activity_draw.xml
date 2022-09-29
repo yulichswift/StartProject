@@ -7,6 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipChildren="false"
         android:paddingBottom="20dp">
 
         <TextView
@@ -45,6 +46,16 @@
             app:layout_constraintTop_toBottomOf="@id/tv_first"
             app:viewColor="#ff0" />
 
+        <com.jeff.startproject.ui.draw.ShadowView
+            android:id="@+id/shadowView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="20dp"
+            app:cornerRadius="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/roundView" />
+
         <com.jeff.startproject.ui.draw.DrawView
             android:id="@+id/draw1"
             android:layout_width="136dp"
@@ -53,7 +64,7 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/roundView" />
+            app:layout_constraintTop_toBottomOf="@id/shadowView" />
 
         <com.jeff.startproject.ui.draw.DrawView2
             android:id="@+id/draw2"
