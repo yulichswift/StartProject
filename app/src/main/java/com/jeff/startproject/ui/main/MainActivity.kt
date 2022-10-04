@@ -37,6 +37,7 @@ import com.jeff.startproject.ui.bottomsheet.BottomSheetActivity
 import com.jeff.startproject.ui.bottomsheet.BottomSheetActivity2
 import com.jeff.startproject.ui.chain.ChainActivity
 import com.jeff.startproject.ui.chart.ChartActivity
+import com.jeff.startproject.ui.clip.ClipActivity
 import com.jeff.startproject.ui.colorpicker.ColorPickerActivity
 import com.jeff.startproject.ui.datastructure.DataStructureActivity
 import com.jeff.startproject.ui.db.DbActivity
@@ -218,6 +219,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         stubBinding.btnDraw.setOnClickListener {
             startActivity(Intent(this, DrawActivity::class.java))
+        }
+
+        stubBinding.btnClip.setOnClickListener {
+            startActivity(Intent(this, ClipActivity::class.java))
         }
 
         stubBinding.btnAdbCmd.setOnClickListener {

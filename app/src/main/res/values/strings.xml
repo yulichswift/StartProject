@@ -55,6 +55,7 @@
     <string name="text_blank">Blank</string>
     <string name="text_adjacent">Adjacent</string>
     <string name="text_drag_helper">Drag helper</string>
+    <string name="text_clip">Clip</string>
 
     <string name="message_file_not_found">File not found.</string>
     <string name="message_wait">Wait a second.</string>
