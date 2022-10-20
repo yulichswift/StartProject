@@ -28,6 +28,7 @@ class DragActivity : BaseActivity<ActivityDragBinding>() {
         adapter.setList(list)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        // binding.recyclerView.layoutManager = FooterLinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
         val itemDragDropCallback = ItemDragDropCallback()
