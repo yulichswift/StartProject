@@ -38,19 +38,28 @@ class PackageRepository @Inject internal constructor(
 
     fun getInstalledPackage() =
         flow {
-            val result = packageManager.getInstalledApplications(0).map { AppViewData(AppType.typeWithAppInfo(it), it) }
+            val result = packageManager.getInstalledApplications(0).map {
+                val pkgInfo = packageManager.getPackageInfo(it.packageName, 0)
+                AppViewData(AppType.typeWithAppInfo(it), it, pkgInfo)
+            }
             emit(result)
         }
 
     fun getNonSystemPackage() =
         flow {
-            val result = packageManager.getInstalledApplications(0).filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 0 }.map { AppViewData(AppType.NonSystem, it) }
+            val result = packageManager.getInstalledApplications(0).filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 0 }.map {
+                val pkgInfo = packageManager.getPackageInfo(it.packageName, 0)
+                AppViewData(AppType.NonSystem, it, pkgInfo)
+            }
             emit(result)
         }
 
     fun getSystemPackage() =
         flow {
-            val result = packageManager.getInstalledApplications(0).filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 1 }.map { AppViewData(AppType.System, it) }
+            val result = packageManager.getInstalledApplications(0).filter { (it.flags and ApplicationInfo.FLAG_SYSTEM) == 1 }.map {
+                val pkgInfo = packageManager.getPackageInfo(it.packageName, 0)
+                AppViewData(AppType.System, it, pkgInfo)
+            }
             emit(result)
         }
 
@@ -58,8 +67,9 @@ class PackageRepository @Inject internal constructor(
         flow {
             recentDao.queryApps().mapNotNull { dbData ->
                 try {
-                    val info = packageManager.getApplicationInfo(dbData.packageName, 0)
-                    AppViewData(AppType.Recent, info)
+                    val appInfo = packageManager.getApplicationInfo(dbData.packageName, 0)
+                    val pkgInfo = packageManager.getPackageInfo(dbData.packageName, 0)
+                    AppViewData(AppType.Recent, appInfo, pkgInfo)
                 } catch (e: Exception) {
                     recentDao.deleteApp(dbData)
                     JFLog.e(e)

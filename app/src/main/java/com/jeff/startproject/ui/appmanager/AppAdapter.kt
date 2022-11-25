@@ -151,21 +151,28 @@ class AppAdapter(private val packageManager: PackageManager) : ListAdapter<AppVi
         @SuppressLint("SetTextI18n")
         fun bind(customAppInfo: AppViewData) {
             appType = customAppInfo.appType
-            val appInfo = customAppInfo.appInfo!!
-            packageName = appInfo.packageName
 
-            binding.icon.setImageDrawable(
-                when (iconType) {
-                    IconType.Logo -> appInfo.loadLogo(packageManager)
-                    IconType.Icon -> appInfo.loadIcon(packageManager)
-                    IconType.Unbadged -> appInfo.loadUnbadgedIcon(packageManager)
-                    IconType.Banner -> appInfo.loadBanner(packageManager)
-                }
-            )
+            val appInfo = customAppInfo.appInfo
+            if (appInfo != null) {
+                packageName = appInfo.packageName
+                binding.icon.setImageDrawable(
+                    when (iconType) {
+                        IconType.Logo -> appInfo.loadLogo(packageManager)
+                        IconType.Icon -> appInfo.loadIcon(packageManager)
+                        IconType.Unbadged -> appInfo.loadUnbadgedIcon(packageManager)
+                        IconType.Banner -> appInfo.loadBanner(packageManager)
+                    }
+                )
 
-            binding.titleLabel.text = appInfo.loadLabel(packageManager)
-            binding.packageLabel.text = appInfo.packageName
-            binding.descLabel.text = appInfo.loadDescription(packageManager)
+                binding.titleLabel.text = appInfo.loadLabel(packageManager)
+                binding.packageLabel.text = appInfo.packageName
+                binding.descLabel.text = appInfo.loadDescription(packageManager)
+            }
+
+            val pkgInfo = customAppInfo.pkgInfo
+            if (pkgInfo != null) {
+                binding.versionLabel.text = "${pkgInfo.versionName} (${pkgInfo.longVersionCode})"
+            }
 
             when (appType) {
                 AppType.NonSystem -> colorTrashNonSystem

@@ -39,6 +39,15 @@
             android:layout_marginTop="5dp"
             android:textSize="11sp"
             tools:text="Package" />
+
+        <TextView
+            android:id="@+id/versionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#999"
+            android:textSize="9sp"
+            tools:text="version" />
     </LinearLayout>
 
     <TextView
