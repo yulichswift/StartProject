@@ -53,6 +53,7 @@ import com.jeff.startproject.ui.flowcontrol.FlowControlActivity
 import com.jeff.startproject.ui.gson.GsonActivity
 import com.jeff.startproject.ui.list.DragActivity
 import com.jeff.startproject.ui.livedata.LiveDataAdvActivity
+import com.jeff.startproject.ui.login.GoogleSignIn2Activity
 import com.jeff.startproject.ui.login.GoogleSignInActivity
 import com.jeff.startproject.ui.login.LoginActivity
 import com.jeff.startproject.ui.myclipboard.ClipboardActivity
@@ -407,6 +408,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
         stubBinding.btnGoogleLogin.setOnClickListener {
             startActivity(Intent(this, GoogleSignInActivity::class.java))
+        }
+
+        stubBinding.btnGoogleLogin2.setOnClickListener {
+            startActivity(Intent(this, GoogleSignIn2Activity::class.java))
         }
 
         stubBinding.btnClipboard.setOnClickListener {

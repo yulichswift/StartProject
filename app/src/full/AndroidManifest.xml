@@ -62,6 +62,7 @@
             android:name="com.jeff.startproject.ui.appmanager.AppManagerActivity"
             android:theme="@style/Theme.App.Starting.AppTheme" />
         <activity android:name="com.jeff.startproject.ui.login.GoogleSignInActivity" />
+        <activity android:name="com.jeff.startproject.ui.login.GoogleSignIn2Activity" />
         <activity android:name="com.jeff.startproject.ui.myclipboard.ClipboardActivity" />
         <activity android:name="com.jeff.startproject.ui.table.TableActivity" />
         <activity android:name="com.jeff.startproject.ui.bottomsheet.BottomSheetActivity" />
